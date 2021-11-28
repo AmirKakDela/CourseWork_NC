@@ -13,7 +13,7 @@ class authController {
             if (candidate) return res.status(400).json({message: `Пользователь с почтовым адрессом ${email} уже существует.`})
 
             const user = new User({email, password, name});
-            // await user.save();
+            await user.save();
             return res.json({message: 'Пользователь создан'})
         } catch (e) {
             console.log(e);
@@ -31,7 +31,7 @@ class authController {
             if (user.password !== password) return res.status(403).json({message: 'Неверный пароль'});
 
             const token = user._id + '_' + user.admin;
-            return res.json({token});
+            return res.json({token, userId: user._id, userName: user.name});
 
         } catch (e) {
             console.log(e);
