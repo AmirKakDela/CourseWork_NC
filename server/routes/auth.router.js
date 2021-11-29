@@ -15,7 +15,8 @@ router.post('/register',
     controller.register
 )
 
-router.post('/login', controller.login)
+router.post('/login', controller.login);
+router.get('/auth', authMiddleware, controller.auth);
 
 
 // TODO: эти функции для теста, их потом удалить
