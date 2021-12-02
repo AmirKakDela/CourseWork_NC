@@ -2,10 +2,11 @@ import {CurrentUserType} from "../../types";
 
 export enum UserActionTypeTypes {
     SET_CURRENT_USER = 'SET_CURRENT_USER',
-    LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER'
+    LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER',
+    SET_AUTH_ERROR = 'SET_AUTH_ERROR'
 }
 
-export type UserActionTypes = SetCurrentUserType | LogoutCurrentUserType
+export type UserActionTypes = SetCurrentUserType | LogoutCurrentUserType | SetAuthErrorType
 
 
 type LogoutCurrentUserType = {
@@ -27,5 +28,17 @@ export const setCurrentUser = (currentUser: CurrentUserType): SetCurrentUserType
     return {
         type: UserActionTypeTypes.SET_CURRENT_USER,
         payload: currentUser
+    }
+}
+
+export type SetAuthErrorType = {
+    type: UserActionTypeTypes.SET_AUTH_ERROR,
+    payload: string | null
+}
+
+export const setAuthError = (error: string | null): SetAuthErrorType => {
+    return {
+        type: UserActionTypeTypes.SET_AUTH_ERROR,
+        payload: error
     }
 }

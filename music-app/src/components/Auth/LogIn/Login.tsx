@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Formik, FormikHelpers} from "formik";
 import * as yup from 'yup';
 import {Link, useNavigate} from "react-router-dom";
@@ -7,6 +7,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../../redux/Actions/thunkUserActions";
 import {Button, Input} from "antd";
 import logo from '../../../assets/imgs/logo-black.png'
+import {RootState} from "../../../redux/Reducers/rootReducer";
+import {setAuthError} from "../../../redux/Actions/userActions";
 
 type UserDataLoginType = {
     email: string,
@@ -20,6 +22,8 @@ const validateSchema = yup.object().shape({
 })
 
 const Login: React.FC = () => {
+    const error = useSelector((state: RootState) => state.user.error);
+    const isAuth = useSelector((state: RootState) => state.user.isAuth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const initialValues: UserDataLoginType = {
@@ -28,9 +32,7 @@ const Login: React.FC = () => {
     }
 
     const onSubmit = (userDataLogin: UserDataLoginType, actions: FormikHelpers<any>) => {
-        navigate('/')
         dispatch(login(userDataLogin.email, userDataLogin.password));
-        actions.resetForm();
     }
 
     return (
@@ -39,9 +41,9 @@ const Login: React.FC = () => {
                 <img src={logo} alt="Logo" className="form__logo"/>
             </div>
             <h5 className="form__title">Чтобы продолжить, войдите в Spotify.</h5>
-            <div className="form__error-block">
-                <span>Неправильный почтовый адрес или пароль</span>
-            </div>
+            {error && <div className="form__error-block">
+                <span>{error}</span>
+            </div>}
             <Formik initialValues={initialValues} onSubmit={onSubmit}
                     validationSchema={validateSchema}
                     validateOnBlur
@@ -73,13 +75,13 @@ const Login: React.FC = () => {
                         />
                         {errors.password && touched.password &&
                             <p className="form__error_text">{errors.password}</p>}
-                        <Button htmlType="submit"
+                        <button type="submit"
                                 className="form__button form__button_login"
-                        >Войти</Button>
+                        >Войти</button>
                         <h5 className="form__subtitle">Нет аккаунта?</h5>
-                        <Button className="form__button">
+                        <button className="form__button">
                             <Link to={'/auth/signup'}>РЕГИСТРАЦИЯ В СПОТИФАЙ</Link>
-                        </Button>
+                        </button>
                     </form>
                 )}
             </Formik>
