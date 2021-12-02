@@ -95,6 +95,10 @@
 }
 .form__subtitle a {
   color: #056c05;
+  transition: 0.2s color ease-in-out;
+}
+.form__subtitle a:hover {
+  color: #0ac90a;
 }
 h5 + .form__button {
   background-color: transparent;
