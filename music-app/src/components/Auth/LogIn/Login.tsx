@@ -8,7 +8,6 @@ import {login} from "../../../redux/Actions/thunkUserActions";
 import {Button, Input} from "antd";
 import logo from '../../../assets/imgs/logo-black.png'
 import {RootState} from "../../../redux/Reducers/rootReducer";
-import {setAuthError} from "../../../redux/Actions/userActions";
 
 type UserDataLoginType = {
     email: string,
@@ -17,7 +16,7 @@ type UserDataLoginType = {
 
 const validateSchema = yup.object().shape({
     email: yup.string().trim()
-        .required('Введите адрес электронной почты из аккаунта Spotify.').matches(/^\S+@\S+\.\S+$/, 'Некорректный email'),
+        .required('Введите адрес электронной почты из аккаунта Spotify.').matches(/^\S+@\S+\.\S+$/, 'Адрес электронной почты недействителен. Убедитесь, что он указан в таком формате: example@email.com.'),
     password: yup.string().trim().required('Введите пароль вашего акканта Spotify.')
 })
 

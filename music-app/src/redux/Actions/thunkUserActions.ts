@@ -6,12 +6,15 @@ import {Simulate} from "react-dom/test-utils";
 import {ErrorType} from "../../types";
 
 
-export const signup = async (email: string, password: string, name: string) => {
-    try {
-        const response = await axios.post(`${url}/api/auth/register`, {email, password, name});
-        console.log(response)
-    } catch (e) {
-        console.log('Ошибка при регистрации', e);
+export const signup = (email: string, password: string, name: string) => {
+    return async (dispatch: Dispatch<UserActionTypes>) => {
+        try {
+            const response = await axios.post(`${url}/api/auth/register`, {email, password, name});
+            console.log(response)
+        } catch (e) {
+            const u = e as ErrorType
+            dispatch(setAuthError(u.response.data.message))
+        }
     }
 }
 

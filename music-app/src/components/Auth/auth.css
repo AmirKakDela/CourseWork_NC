@@ -19,7 +19,7 @@
 .form {
   max-width: 600px;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 15px 30px 15px;
 }
 .form label {
   font-weight: 700;
@@ -93,6 +93,9 @@
   text-align: center;
   margin: 45px 0 10px 0;
 }
+.form__subtitle a {
+  color: #056c05;
+}
 h5 + .form__button {
   background-color: transparent;
   color: #616467;
@@ -102,6 +105,9 @@ h5 + .form__button:hover {
   background-color: #616467;
   color: white;
   border-color: #616467;
+}
+h5 + .form__button a:hover {
+  color: white;
 }
 @media (max-width: 450px) {
   .form__logo {
@@ -118,5 +124,9 @@ h5 + .form__button:hover {
   font-weight: 500;
   font-size: 12px;
   text-align: center;
+}
+.form__title_signup {
+  font-size: 25px;
+  margin-bottom: 30px;
 }
 /*# sourceMappingURL=auth.css.map */
