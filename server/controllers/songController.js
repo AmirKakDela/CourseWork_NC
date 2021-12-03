@@ -1,6 +1,7 @@
 const Song = require("../models/Song");
 const User = require("../models/User");
 const {validationResult} = require("express-validator");
+const Artist = require("../models/Artist");
 
 class songController {
     async createSong(req, res) {
@@ -10,13 +11,20 @@ class songController {
 
             const {name, artist} = req.body;
 
-            // const candidateArtist = await Artist.findOne({name: artist})
-
             const candidateSong = await Song.findOne({name, artist});
             if (candidateSong) return res.status(412).json({message: 'Такой трек уже существует', candidateSong});
-            // TODO: Если такого артиста нет, то создать нового артиста и ему присвоить добавленную песню
+
             const song = new Song(req.body);
             await song.save();
+
+            const candidateArtist = await Artist.findOne({name: artist});
+            if (candidateArtist) {
+                candidateArtist.songs.unshift(song._id);
+                candidateArtist.save();
+            } else {
+                const newArtist = new Artist({name: artist, image: '', songs: [song._id]});
+                newArtist.save();
+            }
 
             return res.status(200).json({message: 'Трек успешно добавлен', song});
 
@@ -64,7 +72,7 @@ class songController {
         try {
             const deletedSong = await Song.findByIdAndDelete(req.params.id);
             if (!deletedSong) return res.status(412).json({message: "Ошибка сервера при удалении трека."});
-
+            // Todo: как удалить трек из плейлистов, из likedSongs?
             return res.json({message: 'Песня успешно удалена'});
         } catch (e) {
             return res.send({message: "Ошибка сервера при удалении трека."});
