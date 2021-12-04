@@ -72,8 +72,11 @@ class songController {
         try {
             const deletedSong = await Song.findByIdAndDelete(req.params.id);
             if (!deletedSong) return res.status(412).json({message: "Ошибка сервера при удалении трека."});
-            // Todo: как удалить трек из плейлистов, из likedSongs?
-            return res.json({message: 'Песня успешно удалена'});
+
+            const users = await User.find({likedSongs: deletedSong._id});
+
+            deleteLikeSongOnUser(users, deletedSong._id)
+            return res.json({message: 'Песня успешно удалена', users});
         } catch (e) {
             return res.send({message: "Ошибка сервера при удалении трека."});
             console.log('Ошибка сервера при deleteSong', e);
@@ -106,3 +109,13 @@ class songController {
 }
 
 module.exports = new songController();
+
+// функция которая принимает на вход массив юзеров, у которых имеется песня, которую мы удаляем из общего стора песен
+// и сам id песни. функция переберает массив и удаляет из likedSongs удаленную песню.
+function deleteLikeSongOnUser(users, deletedSongId) {
+    users.map(user => {
+        const index = user.likedSongs.indexOf(deletedSongId);
+        user.likedSongs.splice(index, 1);
+        user.save();
+    })
+}

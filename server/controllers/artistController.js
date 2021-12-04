@@ -64,5 +64,4 @@ class artistController {
 
 }
 
-module
-    .exports = new artistController();
+module.exports = new artistController();
