@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Formik, FormikHelpers} from "formik";
 import * as yup from 'yup';
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import '../auth.css';
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../../redux/Actions/thunkUserActions";
-import {Button, Input} from "antd";
+import {Input} from "antd";
 import logo from '../../../assets/imgs/logo-black.png'
 import {RootState} from "../../../redux/Reducers/rootReducer";
 
@@ -22,8 +22,6 @@ const validateSchema = yup.object().shape({
 
 const Login: React.FC = () => {
     const error = useSelector((state: RootState) => state.user.error);
-    const isAuth = useSelector((state: RootState) => state.user.isAuth);
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const initialValues: UserDataLoginType = {
         email: '',
@@ -76,7 +74,8 @@ const Login: React.FC = () => {
                             <p className="form__error_text">{errors.password}</p>}
                         <button type="submit"
                                 className="form__button form__button_login"
-                        >Войти</button>
+                        >Войти
+                        </button>
                         <h5 className="form__subtitle">Нет аккаунта?</h5>
                         <button className="form__button">
                             <Link to={'/auth/signup'}>РЕГИСТРАЦИЯ В СПОТИФАЙ</Link>
