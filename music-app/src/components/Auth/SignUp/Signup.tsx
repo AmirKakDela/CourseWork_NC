@@ -5,7 +5,7 @@ import '../auth.less';
 import {Link} from "react-router-dom";
 import {signup} from "../../../redux/Actions/thunkUserActions";
 import {useDispatch, useSelector} from 'react-redux';
-import {Button, Input} from "antd";
+import {Input} from "antd";
 import logo from '../../../assets/imgs/logo-black.png'
 import {RootState} from "../../../redux/Reducers/rootReducer";
 

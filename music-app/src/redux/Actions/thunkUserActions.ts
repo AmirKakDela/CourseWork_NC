@@ -2,7 +2,6 @@ import axios from "axios";
 import {setAuthError, setCurrentUser, UserActionTypes} from "./userActions";
 import {Dispatch} from "redux";
 import {url} from "../../config";
-import {Simulate} from "react-dom/test-utils";
 import {ErrorType} from "../../types";
 
 
