@@ -23,7 +23,7 @@
 
 body {
     margin: 0;
-    font-family: 'Circular', 'Segoe UI', 'Roboto', sans-serif;
+    /*font-family: 'Circular', 'Segoe UI', 'Roboto', sans-serif;*/
     font-family: 'Montserrat', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -37,4 +37,9 @@ code {
 a {
     color: inherit;
     text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
 }
