@@ -1,8 +1,8 @@
 import React from 'react';
-import './album.css';
+import './albumCard.css';
 
 
-const Album: React.FC = () => {
+const AlbumCard: React.FC = () => {
     return (
         <div className="album">
             <img src="https://the-flow.ru/uploads/images/catalog/element/5de03395535b5.jpg" alt="cover"
@@ -17,4 +17,4 @@ const Album: React.FC = () => {
     );
 };
 
-export default Album;
+export default AlbumCard;
