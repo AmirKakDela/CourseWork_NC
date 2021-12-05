@@ -9,14 +9,12 @@ type PropsType = {
 
 const Genre: React.FC<PropsType> = (props) => {
     const getRandomColor = (colors: Array<string>) => {
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        return color
+        return colors[Math.floor(Math.random() * colors.length)];
     }
     return (
-        <Link to={`/genre/${props.genreName}`}>
+        <Link to={`/genre/${props.genreName.toLowerCase()}`}>
             <div className="genre" style={{backgroundColor: getRandomColor(colors)}}>
                 <span>{props.genreName}</span>
-                {/*<img src="" className="genre__img"/>*/}
             </div>
         </Link>
     );
