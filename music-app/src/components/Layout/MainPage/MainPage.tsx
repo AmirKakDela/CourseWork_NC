@@ -1,11 +1,18 @@
 import React from 'react';
+import Header from '../Header/Header';
+import {Sidebar} from '../Sidebar/Sidebar';
+import "./MainPage.css"
 
-const MainPage = () => {
+function MainPage() {
     return (
-        <div style={{backgroundColor: 'orange'}}>
-            Main Page
+        <div className="main-page">
+            <Sidebar/>
+            <Header/>
+            <div className="main-content">
+                Main Page
+            </div>
         </div>
     );
-};
+}
 
 export default MainPage;

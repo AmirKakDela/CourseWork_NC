@@ -1,0 +1,32 @@
+.sidebar {
+    text-align: center;
+}
+
+.menu {
+    padding-top: 24px;
+    position: absolute;
+    height: 100%;
+}
+
+.home-logo {
+    width: 241px;
+    height: 47px;
+    margin-bottom: 18px;
+    padding: 0 24px;
+}
+
+.menu__item, .create-playlist, .favourite-tracks, .my-playlists {
+    margin: 0 8px;
+    display: flex;
+    justify-items: start;
+    align-items: center;
+    padding: 0 8px;
+    height: 55px;
+    gap: 16px;
+}
+
+.menu__item:hover {
+    width: 225px;
+    background: rgba(29, 185, 84, 0.15);
+    border-radius: 10px;
+}

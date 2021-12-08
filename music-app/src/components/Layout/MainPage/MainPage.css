@@ -1,0 +1,21 @@
+.main-page {
+    display: grid;
+    grid-template-areas: "sidebar header"
+                       "sidebar content"
+                       "player player";
+    grid-template-columns: 241px auto;
+    grid-template-rows: 100px auto 100px;
+    row-gap: 24px;
+}
+
+.header {
+    grid-area: header;
+}
+
+.sidebar {
+    grid-area: sidebar;
+}
+
+.main-content {
+    grid-area: content;
+}
