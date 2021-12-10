@@ -26,7 +26,7 @@ function App() {
 
                     <Route path='/auth'>
                             <Route index element={<Login/>}/>
-                            <Route path='auth/signup' element={<Signup/>}/>
+                            <Route path='signup' element={<Signup/>}/>
                             {/*<Route path='*' element={<Navigate to='/auth'/>}/>*/}
                     </Route>
 
