@@ -4,9 +4,7 @@ import Header from "./Header/Header";
 
 const Layout = () => {
     return (
-        <div>
-            <Outlet></Outlet>
-        </div>
+        <Outlet></Outlet>
     );
 };
 

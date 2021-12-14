@@ -3,9 +3,9 @@
     grid-template-areas: "sidebar header"
                        "sidebar content"
                        "player player";
-    grid-template-columns: 241px auto;
-    grid-template-rows: 100px auto 100px;
-    row-gap: 24px;
+    grid-template-columns: 241px 1fr;
+    grid-template-rows: 100px 1fr 100px;
+    height: 100%;
 }
 
 .header {
@@ -18,4 +18,8 @@
 
 .main-content {
     grid-area: content;
+}
+
+.player{
+    grid-area: player;
 }

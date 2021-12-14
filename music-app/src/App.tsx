@@ -20,10 +20,8 @@ function App() {
     }, [dispatch])
 
     return (
-        <>
-            <BrowserRouter>
+            <BrowserRouter >
                 <Routes>
-
                     <Route path='/auth'>
                             <Route index element={<Login/>}/>
                             <Route path='auth/signup' element={<Signup/>}/>
@@ -35,10 +33,8 @@ function App() {
                         <Route path='loved' element={<h1>Loved Songs</h1>}/>
                         <Route path='*' element={<NotFound/>}/>
                     </Route>
-
                 </Routes>
             </BrowserRouter>
-        </>
     );
 }
 

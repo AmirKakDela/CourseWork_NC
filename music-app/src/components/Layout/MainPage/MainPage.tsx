@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../Header/Header';
 import {Sidebar} from '../Sidebar/Sidebar';
 import "./MainPage.css"
+import {Player} from "../Player/Player";
 
 function MainPage() {
     return (
@@ -11,6 +12,7 @@ function MainPage() {
             <div className="main-content">
                 Main Page
             </div>
+            <Player/>
         </div>
     );
 }

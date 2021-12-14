@@ -19,6 +19,12 @@
     url(./assets/fonts/CircularStd-Book.ttf);
 }
 
+:root{
+    font-family: 'Circular', 'Segoe UI', 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 body {
   margin: 0;
   font-family: 'Circular', 'Segoe UI', 'Roboto', sans-serif;
@@ -29,4 +35,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+div[id='root'] {
+    width: 100%;
+    height: 100%;
 }
