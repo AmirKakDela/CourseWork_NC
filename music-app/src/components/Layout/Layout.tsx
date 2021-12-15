@@ -7,13 +7,7 @@ import "./Layout.scss";
 
 const Layout = () => {
     return (
-        <div className="layout">
-            <Sidebar/>
-            <Header/>
-            <div className="main-content">
-
-            </div>
-            <Player/>
+        <div>
             <Outlet></Outlet>
         </div>
     );

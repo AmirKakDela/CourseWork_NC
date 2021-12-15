@@ -13,6 +13,7 @@ import {store} from "../../../redux/store";
 import {AppTheme} from "../../../types";
 import {SharedActionsType} from "../../../redux/Actions/sharedActions";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
 
 export function Sidebar(props: any) {
 
@@ -26,10 +27,10 @@ export function Sidebar(props: any) {
                 appTheme: value ? AppTheme.DARK : AppTheme.LIGHT
             }
         });
+        // TODO: fix reload component when state are updated
     };
 
     const handleClick = (e: any) => {
-        console.log("click ", e);
         setCurrent(() => e.key);
     };
     return (
@@ -48,7 +49,7 @@ export function Sidebar(props: any) {
                 />
                 <div className="home-logo"><img src={SpotifyLogo} className="home-logo" alt="SpotifyLogo"/></div>
                 <Menu.Item key="1" className="menu__item" icon={<HomeOutlined/>}>Главная</Menu.Item>
-                <Menu.Item key="2" className="menu__item" icon={<SearchOutlined/>}>Поиск</Menu.Item>
+                <Link to='/search'><Menu.Item key="2" className="menu__item" icon={<SearchOutlined/>}>Поиск</Menu.Item></Link>
                 <Menu.Item key="3" className="menu__item" icon={<ProfileOutlined/>}>Моя медиатека</Menu.Item>
                 <Menu.Item key="4" id="create-playlist" icon={<PlusSquareFilled/>}>Создать плейлист</Menu.Item>
                 <Menu.Item key="5" id="favourite-tracks" icon={<HeartOutlined/>}>Любимые треки</Menu.Item>

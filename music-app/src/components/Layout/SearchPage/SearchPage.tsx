@@ -21,7 +21,6 @@ const SearchPage = () => {
 
     const [queryValue, setQueryValue] = useState(searchString || '');
 
-    // eslint-disable-next-line
     const debouncedGetSearch = useCallback(
         debounce(queryValue => {
             dispatch(getSearchResult(queryValue))
@@ -40,12 +39,14 @@ const SearchPage = () => {
             console.log(queryValue)
             dispatch(getSearchResult(queryValue));
         }
-        // eslint-disable-next-line
     }, [])
 
-    return (<>
-            {searchError ? <h1 className="search__title">{searchError}</h1> :
-                <div className="search">
+    return (
+        <>
+            {
+                searchError
+                    ? <h1 className="search__title">{searchError}</h1>
+                    : <div className="search">
                     <Input placeholder="Исполнитель, трек или плейлист" allowClear
                            prefix={<SearchOutlined style={{fontSize: '22px', marginRight: 5}}/>}
                            className="search__input"
@@ -91,11 +92,10 @@ const SearchPage = () => {
 
                             </div>
                         </div>}
-                </div>}
-
+                </div>
+            }
         </>
-    )
-        ;
+    );
 };
 
 export default SearchPage;
