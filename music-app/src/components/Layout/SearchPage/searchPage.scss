@@ -1,0 +1,110 @@
+@import "./src/config/colors";
+
+.search {
+  background-color: $black26;
+  color: $white;
+  height: '100vh' - '100px'; // 100px это высота будущая header
+  width: 80%;
+  float: right;
+  padding: 20px 30px;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    background-color: $black26;
+    width: 15px;
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, .3);
+    transition: .3s all ease-in-out;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, .4);
+    }
+
+    &:active {
+      background-color: rgba(255, 255, 255, .5);
+    }
+
+    width: 15px;
+    border-radius: 2px;
+  }
+
+  &__input {
+    max-width: 400px;
+    padding: 12px 15px;
+    margin: 0 auto;
+    border-radius: 500px;
+    border: none;
+
+    input {
+      color: $black26;
+      font-weight: 500;
+
+      &::placeholder {
+        color: $black26;
+      }
+    }
+  }
+
+  &__title {
+    color: white;
+    margin-top: 40px;
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+
+  &__genres-row {
+    display: flex;
+    align-items: center;
+    column-gap: 30px;
+    overflow-x: scroll;
+    padding: 10px 0;
+
+    &::-webkit-scrollbar {
+      height: 15px;
+      background-color: $black26;
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, .3);
+      border-radius: 5px;
+      height: 15px;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, .4);
+      }
+
+      &:active {
+        background-color: rgba(255, 255, 255, .5);
+      }
+    }
+  }
+
+  &__other {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    grid-auto-rows: 1fr;
+    column-gap: 30px;
+    row-gap: 40px;
+    padding: 10px 0;
+  }
+}
+
+
+// QUERY RESULT
+
+.song {
+  padding: 20px;
+  max-width: 500px;
+  border: 1px solid white;
+}
+
+.search__songs {
+  display: flex;
+  flex-direction: column;
+}

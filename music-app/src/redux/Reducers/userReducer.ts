@@ -1,5 +1,5 @@
 import {UserActionTypes, UserActionTypeTypes} from "../Actions/userActions";
-import {CurrentUserType} from "../../types";
+import {CurrentUserType} from "../../types/types";
 
 type InitialStateType = {
     currentUser: CurrentUserType,

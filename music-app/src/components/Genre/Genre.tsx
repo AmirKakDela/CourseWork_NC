@@ -1,6 +1,6 @@
 import React from 'react';
-import './genre.css'
-import {colors} from '../../config';
+import './genre.scss'
+import {colors} from '../../config/config';
 import {Link} from "react-router-dom";
 
 type PropsType = {

@@ -1,4 +1,4 @@
-import {SearchResultType} from "../../types";
+import {SearchResultType} from "../../types/types";
 
 export enum SearchActionsTypeTypes {
     SET_SEARCH_RESULT = 'SET_SEARCH_RESULT',

@@ -1,14 +1,13 @@
-import React from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {Formik, FormikHelpers} from "formik";
 import * as yup from 'yup';
-import '../auth.less';
+import '../auth.scss';
 import {Link} from "react-router-dom";
 import {signup} from "../../../redux/Actions/thunkUserActions";
 import {useDispatch, useSelector} from 'react-redux';
 import {Input} from "antd";
 import logo from '../../../assets/imgs/logo-black.png'
 import {RootState} from "../../../redux/Reducers/rootReducer";
-
 
 type PropsType = {}
 
@@ -22,12 +21,15 @@ type UserDataType = {
 const Signup: React.FC<PropsType> = () => {
     const dispatch = useDispatch();
     const error = useSelector((state: RootState) => state.user.error);
-    const initialValues: UserDataType = {
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-    }
+    const initialValues: UserDataType = useMemo(() => {
+        return {
+            name: '',
+            email: '',
+            password: '',
+            confirmPassword: ''
+        }
+    }, [])
+
 
     const validationSchema = yup.object().shape({
         name: yup.string()
@@ -43,17 +45,17 @@ const Signup: React.FC<PropsType> = () => {
             .oneOf([yup.ref('password')], 'Пароли не совпадают')
     })
 
-    const onSubmit = (userData: UserDataType, actions: FormikHelpers<any>) => {
+    const onSubmit = useCallback((userData: UserDataType, actions: FormikHelpers<any>) => {
         console.log(userData);
         dispatch(signup(userData.email, userData.password, userData.name))
-    }
+    }, [dispatch])
     return (
         <>
             <div className="form__logo_wrap">
                 <img src={logo} alt="Logo" className="form__logo"/>
             </div>
             <h1 className="form__title form__title_signup">Зарегистрируйтесь и слушайте бесплатно</h1>
-            {error && <div className="form__error-block">
+            {error && <div className="form__error_block">
                 <span>{error}</span>
             </div>}
             <Formik onSubmit={onSubmit}
@@ -61,7 +63,7 @@ const Signup: React.FC<PropsType> = () => {
                     validateOnBlur
                     validationSchema={validationSchema}
             >
-                {({values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty}) => (
+                {({values, errors, touched, handleChange, handleBlur, handleSubmit}) => (
                     <form onSubmit={handleSubmit} className="form">
                         <label htmlFor="name">Ваше имя</label> <br/>
                         <Input className={`form__input ${errors.name && touched.name && 'form__input_error'}`}

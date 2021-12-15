@@ -1,6 +1,6 @@
 import Input from 'antd/lib/input';
-import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
-import './searchPage.css';
+import React, {ChangeEvent, useEffect, useMemo, useState} from 'react';
+import './searchPage.scss';
 import {SearchOutlined} from '@ant-design/icons';
 import Genre from "../../Genre/Genre";
 import AlbumCard from "../../AlbumCard/AlbumCard";
@@ -21,14 +21,11 @@ const SearchPage = () => {
 
     const [queryValue, setQueryValue] = useState(searchString || '');
 
-    // eslint-disable-next-line
-    const debouncedGetSearch = useCallback(
+    const debouncedGetSearch = useMemo(() =>
         debounce(queryValue => {
             dispatch(getSearchResult(queryValue))
             setSearchQuery({query: queryValue})
-        }, 250),
-
-        [])
+        }, 1000), [dispatch, setSearchQuery])
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setQueryValue(e.target.value);
@@ -84,18 +81,15 @@ const SearchPage = () => {
                                 {searchResult.artists.map(art => {
                                     return (<ArtistCard key={art._id} artist={art}/>)
                                 })}
-
-                            </div>: null}
+                            </div> : null}
                             <h2 className="search__title">Плейлисты</h2>
                             <div className="search__other">
 
                             </div>
                         </div>}
                 </div>}
-
         </>
-    )
-        ;
+    );
 };
 
 export default SearchPage;

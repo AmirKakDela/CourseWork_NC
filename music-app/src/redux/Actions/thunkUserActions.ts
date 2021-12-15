@@ -1,8 +1,8 @@
 import axios from "axios";
 import {setAuthError, setCurrentUser, UserActionTypes} from "./userActions";
 import {Dispatch} from "redux";
-import {url} from "../../config";
-import {ErrorType} from "../../types";
+import {url} from "../../config/config";
+import {ErrorType} from "../../types/types";
 
 
 export const signup = (email: string, password: string, name: string) => {
