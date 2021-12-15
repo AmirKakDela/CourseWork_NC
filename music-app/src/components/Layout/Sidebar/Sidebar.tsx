@@ -1,12 +1,5 @@
 import React, {useState} from "react";
 import {Menu, Switch} from "antd";
-import {
-    HomeOutlined,
-    SearchOutlined,
-    ProfileOutlined,
-    PlusSquareFilled,
-    HeartOutlined
-} from "@ant-design/icons";
 import "./Sidebar.scss";
 import SpotifyLogo from "../../../assets/icons/Spotify-Logo.wine.svg";
 import {AppTheme} from "../../../types";
@@ -14,6 +7,7 @@ import {SharedActionsType} from "../../../redux/Actions/sharedActions";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../redux/Reducers/rootReducer";
+import {items} from "./items";
 
 export function Sidebar() {
     const navigate = useNavigate();
@@ -51,18 +45,16 @@ export function Sidebar() {
                         <img src={SpotifyLogo} className="home-logo" alt="SpotifyLogo"/>
                     </a>
                 </div>
-                <Menu.Item key="1" onClick={() => navigate("/")}
-                           className="menu__item" icon={<HomeOutlined/>}>Главная</Menu.Item>
-                <Menu.Item key="2" onClick={() => navigate("/search")}
-                           className="menu__item" icon={<SearchOutlined/>}>Поиск</Menu.Item>
-                <Menu.Item key="3" onClick={() => navigate("/my-library")}
-                           className="menu__item" icon={<ProfileOutlined/>}>Моя медиатека</Menu.Item>
-                <Menu.Item key="4" onClick={() => navigate("/create-playlist")}
-                           id="create-playlist" icon={<PlusSquareFilled/>}>Создать плейлист</Menu.Item>
-                <Menu.Item key="5" onClick={() => navigate("/loved")}
-                           id="favourite-tracks" icon={<HeartOutlined/>}>Любимые треки</Menu.Item>
-                <Menu.Item key="6" onClick={() => navigate("/my-playlists")}
-                           id="my-playlists">{}</Menu.Item>
+                {items.map((item, index) => {
+                    return (
+                        <Menu.Item key={index}
+                                   onClick={() => navigate(item.path)}
+                                   icon={item.icon && React.createElement(item.icon)}
+                                   id={item.itemId}>
+                            {item.text}
+                        </Menu.Item>
+                    );
+                })}
             </Menu>
         </div>
     );
