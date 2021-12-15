@@ -7,7 +7,7 @@ import {
     PlusSquareFilled,
     HeartOutlined
 } from "@ant-design/icons";
-import "./Sidebar.css";
+import "./Sidebar.scss";
 import SpotifyLogo from "../../../assets/icons/Spotify-Logo.wine.svg";
 
 export function Sidebar() {
@@ -41,9 +41,9 @@ export function Sidebar() {
                 <Menu.Item key="1" className="menu__item" icon={<HomeOutlined/>}>Главная</Menu.Item>
                 <Menu.Item key="2" className="menu__item" icon={<SearchOutlined/>}>Поиск</Menu.Item>
                 <Menu.Item key="3" className="menu__item" icon={<ProfileOutlined/>}>Моя медиатека</Menu.Item>
-                <Menu.Item key="4" className="create-playlist" icon={<PlusSquareFilled/>}>Создать плейлист</Menu.Item>
-                <Menu.Item key="5" className="favourite-tracks" icon={<HeartOutlined/>}>Любимые треки</Menu.Item>
-                <Menu.Item key="6" className="my-playlists">{}</Menu.Item>
+                <Menu.Item key="4" id="create-playlist" icon={<PlusSquareFilled/>}>Создать плейлист</Menu.Item>
+                <Menu.Item key="5" id="favourite-tracks" icon={<HeartOutlined/>}>Любимые треки</Menu.Item>
+                <Menu.Item key="6" id="my-playlists">{}</Menu.Item>
             </Menu>
 
             {/*

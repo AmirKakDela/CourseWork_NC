@@ -1,0 +1,25 @@
+.layout {
+  display: grid;
+  grid-template-areas: "sidebar header"
+                       "sidebar content"
+                       "player player";
+  grid-template-columns: 241px 1fr;
+  grid-template-rows: 100px 1fr 100px;
+  height: 100%;
+}
+
+.header {
+  grid-area: header;
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.main-content {
+  grid-area: content;
+}
+
+.player{
+  grid-area: player;
+}
