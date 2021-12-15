@@ -1,7 +1,7 @@
 .search {
   background-color: rgb(26, 26, 26);
   color: white;
-  height: ~"calc(100vh - 100px)"; // 100px это высота будущая header
+  height:calc(100vh - 100px); // 100px это высота будущая header
   width: 80%;
   float: right;
   padding: 20px 30px;

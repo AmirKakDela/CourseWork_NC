@@ -4,7 +4,7 @@ import {RootState} from "../../../redux/Reducers/rootReducer";
 import {logoutCurrentUser} from "../../../redux/Actions/userActions";
 import {Link} from "react-router-dom";
 import { Button } from 'antd';
-import './header.css'
+import './header.scss'
 
 const Header = () => {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);

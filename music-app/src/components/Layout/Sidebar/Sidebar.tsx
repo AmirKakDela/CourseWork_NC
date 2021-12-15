@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Menu, MenuTheme, Switch} from "antd";
+import {Menu, MenuProps, MenuTheme, Switch} from "antd";
 import {
     HomeOutlined,
     SearchOutlined,
@@ -9,14 +9,23 @@ import {
 } from "@ant-design/icons";
 import "./Sidebar.scss";
 import SpotifyLogo from "../../../assets/icons/Spotify-Logo.wine.svg";
+import {store} from "../../../redux/store";
+import {AppTheme} from "../../../types";
+import {SharedActionsType} from "../../../redux/Actions/sharedActions";
+import {connect} from "react-redux";
 
-export function Sidebar() {
+export function Sidebar(props: any) {
 
-    const [theme, setTheme] = useState<MenuTheme | undefined>("dark");
+    const theme: AppTheme = store.getState().shared.appTheme;
     const [current, setCurrent] = useState("1");
 
     const changeTheme = (value: boolean) => {
-        setTheme(() => value ? "dark" : "light");
+        store.dispatch({
+            type: SharedActionsType.SET_APP_THEME,
+            payload: {
+                appTheme: value ? AppTheme.DARK : AppTheme.LIGHT
+            }
+        });
     };
 
     const handleClick = (e: any) => {

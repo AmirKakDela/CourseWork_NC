@@ -1,7 +1,7 @@
 import React from 'react';
 import {Formik, FormikHelpers} from "formik";
 import * as yup from 'yup';
-import '../auth.less';
+import '../auth.scss';
 import {Link} from "react-router-dom";
 import {signup} from "../../../redux/Actions/thunkUserActions";
 import {useDispatch, useSelector} from 'react-redux';

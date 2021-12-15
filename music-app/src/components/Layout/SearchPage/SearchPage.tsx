@@ -1,6 +1,6 @@
 import Input from 'antd/lib/input';
 import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
-import './searchPage.css';
+import './searchPage.scss';
 import {SearchOutlined} from '@ant-design/icons';
 import Genre from "../../Genre/Genre";
 import AlbumCard from "../../AlbumCard/AlbumCard";
