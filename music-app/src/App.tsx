@@ -29,8 +29,12 @@ function App() {
                         {/*<Route path='*' element={<Navigate to='/auth'/>}/>*/}
                     </Route>
 
-                    <Route path='/' element={<MainPage/>}>
+                    <Route path='/' element={<Layout/>}>
+                        <Route index element={<MainPage/>}/>
                         <Route path='loved' element={<h1>Loved Songs</h1>}/>
+                        <Route path='my-library' element={<h1>My library</h1>}/>
+                        <Route path='create-playlist' element={<h1>Create playlist</h1>}/>
+                        <Route path='my-playlists' element={<h1>My playlists</h1>}/>
                         <Route path='search' element={<SearchPage/>}/>
                         <Route path='*' element={<NotFound/>}/>
                     </Route>

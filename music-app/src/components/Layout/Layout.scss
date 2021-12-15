@@ -16,10 +16,36 @@
   grid-area: sidebar;
 }
 
-.main-content {
-  grid-area: content;
-}
-
 .player{
   grid-area: player;
+}
+
+.main-content {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: scroll;
+  background-color: rgb(26, 26, 26); //TODO: fix with theme
+
+
+  &::-webkit-scrollbar {
+    background-color: rgb(26, 26, 26);
+    width: 15px;
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, .3);
+    transition: .3s all ease-in-out;
+    width: 15px;
+    border-radius: 2px;
+  }
+  //&:hover {
+  //  background-color: rgba(255, 255, 255, .4);
+  //}
+  //
+  //&:active {
+  //  background-color: rgba(255, 255, 255, .5);
+  //}
 }

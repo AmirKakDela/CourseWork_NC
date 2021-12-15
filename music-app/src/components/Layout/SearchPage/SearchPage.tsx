@@ -36,7 +36,6 @@ const SearchPage = () => {
 
     useEffect(() => {
         if (searchString !== null && queryValue.trim()) {
-            console.log(queryValue)
             dispatch(getSearchResult(queryValue));
         }
     }, [])

@@ -1,14 +1,11 @@
 import {useState} from "react";
-import "./Player.css"
+import "./Player.scss"
 
 export function Player(props: any){
-
     const [play,setPlay] = useState<boolean>(false);
-
     const playMusic = () => {
         setPlay(!play);
     }
-
 
     return (
         <div className="player">
