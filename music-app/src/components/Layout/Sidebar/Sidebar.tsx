@@ -25,10 +25,7 @@ export function Sidebar() {
         });
     };
 
-    const handleClick = (e: MenuInfo) => useCallback(
-            () =>  setCurrent(() => e.key),
-            [e]
-    );
+    const handleClick = useCallback((e: MenuInfo) =>  setCurrent(e.key), []);
 
     return (
         <div className="sidebar">

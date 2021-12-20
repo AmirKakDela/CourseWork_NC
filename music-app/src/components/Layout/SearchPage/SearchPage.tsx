@@ -21,13 +21,10 @@ const SearchPage = () => {
 
     const [queryValue, setQueryValue] = useState(searchString || '');
 
-    const debouncedGetSearch = useCallback(
-        debounce(queryValue => {
+    const debouncedGetSearch = useCallback(debounce(queryValue => {
             dispatch(getSearchResult(queryValue))
             setSearchQuery({query: queryValue})
-        }, 250),
-
-        [])
+        }, 250), [])
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setQueryValue(e.target.value);
