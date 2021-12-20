@@ -2,11 +2,10 @@ import {useState} from "react";
 import "./Player.scss"
 
 export function Player(props: any){
-    const [play,setPlay] = useState<boolean>(false);
+    const [,setPlay] = useState<boolean>(false);
     const playMusic = () => {
-        setPlay(!play);
+        setPlay(it => !it);
     }
-
     return (
         <div className="player">
             <audio src={props.audio}/>
