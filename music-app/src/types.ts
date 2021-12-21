@@ -34,3 +34,8 @@ export type SearchResultType = {
     artists: Array<ArtistType> | [],
     // playlists>: todo: потом добавить плейлисты
 }
+
+export enum AppTheme {
+    DARK = 'dark',
+    LIGHT = 'light'
+}

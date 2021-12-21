@@ -21,10 +21,8 @@ function App() {
     }, [dispatch])
 
     return (
-        <>
-            <BrowserRouter>
+            <BrowserRouter >
                 <Routes>
-
                     <Route path='/auth'>
                         <Route index element={<Login/>}/>
                         <Route path='signup' element={<Signup/>}/>
@@ -34,13 +32,14 @@ function App() {
                     <Route path='/' element={<Layout/>}>
                         <Route index element={<MainPage/>}/>
                         <Route path='loved' element={<h1>Loved Songs</h1>}/>
+                        <Route path='my-library' element={<h1>My library</h1>}/>
+                        <Route path='create-playlist' element={<h1>Create playlist</h1>}/>
+                        <Route path='my-playlists' element={<h1>My playlists</h1>}/>
                         <Route path='search' element={<SearchPage/>}/>
                         <Route path='*' element={<NotFound/>}/>
                     </Route>
-
                 </Routes>
             </BrowserRouter>
-        </>
     );
 }
 

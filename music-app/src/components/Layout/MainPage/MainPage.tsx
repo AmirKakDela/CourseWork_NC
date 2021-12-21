@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
+import "./MainPage.scss";
 
-const MainPage = () => {
+function MainPage() {
     return (
-        <div style={{backgroundColor: 'orange'}}>
-            Main Page
+        <div className='main-page'>
+            <h1>Main page</h1>
         </div>
     );
-};
+}
 
 export default MainPage;

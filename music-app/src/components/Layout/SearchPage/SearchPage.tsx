@@ -1,6 +1,6 @@
 import Input from 'antd/lib/input';
 import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
-import './searchPage.css';
+import './searchPage.scss';
 import {SearchOutlined} from '@ant-design/icons';
 import Genre from "../../Genre/Genre";
 import AlbumCard from "../../AlbumCard/AlbumCard";
@@ -21,14 +21,10 @@ const SearchPage = () => {
 
     const [queryValue, setQueryValue] = useState(searchString || '');
 
-    // eslint-disable-next-line
-    const debouncedGetSearch = useCallback(
-        debounce(queryValue => {
+    const debouncedGetSearch = useCallback(debounce(queryValue => {
             dispatch(getSearchResult(queryValue))
             setSearchQuery({query: queryValue})
-        }, 250),
-
-        [])
+        }, 250), [])
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setQueryValue(e.target.value);
@@ -37,15 +33,16 @@ const SearchPage = () => {
 
     useEffect(() => {
         if (searchString !== null && queryValue.trim()) {
-            console.log(queryValue)
             dispatch(getSearchResult(queryValue));
         }
-        // eslint-disable-next-line
     }, [])
 
-    return (<>
-            {searchError ? <h1 className="search__title">{searchError}</h1> :
-                <div className="search">
+    return (
+        <>
+            {
+                searchError
+                    ? <h1 className="search__title">{searchError}</h1>
+                    : <div className="search">
                     <Input placeholder="Исполнитель, трек или плейлист" allowClear
                            prefix={<SearchOutlined style={{fontSize: '22px', marginRight: 5}}/>}
                            className="search__input"
@@ -91,11 +88,10 @@ const SearchPage = () => {
 
                             </div>
                         </div>}
-                </div>}
-
+                </div>
+            }
         </>
-    )
-        ;
+    );
 };
 
 export default SearchPage;

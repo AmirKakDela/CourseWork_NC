@@ -1,5 +1,5 @@
 import React from 'react';
-import './albumCard.css';
+import './albumCard.scss';
 
 
 const AlbumCard: React.FC = () => {

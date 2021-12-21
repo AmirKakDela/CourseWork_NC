@@ -1,0 +1,52 @@
+$main-color: #121212;
+$text-for-dark-theme: #fff;
+$text-for-light-theme: #000;
+$color-for-light: #1DB95426;
+$color-for-dark: #282828;
+
+.ant-menu.ant-menu-dark {
+    background: $main-color;
+}
+
+.menu {
+    height: 100%;
+    padding: 24px 8px 0;
+    border: none;
+    position: absolute;
+    font-weight: bold;
+}
+
+.home-logo {
+    display: flex;
+    justify-content: flex-start;
+    width: 225px;
+    height: 47px;
+    margin-bottom: 18px;
+}
+
+#menu__item, #create-playlist, #favourite-tracks, #my-playlists {
+    display: flex;
+    justify-items: start;
+    align-items: center;
+    padding: 0 8px;
+    height: 55px;
+    gap: 16px;
+}
+
+#create-playlist{
+    margin-top: 20px;
+}
+
+.ant-menu-item-selected{
+    border-radius: 4px;
+}
+
+.ant-menu.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{
+    background-color: $color-for-light;
+    color: $text-for-light-theme;
+}
+
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: $color-for-dark;
+    color: $text-for-dark-theme;
+}

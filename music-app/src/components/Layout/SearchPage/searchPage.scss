@@ -1,33 +1,9 @@
 .search {
-  background-color: rgb(26, 26, 26);
-  color: white;
-  height: ~"calc(100vh - 100px)"; // 100px это высота будущая header
-  width: 80%;
-  float: right;
-  padding: 20px 30px;
-  overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    background-color: rgb(26, 26, 26);
-    width: 15px;
-    border-radius: 2px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, .3);
-    transition: .3s all ease-in-out;
-
-    &:hover {
-      background-color: rgba(255, 255, 255, .4);
-    }
-
-    &:active {
-      background-color: rgba(255, 255, 255, .5);
-    }
-
-    width: 15px;
-    border-radius: 2px;
-  }
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  color: white; // TODO
+  padding: 20px;
 }
 
 .search__input {

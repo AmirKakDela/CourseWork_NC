@@ -1,5 +1,5 @@
 import React from 'react';
-import './artictCard.css';
+import './artictCard.scss';
 import {ArtistType} from "../../types";
 import {Link} from "react-router-dom";
 
