@@ -1,15 +1,24 @@
-const Song = require("../models/Song");
-const User = require("../models/User");
-const {validationResult} = require("express-validator");
-const Artist = require("../models/Artist");
+const Album = require("../models/Album");
 
 class AlbumController {
-    getArtistAlbum(req,res){
+    async getArtistAlbum(req,res){
         try{
-
+            const {id} = req.params.id;
+            const album = await Album.findById(id);
+            res.json(album);
         }catch (e){
-
+            res.send({message: 'Ошибка сервера при получении альбома'});
+        }
+    }
+    async getAllArtistAlbum(req,res){
+        try{
+            const albums = await Album.find();
+            res.json(albums);
+        }catch (e){
+            res.send({message: 'Ошибка сервера при получени всех альбомов'});
         }
     }
 
 }
+
+export default AlbumController;
