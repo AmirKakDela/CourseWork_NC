@@ -11,6 +11,7 @@ import {RootState} from "./redux/Reducers/rootReducer";
 import {auth} from "./redux/Actions/thunkUserActions";
 import RequireAuth from "./components/HOC/RequireAuth";
 import SearchPage from "./components/Layout/SearchPage/SearchPage";
+import WelcomePage from "./components/Layout/WelcomePage/WelcomePage";
 
 function App() {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
@@ -28,7 +29,7 @@ function App() {
                         <Route path='signup' element={<Signup/>}/>
                         {/*<Route path='*' element={<Navigate to='/auth'/>}/>*/}
                     </Route>
-
+                    <Route path='welcome' element={<WelcomePage/>}/>
                     <Route path='/' element={<Layout/>}>
                         <Route index element={<MainPage/>}/>
                         <Route path='loved' element={<h1>Loved Songs</h1>}/>
