@@ -1,4 +1,4 @@
-import {CurrentUserType} from "../../types";
+import {CurrentUserType} from "../../config/types";
 
 export enum UserActionTypeTypes {
     SET_CURRENT_USER = 'SET_CURRENT_USER',

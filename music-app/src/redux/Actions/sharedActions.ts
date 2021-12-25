@@ -1,4 +1,4 @@
-import {AppTheme} from "../../types";
+import {AppTheme} from "../../config/types";
 
 export enum SharedActionsType {
     SET_APP_THEME = 'SET_APP_THEME',

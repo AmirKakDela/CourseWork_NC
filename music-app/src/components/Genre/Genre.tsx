@@ -1,7 +1,7 @@
 import React from 'react';
 import './genre.scss'
-import {colors} from '../../config';
 import {Link} from "react-router-dom";
+import {colors} from "../../config/config";
 
 type PropsType = {
     genreName: string

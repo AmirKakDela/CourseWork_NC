@@ -2,7 +2,7 @@ import React, {useCallback, useState} from "react";
 import {Menu, Switch} from "antd";
 import "./Sidebar.scss";
 import SpotifyLogo from "../../../assets/icons/Spotify-Logo.wine.svg";
-import {AppTheme} from "../../../types";
+import {AppTheme} from "../../../config/types";
 import {SharedActionsType} from "../../../redux/Actions/sharedActions";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";

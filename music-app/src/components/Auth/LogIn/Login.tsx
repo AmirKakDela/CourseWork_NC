@@ -1,8 +1,8 @@
-import React from 'react';
-import {Formik, FormikHelpers} from "formik";
+import React, {useCallback, useMemo} from 'react';
+import {Formik} from "formik";
 import * as yup from 'yup';
 import {Link} from "react-router-dom";
-import '../auth.css';
+import '../auth.scss';
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../../redux/Actions/thunkUserActions";
 import {Input} from "antd";
@@ -23,14 +23,17 @@ const validateSchema = yup.object().shape({
 const Login: React.FC = () => {
     const error = useSelector((state: RootState) => state.user.error);
     const dispatch = useDispatch();
-    const initialValues: UserDataLoginType = {
-        email: '',
-        password: ''
-    }
 
-    const onSubmit = (userDataLogin: UserDataLoginType, actions: FormikHelpers<any>) => {
+    const initialValues: UserDataLoginType = useMemo(() => {
+        return {
+            email: '',
+            password: ''
+        }
+    }, [])
+
+    const onSubmit = useCallback((userDataLogin: UserDataLoginType) => {
         dispatch(login(userDataLogin.email, userDataLogin.password));
-    }
+    }, [dispatch])
 
     return (
         <>
@@ -38,7 +41,7 @@ const Login: React.FC = () => {
                 <img src={logo} alt="Logo" className="form__logo"/>
             </div>
             <h5 className="form__title">Чтобы продолжить, войдите в Spotify.</h5>
-            {error && <div className="form__error-block">
+            {error && <div className="form__error_block">
                 <span>{error}</span>
             </div>}
             <Formik initialValues={initialValues} onSubmit={onSubmit}
@@ -77,7 +80,7 @@ const Login: React.FC = () => {
                         >Войти
                         </button>
                         <h5 className="form__subtitle">Нет аккаунта?</h5>
-                        <button className="form__button">
+                        <button className="form__button" type="button">
                             <Link to={'/auth/signup'}>РЕГИСТРАЦИЯ В СПОТИФАЙ</Link>
                         </button>
                     </form>
