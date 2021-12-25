@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+@import "./src/config/colors";
 
 .genre {
   width: 400px;
@@ -13,22 +13,22 @@
     color: white;
     font-size: 50px;
     font-weight: 900;
-    font-family: 'Circular';
-    text-shadow: 2px 3px 0px #000000;
+    font-family: 'Circular', sans-serif;
+    text-shadow: 2px 3px 0 $black;
     letter-spacing: 2px;
   }
 
   &:hover {
     transform: translateY(-3px);
   }
-}
 
-.genre__img {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  bottom: 0;
-  right: 0;
-  transform: rotate(30deg);
-  background-color: black;
+  &__img {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    bottom: 0;
+    right: 0;
+    transform: rotate(30deg);
+    background-color: black;
+  }
 }

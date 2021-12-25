@@ -1,6 +1,6 @@
 import React from 'react';
 import './artictCard.scss';
-import {ArtistType} from "../../types";
+import {ArtistType} from "../../config/types";
 import {Link} from "react-router-dom";
 
 type PropsType = {
@@ -9,7 +9,7 @@ type PropsType = {
 
 const ArtistCard: React.FC<PropsType> = (props) => {
     return (
-        <Link to={`/artist/${props.artist.name.toLowerCase()}`}>
+        <Link to={`/artist/${props.artist._id}`}>
             <div className="artist">
                 <img
                     src={props.artist.image}

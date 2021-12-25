@@ -1,8 +1,8 @@
 import {SearchActionType, setSearchError, setSearchResult} from "./searchActions";
 import {Dispatch} from "redux";
 import axios from "axios";
-import {url} from "../../config";
-import {ErrorType} from "../../types";
+import {url} from "../../config/config";
+import {ErrorType} from "../../config/types";
 
 export const getSearchResult = (queryValue: string) => {
     return async (dispatch: Dispatch<SearchActionType>) => {
