@@ -11,6 +11,7 @@ import {RootState} from "./redux/Reducers/rootReducer";
 import {auth} from "./redux/Actions/thunkUserActions";
 import RequireAuth from "./components/HOC/RequireAuth";
 import SearchPage from "./components/Layout/SearchPage/SearchPage";
+import ArtistPage from "./components/Layout/ArtistPage/ArtistPage";
 
 function App() {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
@@ -36,6 +37,7 @@ function App() {
                         <Route path='create-playlist' element={<h1>Create playlist</h1>}/>
                         <Route path='my-playlists' element={<h1>My playlists</h1>}/>
                         <Route path='search' element={<SearchPage/>}/>
+                        <Route path='artist/:id' element={<ArtistPage/>}/>
                         <Route path='*' element={<NotFound/>}/>
                     </Route>
                 </Routes>
