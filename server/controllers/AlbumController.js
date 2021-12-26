@@ -1,5 +1,5 @@
-const Album = require("../models/Album");
 const { validationResult } = require("express-validator");
+const Album = require("../models/Album");
 
 class AlbumController {
     async getArtistAlbum(req, res) {
@@ -17,12 +17,11 @@ class AlbumController {
             const albums = await Album.find();
             res.json(albums);
         } catch (e) {
-            res.status(500).json({ message: "Ошибка сервера при получени всех альбомов" });
+            res.status(500).json({ message: "Ошибка сервера при получении всех альбомов" });
         }
     }
 
     async createArtistAlbum(req, res) {
-        console.log("create req")
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -32,14 +31,8 @@ class AlbumController {
                         errors
                     });
             }
-            const {
-                name,
-                artist
-            } = req.body;
-            const candidateAlbum = await Album.findOne({
-                name,
-                artist
-            });
+            const { name, artist } = req.body;
+            const candidateAlbum = await Album.findOne({ name, artist });
 
             if (candidateAlbum) {
                 return res.status(412)
@@ -57,7 +50,7 @@ class AlbumController {
                     album
                 });
         } catch (e) {
-            res.status(500).json({ message: "Ошибка сервера при создании альбома" });
+            res.status(500).json({ message: `${e.message}. Ошибка сервера при создании альбома` });
         }
     }
 
@@ -85,7 +78,7 @@ class AlbumController {
             const updatedAlbum = await Album.findByIdAndUpdate(album._id, album, {new: true});
             res.json({ message: "Альбом успешно обновлен" , updatedAlbum});
         } catch (e) {
-            res.status(500).json({ message: "Ошибка сервера при обнолении альбома" });
+            res.status(500).json({ message: "Ошибка сервера при обновлении альбома" });
         }
     }
 }
