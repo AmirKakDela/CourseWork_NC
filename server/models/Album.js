@@ -7,5 +7,5 @@ const Album = new Schema({
         cover: { type: String, default: "",  required: true }
     }
 );
-
-module.exports = model("Album", Album);
+module.exports = model('Album', Album);
+// artist: { type: Schema.Types.ObjectId, ref: 'Artist', required: true },
