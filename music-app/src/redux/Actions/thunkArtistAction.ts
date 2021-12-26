@@ -1,11 +1,12 @@
 import {Dispatch} from "redux";
-import {ArtistActionType, setArtist} from "./artistActions";
+import {ArtistActionType, setArtist, setArtistLoading} from "./artistActions";
 import {url} from "../../config/config";
 import axios from "axios";
 import {ArtistType, SongType} from "../../config/types";
 
-export const getArtist = (artistId: string | undefined) => {
+export const getArtist = (artistId: string) => {
     return async (dispatch: Dispatch<ArtistActionType>) => {
+        dispatch(setArtistLoading())
         try {
             const response = await axios.get(`${url}/api/artist/artist/${artistId}`, {
                 headers: {
@@ -15,7 +16,6 @@ export const getArtist = (artistId: string | undefined) => {
             const artist: ArtistType = response.data.artist;
             const songs: Array<SongType> = response.data.songs;
             artist.songs = [...songs]
-            console.log(artist)
             dispatch(setArtist(response.data.artist))
         } catch (e) {
             console.log(e)
