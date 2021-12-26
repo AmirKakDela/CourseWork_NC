@@ -1,13 +1,14 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import {Menu, Switch} from "antd";
 import "./Sidebar.scss";
 import SpotifyLogo from "../../../assets/icons/Spotify-Logo.wine.svg";
-import {AppTheme} from "../../../types";
+import {AppTheme} from "../../../config/types";
 import {SharedActionsType} from "../../../redux/Actions/sharedActions";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../redux/Reducers/rootReducer";
 import {items} from "./items";
+import {MenuInfo} from "rc-menu/lib/interface";
 
 export function Sidebar() {
     const navigate = useNavigate();
@@ -24,9 +25,8 @@ export function Sidebar() {
         });
     };
 
-    const handleClick = (e: any) => {
-        setCurrent(() => e.key);
-    };
+    const handleClick = useCallback((e: MenuInfo) =>  setCurrent(e.key), []);
+
     return (
         <div className="sidebar">
             <Menu className="menu"

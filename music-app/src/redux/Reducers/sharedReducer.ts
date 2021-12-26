@@ -1,5 +1,5 @@
 import {SharedAction, SharedActionsType} from "../Actions/sharedActions";
-import {AppTheme} from "../../types";
+import {AppTheme} from "../../config/types";
 
 type StateType = {
     appTheme: AppTheme,

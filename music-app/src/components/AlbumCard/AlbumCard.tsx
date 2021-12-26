@@ -1,7 +1,6 @@
 import React from 'react';
 import './albumCard.scss';
 
-
 const AlbumCard: React.FC = () => {
     return (
         <div className="album">

@@ -1,4 +1,4 @@
-import {SearchResultType} from "../../types"
+import {SearchResultType} from "../../config/types"
 import {SearchActionsTypeTypes, SearchActionType} from "../Actions/searchActions";
 
 type StateType = {
