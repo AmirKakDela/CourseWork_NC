@@ -14,7 +14,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-//app.use(authMiddleware);
+app.use(authMiddleware);
 app.use('/api/auth', authRouter);
 app.use('/api/song', songRouter);
 app.use('/api/artist', artistRouter);
