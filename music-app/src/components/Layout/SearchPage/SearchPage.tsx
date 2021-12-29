@@ -10,11 +10,17 @@ import {RootState} from '../../../redux/Reducers/rootReducer';
 import debounce from 'lodash.debounce';
 import ArtistCard from "../../ArtistCard/ArtistCard";
 import {useSearchParams} from 'react-router-dom';
+import {getAlbumByIdRequest} from "../../../redux/Actions/thunkAlbumActions";
 
 const SearchPage = () => {
     const dispatch = useDispatch();
     const searchResult = useSelector((state: RootState) => state.search.searchResult);
-    const searchError = useSelector((state: RootState) => state.search.error)
+    const searchError = useSelector((state: RootState) => state.search.error);
+
+    const popularAlbums = useSelector((state: RootState) => state.album.popularAlbums);
+    const setAlbum = (id: string) => {
+        dispatch(getAlbumByIdRequest(id));
+    }
 
     const [searchQuery, setSearchQuery] = useSearchParams();
     const searchString = searchQuery.get('query');
@@ -60,11 +66,9 @@ const SearchPage = () => {
                                 </div>
                                 <h2 className="search__title">Популярные плейлисты и альбомы</h2>
                                 <div className="search__other">
-                                    <AlbumCard/>
-                                    <AlbumCard/>
-                                    <AlbumCard/>
-                                    <AlbumCard/>
-                                    <AlbumCard/>
+                                    {popularAlbums.map( album => {
+                                        return <AlbumCard key={album._id} album={album} onAlbumClick={setAlbum}/>
+                                    })}
                                 </div>
                             </div> :
 
