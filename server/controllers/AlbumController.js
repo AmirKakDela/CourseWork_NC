@@ -4,7 +4,7 @@ const Album = require("../models/Album");
 class AlbumController {
     async getArtistAlbum(req, res) {
         try {
-            const { id } = req.params.id;
+            const id = req.params["id"];
             const album = await Album.findById(id);
             res.json(album);
         } catch (e) {
