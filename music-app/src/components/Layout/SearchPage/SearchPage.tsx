@@ -10,28 +10,30 @@ import {RootState} from '../../../redux/Reducers/rootReducer';
 import debounce from 'lodash.debounce';
 import ArtistCard from "../../ArtistCard/ArtistCard";
 import {useSearchParams} from 'react-router-dom';
-import {getAlbumByIdRequest} from "../../../redux/Actions/thunkAlbumActions";
+import { getAlbumByIdRequest, getAlbumsByRequest } from "../../../redux/Actions/thunkAlbumActions";
 
 const SearchPage = () => {
     const dispatch = useDispatch();
+    if(!useSelector((state: RootState) => state.album.albums)?.length) {
+        dispatch(getAlbumsByRequest());
+    }
     const searchResult = useSelector((state: RootState) => state.search.searchResult);
     const searchError = useSelector((state: RootState) => state.search.error);
+    const popularAlbums = useSelector((state: RootState) => state.album.albums); //здесь нужно получать популярные альбомы, пока получаем все из бд
 
-    const popularAlbums = useSelector((state: RootState) => state.album.popularAlbums);
-    const setAlbum = (id: string) => {
-        dispatch(getAlbumByIdRequest(id));
+    const openAlbumDetailsHandler = (id: string) => {
+       // dispatch(getAlbumByIdRequest(id));
+        //навигироваться на страницу с альбомом и получать из роута id
     }
-
     const [searchQuery, setSearchQuery] = useSearchParams();
     const searchString = searchQuery.get('query');
-
     const [queryValue, setQueryValue] = useState(searchString || '');
-
     const debouncedGetSearch = useMemo(() =>
         debounce(queryValue => {
             dispatch(getSearchResult(queryValue))
             setSearchQuery({query: queryValue})
-        }, 250), [dispatch, setSearchQuery])
+        }, 250), [dispatch, setSearchQuery]
+    )
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setQueryValue(e.target.value);
@@ -43,7 +45,7 @@ const SearchPage = () => {
             dispatch(getSearchResult(queryValue));
         }
         // eslint-disable-next-line
-    }, [])
+    }, []);
 
     return (
         <>
@@ -67,7 +69,7 @@ const SearchPage = () => {
                                 <h2 className="search__title">Популярные плейлисты и альбомы</h2>
                                 <div className="search__other">
                                     {popularAlbums.map( album => {
-                                        return <AlbumCard key={album._id} album={album} onAlbumClick={setAlbum}/>
+                                        return <AlbumCard key={album._id} album={album} onAlbumClick={openAlbumDetailsHandler}/>
                                     })}
                                 </div>
                             </div> :
