@@ -1,18 +1,18 @@
 import React from 'react';
 import './albumCard.scss';
 
+const defaultImageUrl = "https://the-flow.ru/uploads/images/catalog/element/5de03395535b5.jpg";
+
 function AlbumCard ({ album, onAlbumClick }: any){
     return (
-        <div className="album" onClick={onAlbumClick(album._id)}>
-            <img src="https://the-flow.ru/uploads/images/catalog/element/5de03395535b5.jpg" alt="cover"
+        <div className="album" onClick={() => onAlbumClick(album._id)}>
+            <img src={album.cover || defaultImageUrl} alt="cover"
                  className="album__img"/>
             <h2 className="album__name">
-                ОПГ Сити
-                {/*{album.name}*/}
+                {album.name}
             </h2>
             <h3 className="album__artist">
-                OG Buda
-                {/*{album.artist}*/}
+                {album.artist}
             </h3>
         </div>
     );

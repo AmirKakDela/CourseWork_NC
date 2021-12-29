@@ -8,16 +8,24 @@ class AlbumController {
             const album = await Album.findById(id);
             res.json(album);
         } catch (e) {
-            res.status(500).json({ message: "Ошибка сервера при получении альбома" });
+            res.status(500).json({ message: `${e.message}.Ошибка сервера при получении альбома` });
         }
     }
 
     async getAllArtistAlbum(req, res) {
         try {
-            const albums = await Album.find();
-            res.json(albums);
+            const artistId = req.query["artistId"];
+            let albums = [];
+            if(artistId) {
+                albums = await Album.findOne(artistId);
+                console.log(albums)
+            } else {
+                albums = await Album.find();
+                console.log(albums)
+            }
+            res.json(albums || []);
         } catch (e) {
-            res.status(500).json({ message: "Ошибка сервера при получении всех альбомов" });
+            res.status(500).json({ message: `${e.message}.Ошибка сервера при получении всех альбомов` });
         }
     }
 
@@ -71,11 +79,12 @@ class AlbumController {
     async updateAlbum(req, res) {
         try {
             const album = req.body;
-            if (!album._id) {
+            const id = req.params["id"];
+            if (!id) {
                 return res.status(412)
                     .json({ message: "Альбома с таким id не существует" })
             }
-            const updatedAlbum = await Album.findByIdAndUpdate(album._id, album, {new: true});
+            const updatedAlbum = await Album.findByIdAndUpdate(id, album,{new: true});
             res.json({ message: "Альбом успешно обновлен" , updatedAlbum});
         } catch (e) {
             res.status(500).json({ message: "Ошибка сервера при обновлении альбома" });

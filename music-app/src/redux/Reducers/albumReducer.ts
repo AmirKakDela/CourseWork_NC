@@ -3,14 +3,12 @@ import {AlbumAction, AlbumActionsType} from "../Actions/albumAction";
 
 type State = {
     albums: Album[],
-    popularAlbums: Album[],
-    message: string
+    popularAlbums: Album[]
 }
 
 const initialState: State = {
     albums: [],
-    popularAlbums: [],
-    message: ""
+    popularAlbums: []
 };
 
 const albumReducer = (state = initialState, action: AlbumAction): State => {
@@ -38,32 +36,16 @@ const albumReducer = (state = initialState, action: AlbumAction): State => {
                 ...state,
                 albums: state.albums.filter(value => value._id !== id),
             };
-        // case AlbumActionsType.GET_ALBUMS_REQUEST:
-        //     return {
-        //         ...state,
-        //         albums: action.payload as Album[] || initialState.albums
-        //     };
-        // case AlbumActionsType.CREATE_ALBUM_REQUEST:
-        //     return {
-        //         ...state,
-        //         albums: state.albums.concat(action.payload as Album)
-        //     };
-        // case AlbumActionsType.UPDATE_ALBUM_REQUEST:
-        //     return {
-        //         ...state,
-        //         albums: state.albums.filter(album => album._id !== action.payload as string).concat(action.payload as Album)
-        //     };
-        // case AlbumActionsType.DELETE_ALBUM_REQUEST:
-        //     return {
-        //         ...state,
-        //         message: action.payload as string || initialState.message,
-        //         albums: state.albums.filter(album => album._id !== action.payload as string).sort()
-        //     };
-        // case AlbumActionsType.GET_POPULAR_ALBUMS_REQUEST:
-        //     return {
-        //         ...state,
-        //         popularAlbums: action.payload as Album[] || initialState.popularAlbums
-        //     };
+         // case AlbumActionsType.CREATE_ALBUM:
+         //     return {
+         //         ...state,
+         //         albums: state.albums.concat(action.payload as Album)
+         //     };
+         // case AlbumActionsType.UPDATE_ALBUM:
+         //     return {
+         //         ...state,
+         //         albums: state.albums.filter(album => album._id !== action.payload as string).concat(action.payload as Album)
+         //     };
         default:
             return state;
     }
