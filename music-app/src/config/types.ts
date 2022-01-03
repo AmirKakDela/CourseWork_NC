@@ -39,3 +39,11 @@ export enum AppTheme {
     DARK = 'dark',
     LIGHT = 'light'
 }
+
+export type Album = {
+    _id: string,
+    name: string,
+    artist: string,
+    songs: Array<string>,
+    cover: string
+}

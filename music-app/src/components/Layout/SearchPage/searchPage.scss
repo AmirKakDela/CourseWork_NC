@@ -3,11 +3,8 @@
 .search {
   background-color: $black26;
   color: $white;
-  height: '100vh' - '100px'; // 100px это высота будущая header
-  width: 80%;
-  float: right;
+  height: 100vh;
   padding: 20px 30px;
-  overflow-y: scroll;
 
   &::-webkit-scrollbar {
     background-color: $black26;
