@@ -14,7 +14,7 @@ const ArtistPage = () => {
     const dispatch = useDispatch();
     const artist: ArtistType = useSelector((state: RootState) => state.artist.artist)
     const isLoading = useSelector((state: RootState) => state.artist.isLoading);
-    console.log(isLoading)
+    console.log(artist)
     useEffect(() => {
         if (urlParams.id) {
             dispatch(getArtist(urlParams.id))
@@ -41,9 +41,9 @@ const ArtistPage = () => {
                     <div className="info__main">
                         <h2 className="main__title">Альбомы</h2>
                         <div className="main__slider">
-                            <AlbumCard/>
-                            <AlbumCard/>
-                            <AlbumCard/>
+                            {artist.albums.map(a => (
+                                <AlbumCard album={a}/>
+                            ))}
                         </div>
                         <h2 className="main__title">Песни</h2>
                         <div className="main__songs">
