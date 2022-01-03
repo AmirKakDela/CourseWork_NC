@@ -27,6 +27,7 @@
   flex: 1;
   overflow-y: scroll;
   background-color: rgb(26, 26, 26); //TODO: fix with theme
+  justify-content: center;
 
 
   &::-webkit-scrollbar {

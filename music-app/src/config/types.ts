@@ -24,7 +24,7 @@ export type SongType = {
 export type ArtistType = {
     _id: string;
     name: string,
-    songs: Array<string>,
+    songs: Array<SongType>,
     albums: Array<string>,
     image: string
 }
