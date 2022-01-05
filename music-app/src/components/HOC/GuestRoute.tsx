@@ -6,11 +6,11 @@ type PropsType = {
     children: JSX.Element
 }
 
-const RequireAuth: React.FC<PropsType> = ({children, isAuth}) => {
-    if (!isAuth) {
-        return <Navigate to='/auth'/>
+const GuestRoute: React.FC<PropsType> = ({children, isAuth}) => {
+    if (isAuth) {
+        return <Navigate to='/'/>
     }
     return children;
 };
 
-export default RequireAuth;
+export default GuestRoute;

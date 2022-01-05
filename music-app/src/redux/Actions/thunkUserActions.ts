@@ -1,5 +1,5 @@
 import axios from "axios";
-import {setAuthError, setCurrentUser, UserActionTypes} from "./userActions";
+import {setAuthError, setCurrentUser, UserActionTypes, userLoading} from "./userActions";
 import {Dispatch} from "redux";
 import {url} from "../../config/config";
 import {ErrorType} from "../../config/types";
@@ -33,9 +33,10 @@ export const login = (email: string, password: string) => {
 
 export const auth = () => {
     return async (dispatch: Dispatch<UserActionTypes>) => {
+        dispatch(userLoading(true))
         try {
             console.log(localStorage.getItem('token'))
-            if (localStorage.getItem('token') === null) return
+            if (localStorage.getItem('token') === null) return dispatch(userLoading(false))
             const response = await axios.get(`${url}/api/auth/auth`, {
                 headers: {
                     Authorization: '' + localStorage.getItem('token')
@@ -45,6 +46,8 @@ export const auth = () => {
             localStorage.setItem('token', response.data.token)
         } catch (e) {
             console.log('ошибка при авторизации на фронте', e)
+            const u = e as ErrorType
+            dispatch(setAuthError(u.response.data.message))
             localStorage.removeItem('token');
         }
     }
