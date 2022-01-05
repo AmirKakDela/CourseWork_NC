@@ -43,7 +43,7 @@ class authController {
         try {
             const user = await User.findOne({_id: req.user});
             const token = user._id + '_' + user.admin;
-            return res.json({token, userId: user._id, userName: user.name});
+            return res.json({token, userId: user._id, userName: user.name, isAdmin: user.admin});
         } catch (e) {
             console.log(e);
             res.send({message: 'Ошибка сервера при авторизации'});
