@@ -4,7 +4,8 @@ import {CurrentUserType} from "../../config/types";
 type InitialStateType = {
     currentUser: CurrentUserType,
     isAuth: boolean,
-    error: string | null
+    error: string | null,
+    isLoading: boolean
 }
 const initialState: InitialStateType = {
     currentUser: {
@@ -12,14 +13,15 @@ const initialState: InitialStateType = {
         userName: ''
     },
     isAuth: false,
-    error: null
+    error: null,
+    isLoading: true
 }
 
 const userReducer = (state = initialState, action: UserActionTypes) => {
     switch (action.type) {
         case UserActionTypeTypes.SET_CURRENT_USER:
             return {
-                ...state, currentUser: {...action.payload}, isAuth: true
+                ...state, currentUser: {...action.payload}, isAuth: true, isLoading: false
             }
         case UserActionTypeTypes.LOGOUT_CURRENT_USER:
             return {
@@ -27,7 +29,11 @@ const userReducer = (state = initialState, action: UserActionTypes) => {
             }
         case UserActionTypeTypes.SET_AUTH_ERROR:
             return {
-                ...state, error: action.payload
+                ...state, error: action.payload, isLoading: false
+            }
+        case UserActionTypeTypes.USER_LOADING:
+            return {
+                ...state, isLoading: action.payload
             }
         default:
             return state
