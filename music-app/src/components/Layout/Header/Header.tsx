@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/Reducers/rootReducer";
 import { logoutCurrentUser } from "../../../redux/Actions/userActions";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Dropdown, Input, Menu } from "antd";
+import { Dropdown, Menu } from "antd";
 
 import "./Header.scss";
 
@@ -12,7 +12,6 @@ const Header = () => {
   const navigate = useNavigate();
 
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
-  //const isAuth = true
 
   const userName = useSelector(
       (state: RootState) => state.user.currentUser.userName
@@ -23,8 +22,6 @@ const Header = () => {
     dispatch(logoutCurrentUser());
   };
 
-  // let isWelcome = false;
-  // let isSearch = true;
 
   const nav = (
       <nav className="header__navigation">
@@ -68,15 +65,7 @@ const Header = () => {
         ) : (
             nav
         )}
-        {location.pathname == "/search" && (
-            <Input
-                className="header__search"
-                prefix="&#128269;"
-                allowClear
-                bordered={false}
-                placeholder="Трек или исполнитель"
-            />
-        )}
+
         {isAuth ? (
             <div>
               <Dropdown overlay={dropdown} trigger={["click"]}>
