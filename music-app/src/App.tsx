@@ -16,10 +16,12 @@ import WelcomePage from "./components/Layout/WelcomePage/WelcomePage";
 import GuestRoute from "./components/HOC/GuestRoute";
 import AppLoading from "./components/AppLoading/AppLoading";
 import AdminLayout from "./components/AdminPage/AdminLayout/AdminLayout";
+import AdminRoute from "./components/HOC/AdminRoute";
 
 function App() {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
-    const userLoading = useSelector((state: RootState) => state.user.isLoading)
+    const isAdmin = useSelector((state: RootState) => state.user.currentUser.isAdmin)
+    const userLoading = useSelector((state: RootState) => state.user.isLoading);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -55,7 +57,10 @@ function App() {
                             <Route path='*' element={<NotFound/>}/>
                         </Route>
 
-                        <Route path='/admin' element={<AdminLayout/>}>
+                        <Route path='/admin' element={
+                            <AdminRoute isAdmin={isAdmin} isAuth={isAuth}>
+                                <AdminLayout/>
+                            </AdminRoute>}>
                             <Route path="songs" element={<h1>All songs</h1>}/>
                             <Route path="artists" element={<h1>All Artists</h1>}/>
                             <Route path="playlists" element={<h1>All Playlists</h1>}/>

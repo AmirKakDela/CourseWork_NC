@@ -10,7 +10,8 @@ type InitialStateType = {
 const initialState: InitialStateType = {
     currentUser: {
         userId: '',
-        userName: ''
+        userName: '',
+        isAdmin: false
     },
     isAuth: false,
     error: null,
@@ -25,7 +26,7 @@ const userReducer = (state = initialState, action: UserActionTypes) => {
             }
         case UserActionTypeTypes.LOGOUT_CURRENT_USER:
             return {
-                ...state, isAuth: false, currentUser: {userId: '', userName: ''}
+                ...state, isAuth: false, currentUser: {userId: '', userName: '', isAdmin: false}
             }
         case UserActionTypeTypes.SET_AUTH_ERROR:
             return {
