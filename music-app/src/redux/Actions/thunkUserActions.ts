@@ -21,7 +21,8 @@ export const login = (email: string, password: string) => {
     return async (dispatch: Dispatch<UserActionTypes>) => {
         try {
             const response = await axios.post(`${url}/api/auth/login`, {email, password})
-            dispatch(setCurrentUser({userId: response.data.userId, userName: response.data.userName}))
+            const {userId, userName, isAdmin} = response.data
+            dispatch(setCurrentUser({userId, userName, isAdmin}))
             dispatch(setAuthError(null))
             localStorage.setItem('token', response.data.token)
         } catch (e) {
@@ -42,7 +43,8 @@ export const auth = () => {
                     Authorization: '' + localStorage.getItem('token')
                 }
             })
-            dispatch(setCurrentUser({userId: response.data.userId, userName: response.data.userName}));
+            const {userId, userName, isAdmin} = response.data
+            dispatch(setCurrentUser({userId, userName, isAdmin}));
             localStorage.setItem('token', response.data.token)
         } catch (e) {
             console.log('ошибка при авторизации на фронте', e)

@@ -1,6 +1,7 @@
 export type CurrentUserType = {
     userId: string,
     userName: string,
+    isAdmin: boolean
 }
 
 export type ErrorType = {
