@@ -1,13 +1,22 @@
-import {CurrentUserType} from "../../config/types";
+import {CurrentUserType, SongType} from "../../config/types";
 
 export enum UserActionTypeTypes {
     SET_CURRENT_USER = 'SET_CURRENT_USER',
     LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER',
     SET_AUTH_ERROR = 'SET_AUTH_ERROR',
-    USER_LOADING = 'USER_LOADING'
+    SET_USER_LIKED_SONGS = 'SET_USER_LIKED_SONGS',
+    TOGGLE_LIKE_SONG = 'TOGGLE_LIKE_SONG',
+    USER_LOADING = 'USER_LOADING',
+    LIKE_LOADING = 'LIKE_LOADING'
 }
 
-export type UserActionTypes = SetCurrentUserType | LogoutCurrentUserType | SetAuthErrorType | UserLoadingType
+export type UserActionTypes = SetCurrentUserType
+    | LogoutCurrentUserType
+    | SetAuthErrorType
+    | SetUserLikedSongsType
+    | UserLoadingType
+    | ToggleLikeSongType
+    | LikeLoadingType
 
 
 type LogoutCurrentUserType = {
@@ -52,6 +61,42 @@ export type UserLoadingType = {
 export const userLoading = (status: boolean): UserLoadingType => {
     return {
         type: UserActionTypeTypes.USER_LOADING,
+        payload: status
+    }
+}
+
+export type SetUserLikedSongsType = {
+    type: UserActionTypeTypes.SET_USER_LIKED_SONGS,
+    payload: Array<SongType>
+}
+
+export const setUserLikedSongs = (likedSongs: Array<SongType>): SetUserLikedSongsType => {
+    return {
+        type: UserActionTypeTypes.SET_USER_LIKED_SONGS,
+        payload: likedSongs
+    }
+}
+
+export type ToggleLikeSongType = {
+    type: UserActionTypeTypes.TOGGLE_LIKE_SONG,
+    payload: SongType
+}
+
+export const toggleLikeSong = (song: SongType): ToggleLikeSongType => {
+    return {
+        type: UserActionTypeTypes.TOGGLE_LIKE_SONG,
+        payload: song
+    }
+}
+
+export type LikeLoadingType = {
+    type: UserActionTypeTypes.LIKE_LOADING,
+    payload: boolean
+}
+
+export const likeLoading = (status: boolean): LikeLoadingType => {
+    return {
+        type: UserActionTypeTypes.LIKE_LOADING,
         payload: status
     }
 }
