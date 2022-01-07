@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import './App.css';
 import Signup from "./components/Auth/SignUp/Signup";
 import MainPage from "./components/Layout/MainPage/MainPage";
@@ -17,6 +17,8 @@ import GuestRoute from "./components/HOC/GuestRoute";
 import AppLoading from "./components/AppLoading/AppLoading";
 import AdminLayout from "./components/AdminPage/AdminLayout/AdminLayout";
 import AdminRoute from "./components/HOC/AdminRoute";
+import MyLibraryPage from "./components/Layout/MyLibraryPage/MyLibraryPage";
+import LibrarySong from "./components/Layout/MyLibraryPage/LibrarySong";
 
 function App() {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
@@ -49,7 +51,12 @@ function App() {
                             </RequireAuth>}>
                             <Route index element={<MainPage/>}/>
                             <Route path='loved' element={<h1>Loved Songs</h1>}/>
-                            <Route path='my-library' element={<h1>My library</h1>}/>
+                            <Route path='my-library' element={<MyLibraryPage/>}>
+                                <Route index element={<Navigate to='songs'/>}/>
+                                <Route path='songs' element={<LibrarySong/>}/>
+                                <Route path='albums' element={<h1>playlists</h1>}/>
+                                <Route path='playlists' element={<h1>albums</h1>}/>
+                            </Route>
                             <Route path='create-playlist' element={<h1>Create playlist</h1>}/>
                             <Route path='my-playlists' element={<h1>My playlists</h1>}/>
                             <Route path='search' element={<SearchPage/>}/>
