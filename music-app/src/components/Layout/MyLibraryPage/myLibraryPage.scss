@@ -28,6 +28,17 @@
     }
   }
 
+  &__notsongs {
+    color: $white;
+    font-weight: 700;
+    font-size: 25px;
+    text-align: center;
+
+    a {
+      color: $link-green_hover;
+    }
+  }
+
   &__link {
     color: $grey;
     font-weight: 600;
