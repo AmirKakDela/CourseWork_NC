@@ -1,7 +1,8 @@
 export type CurrentUserType = {
     userId: string,
     userName: string,
-    isAdmin: boolean
+    isAdmin: boolean,
+    likedSongs: Array<SongType>
 }
 
 export type ErrorType = {

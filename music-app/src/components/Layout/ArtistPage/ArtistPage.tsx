@@ -8,6 +8,7 @@ import {ArtistType} from "../../../config/types";
 import {getArtist} from "../../../redux/Actions/thunkArtistAction";
 import Song from "../../Song/Song";
 import MoonLoader from "react-spinners/MoonLoader";
+import {thunkUserLikedSongs} from "../../../redux/Actions/thunkUserActions";
 
 const ArtistPage = () => {
     const urlParams = useParams();
@@ -18,6 +19,7 @@ const ArtistPage = () => {
     useEffect(() => {
         if (urlParams.id) {
             dispatch(getArtist(urlParams.id))
+            dispatch(thunkUserLikedSongs())
         }
     }, [])
 
@@ -41,14 +43,14 @@ const ArtistPage = () => {
                     <div className="info__main">
                         <h2 className="main__title">Альбомы</h2>
                         <div className="main__slider">
-                            <AlbumCard/>
-                            <AlbumCard/>
-                            <AlbumCard/>
+                            {/*<AlbumCard/>*/}
+                            {/*<AlbumCard/>*/}
+                            {/*<AlbumCard/>*/}
                         </div>
                         <h2 className="main__title">Песни</h2>
                         <div className="main__songs">
-                            {artist.songs.map(s => (
-                                <Song song={s} key={s._id}/>
+                            {artist.songs.map((s, index) => (
+                                <Song song={s} number={index + 1} key={s._id}/>
                             ))}
                         </div>
                     </div>
