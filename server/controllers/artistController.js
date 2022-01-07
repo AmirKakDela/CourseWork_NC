@@ -18,8 +18,8 @@ class artistController {
             artist.save();
             return res.json({message: 'Исполнитель успешно создан.', artist});
         } catch (e) {
-            return res.send({message: "Ошибка сервера при добавлении артиста."});
             console.log('Ошибка сервера при createArtist', e);
+            return res.send({message: "Ошибка сервера при добавлении артиста."});
         }
     }
 
@@ -33,8 +33,8 @@ class artistController {
             return res.json({message: 'Изображение артиста успешно изменено'});
         } catch
             (e) {
-            return res.send({message: "Ошибка сервера при обновлении артиста."});
             console.log('Ошибка сервера при updateArtist', e);
+            return res.send({message: "Ошибка сервера при обновлении артиста."});
         }
     }
 
@@ -45,8 +45,8 @@ class artistController {
 
             return res.json(artists);
         } catch (e) {
-            return res.send({message: "Ошибка сервера при получении списка всех артистов."});
             console.log('Ошибка сервера при getAllArtists', e);
+            return res.send({message: "Ошибка сервера при получении списка всех артистов."});
         }
     }
 
@@ -60,8 +60,8 @@ class artistController {
             // todo: как будут готовы альбомы, их отправлять так же
             return res.json({artist, songs})
         } catch (e) {
-            return res.send({message: "Ошибка сервера при получении артиста."});
             console.log('Ошибка сервера при getArtist', e);
+            return res.send({message: "Ошибка сервера при получении артиста."});
         }
     }
 
@@ -73,8 +73,8 @@ class artistController {
             const songs = await Song.find({_id: artist.songs});
             return res.json(songs);
         } catch (e) {
-            return res.send({message: "Ошибка сервера при получении всех песен."});
             console.log('Ошибка сервера при getArtist', e);
+            return res.send({message: "Ошибка сервера при получении всех песен."});
         }
     }
 

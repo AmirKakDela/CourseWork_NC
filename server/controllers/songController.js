@@ -41,8 +41,8 @@ class songController {
 
             return res.json(songs);
         } catch (e) {
-            return res.send({message: "Ошибка сервера при получении списка всех треков."});
             console.log('Ошибка сервера при getAllSongs', e);
+            return res.send({message: "Ошибка сервера при получении списка всех треков."});
         }
     }
 
@@ -63,8 +63,8 @@ class songController {
                 return res.json({message: 'Удалено из списка любимых песен.'});
             }
         } catch (e) {
-            return res.send({message: "Ошибка сервера добавлении песни в список любимых песен."});
             console.log('Ошибка сервера при toggleLikeSong', e);
+            return res.send({message: "Ошибка сервера добавлении песни в список любимых песен."});
         }
     }
 
@@ -78,8 +78,8 @@ class songController {
             deleteLikeSongOnUser(users, deletedSong._id)
             return res.json({message: 'Песня успешно удалена', users});
         } catch (e) {
-            return res.send({message: "Ошибка сервера при удалении трека."});
             console.log('Ошибка сервера при deleteSong', e);
+            return res.send({message: "Ошибка сервера при удалении трека."});
         }
     }
 
@@ -91,8 +91,8 @@ class songController {
             if (!updatedSong) return res.status(412).json({message: "Песни с таким id не существует"});
             res.json({message: 'Песня успешно обновлена'});
         } catch (e) {
-            return res.send({message: "Ошибка сервера при обновлении трека."});
             console.log('Ошибка сервера при updateSong', e);
+            return res.send({message: "Ошибка сервера при обновлении трека."});
         }
     }
 
@@ -103,7 +103,8 @@ class songController {
             const songs = await Song.find({_id: user.likedSongs});
             return res.json(songs);
         } catch (e) {
-
+            console.log('Ошибка сервера при userLikedSongs', e);
+            return res.send({message: "Ошибка сервера при сохранении понравившейся песни."});
         }
     }
 }
