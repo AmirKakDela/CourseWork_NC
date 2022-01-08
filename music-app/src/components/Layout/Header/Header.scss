@@ -1,8 +1,4 @@
-* {
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
-}
+@import "src/config/colors";
 
 .header {
   padding: 16px 32px;
@@ -84,6 +80,17 @@
     font-size: 14px;
     border: none;
     border-radius: 500px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    column-gap: 7px;
+
+    &_icon {
+      background-color: $lightgrey;
+      padding: 6px;
+      border-radius: 100%;
+      font-size: 15px;
+    }
 
     &:hover,
     &:focus {
