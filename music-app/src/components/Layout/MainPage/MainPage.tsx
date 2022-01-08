@@ -7,13 +7,14 @@ import ArtistCard from "../../ArtistCard/ArtistCard";
 import {getAllArtists} from "../../../redux/Actions/thunkArtistAction";
 
 import "./MainPage.scss";
+import {ScrollComponent} from "../../ScrollComponent/ScrollComponent";
 
 function MainPage() {
 
     const dispatch = useDispatch();
-    useEffect(()=> {
+    useEffect(() => {
         dispatch(getAlbumsByRequest());
-        dispatch(getAllArtists())
+        dispatch(getAllArtists());
     }, []);
 
     const artists = useSelector((state: RootState) => state.artist.artists);
@@ -24,80 +25,34 @@ function MainPage() {
     };
 
     return (
-        <div className="main-page">
-            <div className="main-page__collections">
-                <div className="main-page__title">
-                    <h2 className="main-page__title__name">Не пропусти топовые плейлисты</h2>
-                    <span className="main-page__title__more">Еще</span>
-                </div>
-                <div className="main-page__playlists">
-                    {popularPlaylists.map(playlist => {
-                        return <AlbumCard key={playlist._id} album={playlist} onAlbumClick={openPlaylistDetailsHandler}/>; //когда будет
-                        // написана бд с плейлистом, использовать не AlbumCard, а PlaylistCard
-                    })}
-                </div>
-            </div>
-
-            <div className="main-page__collections">
-                <div className="main-page__title">
-                    <h2 className="main-page__title__name">Тема1</h2>
-                    <span className="main-page__title__more">Еще</span>
-                </div>
-                <div className="main-page__playlists">
-                    {popularPlaylists.map(playlist => {
-                        return <AlbumCard key={playlist._id} album={playlist} onAlbumClick={openPlaylistDetailsHandler}/>;
-                    })}
-                </div>
-            </div>
-
-            <div className="main-page__collections">
-                <div className="main-page__title">
-                    <h2 className="main-page__title__name">Тема2</h2>
-                    <span className="main-page__title__more">Еще</span>
-                </div>
-                <div className="main-page__playlists">
-                    {popularPlaylists.map(playlist => {
-                        return <AlbumCard key={playlist._id} album={playlist} onAlbumClick={openPlaylistDetailsHandler}/>;
-                    })}
-                </div>
-            </div>
-
-            <div className="main-page__collections">
-                <div className="main-page__title">
-                    <h2 className="main-page__title__name">Тема3</h2>
-                    <span className="main-page__title__more">Еще</span>
-                </div>
-                <div className="main-page__playlists">
-                    {popularPlaylists.map(playlist => {
-                        return <AlbumCard key={playlist._id} album={playlist} onAlbumClick={openPlaylistDetailsHandler}/>;
-                    })}
-                </div>
-            </div>
-
-            <div className="main-page__collections">
-                <div className="main-page__title">
-                    <h2 className="main-page__title__name">Тема4</h2>
-                    <span className="main-page__title__more">Еще</span>
-                </div>
-                <div className="main-page__playlists">
-                    {popularPlaylists.map(playlist => {
-                        return <AlbumCard key={playlist._id} album={playlist} onAlbumClick={openPlaylistDetailsHandler}/>;
-                    })}
-                </div>
-            </div>
-
-            <div className="main-page__collections">
-                <div className="main-page__title">
-                    <h2 className="main-page__title__name">Популярные исполнители</h2>
-                    <span className="main-page__title__more">Еще</span>
-                </div>
-                <div className="main-page__playlists artists">
-                    {artists.length ? <div className="main-page__playlists-row">
-                        {artists.map(art => {
-                            return (<ArtistCard key={art._id} artist={art}/>)
-                        })}</div> : null}
-                </div>
-            </div>
+        <div className="main-page-content">
+            <ScrollComponent titleName="Не пропусти топовые плейлисты" data={
+                popularPlaylists.map(playlist => {
+                    return <AlbumCard key={playlist._id} album={playlist} onAlbumClick={openPlaylistDetailsHandler}/>; //когда будет
+                    // написана бд с плейлистом, использовать не AlbumCard, а PlaylistCard
+                })
+            }/>
+            <ScrollComponent titleName="Тема1" data={
+                popularPlaylists.map(playlist => {
+                    return <AlbumCard key={playlist._id} album={playlist} onAlbumClick={openPlaylistDetailsHandler}/>;
+                })}/>
+            <ScrollComponent titleName="Тема2" data={
+                popularPlaylists.map(playlist => {
+                    return <AlbumCard key={playlist._id} album={playlist} onAlbumClick={openPlaylistDetailsHandler}/>;
+                })}/>
+            <ScrollComponent titleName="Тема3" data={
+                popularPlaylists.map(playlist => {
+                    return <AlbumCard key={playlist._id} album={playlist} onAlbumClick={openPlaylistDetailsHandler}/>;
+                })}/>
+            <ScrollComponent titleName="Тема4" data={
+                popularPlaylists.map(playlist => {
+                    return <AlbumCard key={playlist._id} album={playlist} onAlbumClick={openPlaylistDetailsHandler}/>;
+                })}/>
+            <ScrollComponent titleName="Популярные исполнители" data={
+                artists.length ? <div className="main-page__playlists-row">
+                    {artists.map(art => {
+                        return (<ArtistCard key={art._id} artist={art}/>);
+                    })}</div> : null}/>
         </div>
     );
 }
