@@ -1,28 +1,35 @@
-import {ArtistType} from "../../config/types";
+import {Album, ArtistType} from "../../config/types";
 import {ArtistActionsTypeTypes, ArtistActionType} from "../Actions/artistActions";
+import {AlbumActionsType} from "../Actions/albumAction";
 
 type StateType = {
-    artist: ArtistType,
-    isLoading: boolean
+    isLoading: boolean,
+    artists: ArtistType[]
 }
 
 const initialState: StateType = {
-    artist: {
-        _id: '',
-        name: '',
-        songs: [],
-        albums: [],
-        image: ''
-    },
-    isLoading: false
+    isLoading: false,
+    artists: []
 }
 
 const artistReducer = (state: StateType = initialState, action: ArtistActionType): StateType => {
     switch (action.type) {
-        case ArtistActionsTypeTypes.SET_ARTIST:
-            return {...state, artist: action.payload, isLoading: false}
         case ArtistActionsTypeTypes.SET_LOADING:
-            return {...state, isLoading: true}
+            return {
+                ...state,
+                isLoading: true
+            };
+        case ArtistActionsTypeTypes.SET_ARTIST:
+            return {
+                ...state, // upsert
+                isLoading: false
+            };
+        case ArtistActionsTypeTypes.SET_ARTISTS:
+            return {
+                ...state,
+                artists: action.payload || initialState.artists,
+                isLoading: false
+            };
         default:
             return state
     }

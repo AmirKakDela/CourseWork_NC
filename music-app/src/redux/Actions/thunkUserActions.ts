@@ -71,7 +71,7 @@ export const thunkUserLikedSongs = () => {
                     Authorization: '' + localStorage.getItem('token')
                 }
             })
-            dispatch(setUserLikedSongs(response.data))
+           dispatch(setUserLikedSongs(response.data))
         } catch (e) {
             const u = e as ErrorType
             dispatch(setAuthError(u.response.data.message))

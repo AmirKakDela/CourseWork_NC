@@ -14,9 +14,10 @@ import { getAlbumByIdRequest, getAlbumsByRequest } from "../../../redux/Actions/
 
 const SearchPage = () => {
     const dispatch = useDispatch();
-    if(!useSelector((state: RootState) => state.album.albums)?.length) {
+    useEffect( () => {
         dispatch(getAlbumsByRequest());
-    }
+    },[]);
+
     const searchResult = useSelector((state: RootState) => state.search.searchResult);
     const searchError = useSelector((state: RootState) => state.search.error);
     const popularAlbums = useSelector((state: RootState) => state.album.albums); //здесь нужно получать популярные альбомы, пока получаем все из бд

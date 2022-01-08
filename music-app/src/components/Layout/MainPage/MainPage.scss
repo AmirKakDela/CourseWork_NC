@@ -10,11 +10,55 @@
     padding: 24px 32px 0;
   }
 
+  &::-webkit-scrollbar {
+    background-color: $black26;
+    width: 15px;
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, .3);
+    transition: .3s all ease-in-out;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, .4);
+    }
+
+    &:active {
+      background-color: rgba(255, 255, 255, .5);
+    }
+
+    width: 15px;
+    border-radius: 2px;
+  }
+
   &__collections {
     padding-bottom: 24px;
     margin-bottom: 16px;
     min-height: 300px;
     min-width: 100%;
+    overflow-x: scroll;
+    &::-webkit-scrollbar {
+      background-color: $black26;
+      width: 15px;
+      border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, .3);
+      transition: .3s all ease-in-out;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, .4);
+      }
+
+      &:active {
+        background-color: rgba(255, 255, 255, .5);
+      }
+
+      width: 15px;
+      border-radius: 2px;
+    }
   }
 
   &__title {

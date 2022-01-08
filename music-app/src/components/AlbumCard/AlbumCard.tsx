@@ -1,3 +1,5 @@
+import { CaretRightOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 import React from "react";
 import "./albumCard.scss";
 
@@ -14,11 +16,7 @@ function AlbumCard({ album, onAlbumClick }: any) {
             <h3 className="album__artist">
                 {album.artist}
             </h3>
-            <button className="album__btn">
-                <svg height="16" role="img" width="16" viewBox="0 -3 24 24" aria-hidden="true">
-                    <polygon points="21.57 12 5.98 3 5.98 21 21.57 12" fill="currentColor"/>
-                </svg>
-            </button>
+            <Button shape="circle" icon={<CaretRightOutlined />} className="album__btn"/>
         </div>
     );
 }
