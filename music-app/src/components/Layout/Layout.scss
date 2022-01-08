@@ -27,7 +27,7 @@
   flex: 1;
   overflow-y: scroll;
   background-color: rgb(26, 26, 26); //TODO: fix with theme
-
+  min-height: calc(((100vh - 64px) - 90px) - 519px);
 
   &::-webkit-scrollbar {
     background-color: rgb(26, 26, 26);

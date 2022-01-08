@@ -1,18 +1,13 @@
-$main-color: #121212;
-$text-for-dark-theme: #fff;
-$text-for-light-theme: #000;
-$color-for-light: #1DB95426;
-$color-for-dark: #282828;
+@import "./src/config/colors";
 
 .ant-menu.ant-menu-dark {
-    background: $main-color;
+    background: $black0;
 }
 
 .menu {
     height: 100%;
     padding: 24px 8px 0;
     border: none;
-    position: absolute;
     font-weight: bold;
 }
 
@@ -42,11 +37,11 @@ $color-for-dark: #282828;
 }
 
 .ant-menu.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{
-    background-color: $color-for-light;
-    color: $text-for-light-theme;
+    background-color: $hover-color-for-light-items;
+    color: $black0;
 }
 
 .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
-    background-color: $color-for-dark;
-    color: $text-for-dark-theme;
+    background-color: $black40;
+    color: $white;
 }
