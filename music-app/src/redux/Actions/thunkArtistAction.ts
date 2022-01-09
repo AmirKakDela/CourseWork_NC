@@ -3,7 +3,6 @@ import {ArtistActionType, setArtist, setLoading, setArtists} from "./artistActio
 import {url} from "../../config/config";
 import axios from "axios";
 import {ArtistType, SongType} from "../../config/types";
-import {AlbumAction, AlbumActionsType} from "./albumAction";
 
 export const getArtist = (artistId: string) => {
     return async (dispatch: Dispatch<ArtistActionType>) => {
@@ -34,7 +33,6 @@ export const getAllArtists = () => {
                 }
             });
             dispatch(setArtists(response.data));
-            console.log(response.data);
         } catch (e) {
             console.log(e);
         }
