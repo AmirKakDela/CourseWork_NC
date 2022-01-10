@@ -10,6 +10,12 @@
   justify-content: space-between;
   padding: 15px 16px;
   align-items: center;
+  color: white;
+
+  &__control__song-progress{
+    flex:1
+  }
+
   &__now-playing{
     min-width: 180px;
     width: 30%;
@@ -28,6 +34,9 @@
       justify-content: center;
     }
     &__timeline {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
       width: 100%;
     }
 
@@ -46,9 +55,9 @@
     width: 30%;
     gap: 16px;
     &__volume {
+      display: flex;
       align-items: center;
-      width: 93px;
+      width: 124px;
     }
   }
-
 }

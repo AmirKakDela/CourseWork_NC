@@ -38,24 +38,4 @@ export type PlayerAction =
     | SetPlaybackAction
     | SetDurationAction
     | SetVolumeAction
-    | SetCurrentTimeAction
-
-
-export const playTrack = (): PlayerAction => {
-    return { type: PlayerActionsType.PLAY };
-};
-export const pauseTrack = (): PlayerAction => {
-    return { type: PlayerActionsType.PAUSE };
-};
-export const setDuration = (payload: number): PlayerAction => {
-    return { type: PlayerActionsType.SET_DURATION, payload };
-};
-export const setVolume = (payload: number): PlayerAction => {
-    return { type: PlayerActionsType.SET_VOLUME, payload };
-};
-export const setCurrentTime = (payload: number): PlayerAction => {
-    return { type: PlayerActionsType.SET_CURRENT_TIME, payload };
-};
-export const setActiveTrack = (payload: SongType): PlayerAction => {
-    return { type: PlayerActionsType.SET_PLAYBACK, payload };
-};
+    | SetCurrentTimeAction;

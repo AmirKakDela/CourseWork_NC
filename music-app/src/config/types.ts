@@ -49,10 +49,3 @@ export type Album = {
     songs: Array<string>,
     cover: string
 }
-// export type Player = {
-//     pause: boolean,
-//     playback: SongType | null,
-//     duration: SongType["duration"],
-//     volume: number,
-//     currentTime: number
-// }

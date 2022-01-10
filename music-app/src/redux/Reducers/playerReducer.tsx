@@ -4,7 +4,7 @@ import {PlayerAction, PlayerActionsType} from "../Actions/playerActions";
 type State = {
     pause: boolean,
     playback: SongType | null,
-    duration: SongType["duration"],
+    duration: number,
     volume: number,
     currentTime: number
 }
@@ -32,22 +32,22 @@ const playerReducer = (state = initialState, action: PlayerAction): State => {
         case PlayerActionsType.SET_CURRENT_TIME:
             return {
                 ...state,
-                currentTime: action.payload as number
+                currentTime: action.payload
             };
         case PlayerActionsType.SET_DURATION:
             return {
                 ...state,
-                duration: action.payload as number
+                duration: action.payload
             };
         case PlayerActionsType.SET_VOLUME:
             return {
                 ...state,
-                volume: action.payload as number
+                volume: action.payload
             };
         case PlayerActionsType.SET_PLAYBACK:
             return {
                 ...state,
-                playback: action.payload as SongType,
+                playback: action.payload,
                 duration: 0,
                 currentTime: 0
             };

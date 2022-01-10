@@ -3,18 +3,26 @@ import './song.scss';
 import {SongType} from "../../config/types";
 import songDefault from '../../assets/imgs/song_default.jpg'
 import Like from "./Like";
-import {CaretRightFilled} from "@ant-design/icons";
-
+import {CaretRightFilled, PauseOutlined} from "@ant-design/icons";
+import {useActions} from "../../hooks/useActions";
+import {setPlayingSong} from "../../redux/action-creators/player";
 
 type PropsType = {
     song: SongType,
-    number: number
+    number: number,
+    active?: boolean;
 }
 
-
 const Song = (props: PropsType) => {
-    const {song} = props
-    const [songCover, setSongCover] = useState(song.cover)
+    const {song, active = false} = props;
+    const [songCover, setSongCover] = useState(song.cover);
+    const {playTrack, pauseTrack, setPlayingSong} = useActions();
+
+    const play = (e: { stopPropagation: () => void; }) => {
+        e.stopPropagation();
+        setPlayingSong(song);
+        playTrack();
+    }
 
     const onImageError = () => {
         setSongCover(songDefault)
@@ -25,7 +33,12 @@ const Song = (props: PropsType) => {
             <div className="song__main">
                 <div className="song__first">
                     <h3 className="song__number">{props.number}</h3>
-                    <CaretRightFilled className="song__play"/>
+                    <div className="song__play" onClick={play}>
+                        {!active
+                            ? <CaretRightFilled/>
+                            : <PauseOutlined/>
+                        }
+                    </div>
                 </div>
                 <img src={songCover} alt="Song Picture"
                      className="song__img"
