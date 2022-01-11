@@ -82,7 +82,7 @@ class songController {
     async deleteSong(req, res) {
         try {
             const deletedSong = await Song.findByIdAndDelete(req.params.id);
-            if (!deletedSong) return res.status(412).json({message: "Ошибка сервера при удалении трека."});
+            if (!deletedSong) return res.status(412).json({message: "Такого трека не существует"});
 
             const users = await User.find({likedSongs: deletedSong._id});
 

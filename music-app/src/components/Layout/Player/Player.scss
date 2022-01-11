@@ -1,3 +1,12 @@
+.song-progress {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  &__slider {
+    flex: 1;
+  }
+}
+
 .player {
   background-color: #181818;
   border-top: 1px solid #282828;
@@ -12,11 +21,7 @@
   align-items: center;
   color: white;
 
-  &__control__song-progress{
-    flex:1
-  }
-
-  &__now-playing{
+  &__now-playing {
     min-width: 180px;
     width: 30%;
   }
@@ -24,7 +29,8 @@
   &__controls {
     max-width: 722px;
     width: 40%;
-    &__icons{
+
+    &__icons {
       display: flex;
       flex-flow: row nowrap;
       align-items: center;
@@ -33,6 +39,7 @@
       width: 100%;
       justify-content: center;
     }
+
     &__timeline {
       display: flex;
       flex-flow: row nowrap;
@@ -40,13 +47,13 @@
       width: 100%;
     }
 
-    &__playpause{
+    &__playpause {
       size: 32px;
     }
   }
 
 
-  &__control-button-bar{
+  &__control-button-bar {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
@@ -54,6 +61,7 @@
     min-width: 180px;
     width: 30%;
     gap: 16px;
+
     &__volume {
       display: flex;
       align-items: center;

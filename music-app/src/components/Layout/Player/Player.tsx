@@ -7,6 +7,7 @@ import {useActions} from "../../../hooks/useActions";
 import SongProgress from "./SongProgress";
 
 let audio: HTMLAudioElement;
+const audioSrcDefault = "https://assets.coderrocketfuel.com/pomodoro-times-up.mp3";
 
 export function Player() {
 
@@ -23,17 +24,24 @@ export function Player() {
     }, [playback]);
 
     const setSongParams = () => {
-        if (audio) {
-            audio.src = playback?.song as string;
+        if (playback) {
+            audio.src = playback?.song;
             audio.volume = volume / 100;
             audio.onloadedmetadata = () => {
-                setDurationSong(Math.ceil(audio.duration));
+                setDurationSong(audio.duration);
             };
             audio.ontimeupdate = () => {
                 setCurrentTimeSong(Math.ceil(audio.currentTime));
             };
         }
     };
+
+    const formattedTime = (time: number) => {
+        return new Date((time + new Date().getTimezoneOffset() * 60) * 1000)
+            .toLocaleTimeString()
+            .replace(/^00:/, '');
+    };
+
     const playMusic = () => {
         if (pause) {
             playTrack();
@@ -44,13 +52,13 @@ export function Player() {
         }
     };
 
-    const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-        audio.volume = Number(e.target.value) / 100;
-        setVolumeSong(Number(e.target.value));
+    const changeVolume = (value: number) => {
+        audio.volume = value / 100;
+        setVolumeSong(value);
     };
-    const changeCurrentTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-        audio.currentTime = Number(e.target.value);
-        setCurrentTimeSong(Number(e.target.value));
+    const changeCurrentTime = (value: number) => {
+        audio.currentTime = value;
+        setCurrentTimeSong(value);
     };
 
     return (
@@ -71,14 +79,24 @@ export function Player() {
                     <StepForwardOutlined style={{ fontSize: "16px", color: "#fff" }}/>
                 </div>
                 <div className="player__controls__timeline">
-                    <SongProgress begin={currentTime} end={duration} onChange={changeCurrentTime}/>
+                    <SongProgress
+                        begin={currentTime}
+                        end={duration}
+                        current={formattedTime(currentTime)}
+                        finish={formattedTime(duration)}
+                        onChange={changeCurrentTime}
+                    />
                 </div>
             </div>
             <div className="player__control-button-bar">
                 <MenuUnfoldOutlined style={{ fontSize: "14px", color: "#fff" }}/>
                 <SoundOutlined style={{ fontSize: "14px", color: "#fff" }}/>
                 <div className="player__control-button-bar__volume">
-                    <SongProgress begin={volume} end={100} onChange={changeVolume}/>
+                    <SongProgress
+                        begin={volume}
+                        end={100}
+                        onChange={changeVolume}
+                    />
                 </div>
             </div>
         </div>
