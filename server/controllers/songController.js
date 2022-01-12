@@ -46,6 +46,17 @@ class songController {
         }
     }
 
+    async getSong(req, res) {
+        try {
+            const id = req.params["id"];
+            const song = await Song.findById(id);
+            if (!song) return res.status(412).json({message: "Ошибка сервера при получении трека."});
+            return res.json(song);
+        } catch (e) {
+            return res.send({message: "Ошибка сервера при getSong."});
+        }
+    }
+
     async toggleLikeSong(req, res) {
         try {
             const song = await Song.findById(req.params.id);
@@ -71,7 +82,7 @@ class songController {
     async deleteSong(req, res) {
         try {
             const deletedSong = await Song.findByIdAndDelete(req.params.id);
-            if (!deletedSong) return res.status(412).json({message: "Ошибка сервера при удалении трека."});
+            if (!deletedSong) return res.status(412).json({message: "Такого трека не существует"});
 
             const users = await User.find({likedSongs: deletedSong._id});
 

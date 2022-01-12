@@ -16,6 +16,8 @@ router.post('/create', authMiddleware,
 
 router.get('/all', authMiddleware, controller.getAllSongs);
 
+router.get('/:id',authMiddleware, controller.getSong);
+
 router.get('/user/liked-songs', authMiddleware, controller.userLikedSongs);
 
 router.put('/user/like/:id', authMiddleware, controller.toggleLikeSong);
@@ -23,6 +25,5 @@ router.put('/user/like/:id', authMiddleware, controller.toggleLikeSong);
 router.delete('/delete/:id', adminMiddleware, controller.deleteSong);
 
 router.put('/update/:id', adminMiddleware, controller.updateSong);
-
 
 module.exports = router;
