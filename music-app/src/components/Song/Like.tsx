@@ -3,11 +3,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/Reducers/rootReducer";
 import {HeartFilled, HeartOutlined} from "@ant-design/icons";
 import {thunkToggleLikeSong} from "../../redux/Actions/thunkUserActions";
-import {SongType} from "../../config/types";
+import {Track} from "../../config/types";
 import {ClipLoader} from "react-spinners";
 
 type PropsType = {
-    song: SongType
+    song: Track;
 }
 
 const Like: React.FC<PropsType> = (props) => {

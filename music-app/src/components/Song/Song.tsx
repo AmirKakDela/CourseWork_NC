@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import "./song.scss";
-import {SongType} from "../../config/types";
+import {Track} from "../../config/types";
 import songDefault from "../../assets/imgs/song_default.jpg";
 import Like from "./Like";
 import {CaretRightFilled as PlayIcon, PauseOutlined as PauseIcon} from "@ant-design/icons";
@@ -11,7 +11,7 @@ import {RootState} from "../../redux/Reducers/rootReducer";
 import {playMusic} from "../Layout/Player/playMusic";
 
 type PropsType = {
-    song: SongType,
+    song: Track,
     order: number,
 }
 

@@ -10,9 +10,9 @@ import {formattedTime} from "./player.untils";
 const audio: HTMLAudioElement = new Audio();
 
 export function Player() {
-    const { playback, volume, currentTime, pause, duration } = useTypedSelector((state: RootState) => state.player);
+    const { playback, volume, pause, duration } = useTypedSelector((state: RootState) => state.player);
     const { playSong, setDurationSong, setVolumeSong, pauseSong } = useActions();
-    const [ playerTime, setPlayerTime ] = useState(currentTime);
+    const [ playerTime, setPlayerTime ] = useState(0);
 
     useEffect(() => {
         if (pause) {

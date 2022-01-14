@@ -1,11 +1,10 @@
-import {SongType} from "../../config/types";
+import {Track} from "../../config/types";
 
 export enum PlayerActionsType {
     PLAY = "PLAY",
     PAUSE = "PAUSE",
     SET_PLAYBACK = "SET_PLAYBACK",
     SET_VOLUME = "SET_VOLUME",
-    SET_CURRENT_TIME = "SET_CURRENT_TIME",
     SET_DURATION = "SET_DURATION",
 }
 
@@ -17,7 +16,7 @@ type PauseAction = {
 }
 type SetPlaybackAction = {
     type: PlayerActionsType.SET_PLAYBACK,
-    payload: SongType;
+    payload: Track;
 }
 type SetDurationAction = {
     type: PlayerActionsType.SET_DURATION,
@@ -27,15 +26,10 @@ type SetVolumeAction = {
     type: PlayerActionsType.SET_VOLUME,
     payload: number;
 }
-type SetCurrentTimeAction = {
-    type: PlayerActionsType.SET_CURRENT_TIME,
-    payload: number;
-}
 
 export type PlayerAction =
     PlayAction
     | PauseAction
     | SetPlaybackAction
     | SetDurationAction
-    | SetVolumeAction
-    | SetCurrentTimeAction;
+    | SetVolumeAction;
