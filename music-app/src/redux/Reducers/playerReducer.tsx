@@ -48,8 +48,6 @@ const playerReducer = (state = initialState, action: PlayerAction): State => {
             return {
                 ...state,
                 playback: action.payload,
-                duration: 0,
-                currentTime: 0
             };
         default:
             return state;

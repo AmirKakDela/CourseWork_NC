@@ -18,7 +18,7 @@ const songReducer = (state = initialState, action: SongAction): State => {
         case SongActionTypes.FETCH_SONGS:
             return {error: '', tracks: action.payload}
         default:
-            return state
+            return state;
     }
 }
 

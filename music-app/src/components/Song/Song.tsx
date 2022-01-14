@@ -3,7 +3,7 @@ import "./song.scss";
 import {SongType} from "../../config/types";
 import songDefault from "../../assets/imgs/song_default.jpg";
 import Like from "./Like";
-import {CaretRightFilled, PauseOutlined} from "@ant-design/icons";
+import {CaretRightFilled as PlayIcon, PauseOutlined as PauseIcon} from "@ant-design/icons";
 import {useActions} from "../../hooks/useActions";
 import {setPlayingSong} from "../../redux/action-creators/player";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
@@ -21,15 +21,14 @@ const Song = (props: PropsType) => {
     const [songCover, setSongCover] = useState(song.cover);
     const { playSong, pauseSong, setPlayingSong } = useActions();
 
-    const play = () => {
+    function play() {
         setPlayingSong(song);
-            if (pause) {
-                setPlayingSong(song);
-                playSong();
-            } else {
-                pauseSong();
-            }
-    };
+        if (pause) {
+            playSong();
+        } else {
+            pauseSong();
+        }
+    }
 
     const onImageError = () => {
         setSongCover(songDefault);
@@ -40,14 +39,16 @@ const Song = (props: PropsType) => {
             <div className="song__main">
                 <div className="song__first">
                     <h3 className="song__number">{order}</h3>
-                    <div className="song__play" onClick={play}>
+                    <div className="song__play"
+                         onClick={play}>
                         {pause
-                            ? <CaretRightFilled/>
-                            : <PauseOutlined/>
+                            ? <PlayIcon/>
+                            : <PauseIcon/>
                         }
                     </div>
                 </div>
-                <img src={songCover} alt="Song Picture"
+                <img src={songCover || songDefault}
+                     alt="Song Picture"
                      className="song__img"
                      onError={onImageError}
                 />
