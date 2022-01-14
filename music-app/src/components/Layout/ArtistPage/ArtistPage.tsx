@@ -51,7 +51,7 @@ const ArtistPage = () => {
                             <h2 className="main__title">Песни</h2>
                             <div className="main__songs">
                                 {artist.songs.map((s, index) => (
-                                    <Song song={s} number={index + 1} key={s._id}/>
+                                    <Song song={s} order={index + 1} key={s._id}/>
                                 ))}
                             </div>
                         </div>

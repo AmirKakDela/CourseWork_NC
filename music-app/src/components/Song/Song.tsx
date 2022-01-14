@@ -1,40 +1,47 @@
-import React, {useState} from 'react';
-import './song.scss';
+import React, {useEffect, useState} from "react";
+import "./song.scss";
 import {SongType} from "../../config/types";
-import songDefault from '../../assets/imgs/song_default.jpg'
+import songDefault from "../../assets/imgs/song_default.jpg";
 import Like from "./Like";
 import {CaretRightFilled, PauseOutlined} from "@ant-design/icons";
 import {useActions} from "../../hooks/useActions";
 import {setPlayingSong} from "../../redux/action-creators/player";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
+import {RootState} from "../../redux/Reducers/rootReducer";
+import {playMusic} from "../Layout/Player/playMusic";
 
 type PropsType = {
     song: SongType,
-    number: number,
-    active?: boolean;
+    order: number,
 }
 
 const Song = (props: PropsType) => {
-    const {song, active = false} = props;
+    const { song, order } = props;
+    const { pause } = useTypedSelector((state: RootState) => state.player);
     const [songCover, setSongCover] = useState(song.cover);
-    const {playTrack, pauseTrack, setPlayingSong} = useActions();
+    const { playSong, pauseSong, setPlayingSong } = useActions();
 
-    const play = (e: { stopPropagation: () => void; }) => {
-        e.stopPropagation();
+    const play = () => {
         setPlayingSong(song);
-        playTrack();
-    }
+            if (pause) {
+                setPlayingSong(song);
+                playSong();
+            } else {
+                pauseSong();
+            }
+    };
 
     const onImageError = () => {
-        setSongCover(songDefault)
-    }
+        setSongCover(songDefault);
+    };
 
     return (
         <div className="song">
             <div className="song__main">
                 <div className="song__first">
-                    <h3 className="song__number">{props.number}</h3>
+                    <h3 className="song__number">{order}</h3>
                     <div className="song__play" onClick={play}>
-                        {!active
+                        {pause
                             ? <CaretRightFilled/>
                             : <PauseOutlined/>
                         }
@@ -51,7 +58,7 @@ const Song = (props: PropsType) => {
             </div>
             <div className="song__other">
                 <div className="song__like">
-                        <Like song={song}/>
+                    <Like song={song}/>
                 </div>
                 <h3 className="song__duration">
                     {song.duration}

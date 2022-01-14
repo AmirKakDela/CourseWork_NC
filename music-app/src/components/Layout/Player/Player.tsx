@@ -7,19 +7,19 @@ import {useActions} from "../../../hooks/useActions";
 import SongProgress from "./SongProgress";
 
 let audio: HTMLAudioElement;
-const audioSrcDefault = "https://assets.coderrocketfuel.com/pomodoro-times-up.mp3";
+const audioSrcDefault = "https://cdn.pixabay.com/audio/2021/12/01/audio_6d87e99a12.mp3";
 
 export function Player() {
 
     const { playback, volume, currentTime, pause, duration } = useTypedSelector((state: RootState) => state.player);
-    const { playTrack, setPlayingSong, setCurrentTimeSong, setDurationSong, setVolumeSong, pauseTrack } = useActions();
+    const { playSong, setPlayingSong, setCurrentTimeSong, setDurationSong, setVolumeSong, pauseSong } = useActions();
 
     useEffect(() => {
         if (!audio) {
             audio = new Audio();
         } else {
             setSongParams();
-            playMusic();
+            play();
         }
     }, [playback]);
 
@@ -39,17 +39,19 @@ export function Player() {
     const formattedTime = (time: number) => {
         return new Date((time + new Date().getTimezoneOffset() * 60) * 1000)
             .toLocaleTimeString()
-            .replace(/^00:/, '');
+            .replace(/^00:/, "");
     };
 
-    const playMusic = () => {
-        if (pause) {
-            playTrack();
-            audio.play();
-        } else {
-            pauseTrack();
-            audio.pause();
-        }
+    const play = () => {
+            if (pause) {
+                playSong();
+                audio.play();
+                console.log(audio);
+            } else {
+                pauseSong();
+                audio.pause();
+                console.log(audio);
+            }
     };
 
     const changeVolume = (value: number) => {
@@ -70,7 +72,7 @@ export function Player() {
             <div className="player__controls">
                 <div className="player__controls__icons">
                     <StepBackwardOutlined style={{ fontSize: "16px", color: "#fff" }}/>
-                    <div onClick={playMusic} className="player__controls__playpause">
+                    <div onClick={play} className="player__controls__playpause">
                         {pause
                             ? <PlayCircleFilled style={{ fontSize: "32px", color: "#fff" }}/>
                             : <PauseCircleFilled style={{ fontSize: "32px", color: "#fff" }}/>

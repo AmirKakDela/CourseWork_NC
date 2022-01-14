@@ -1,10 +1,10 @@
 import {SongType} from "../../config/types";
 import {PlayerAction, PlayerActionsType} from "../Actions/playerActions";
 
-export const playTrack = (): PlayerAction => {
+export const playSong = (): PlayerAction => {
     return { type: PlayerActionsType.PLAY };
 };
-export const pauseTrack = (): PlayerAction => {
+export const pauseSong = (): PlayerAction => {
     return { type: PlayerActionsType.PAUSE };
 };
 export const setDurationSong = (payload: number): PlayerAction => {

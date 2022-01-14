@@ -81,7 +81,7 @@ const SearchPage = () => {
                                 <div className="search__songs">
 
                                     {searchResult.songs && searchResult.songs.map((song, index) => {
-                                        return <Song song={song} number={index + 1}/>
+                                        return <Song song={song} order={index + 1}/>
                                     })}
                                 </div>
                                 <h2 className="search__title">Исполнители</h2>

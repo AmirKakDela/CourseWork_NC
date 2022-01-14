@@ -34,16 +34,9 @@ const LibrarySong: React.FC = () => {
                 </h2>
 
                 {user.likedSongs.length > 0 ? user.likedSongs.map((song, index) => {
-                    return <Song key={song._id} song={song} number={index + 1}/>
+                    return <Song key={song._id} song={song} order={index + 1}/>
                 }) : <h1 className="library__notsongs">Треков пока нет. Но их можно <Link to='/search'>добавить</Link>!</h1>
                 }
-
-                <div>
-                    <h1 className="library__title">Все треки</h1>
-                    {tracks.map((track, index) => {
-                        return <Song key={track._id} song={track} number={index + 1}/>
-                    })}
-                </div>
             </div>
     );
 };
