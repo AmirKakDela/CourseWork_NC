@@ -11,7 +11,7 @@ import debounce from 'lodash.debounce';
 import ArtistCard from "../../ArtistCard/ArtistCard";
 import {useSearchParams} from 'react-router-dom';
 import { getAlbumsByRequest } from "../../../redux/Actions/thunkAlbumActions";
-import Song from "../../Song/Song";
+import {Song} from "../../Song/Song";
 
 const SearchPage = () => {
     const dispatch = useDispatch();
@@ -81,7 +81,7 @@ const SearchPage = () => {
                                 <div className="search__songs">
 
                                     {searchResult.songs && searchResult.songs.map((song, index) => {
-                                        return <Song song={song} number={index + 1}/>
+                                        return <Song song={song} order={index + 1}/>
                                     })}
                                 </div>
                                 <h2 className="search__title">Исполнители</h2>

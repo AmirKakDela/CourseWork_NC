@@ -1,26 +1,29 @@
 import {MenuUnfoldOutlined, PauseCircleFilled, PlayCircleFilled, SoundOutlined, StepBackwardOutlined, StepForwardOutlined} from "@ant-design/icons";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {RootState} from "../../../redux/Reducers/rootReducer";
 import "./Player.scss";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import {useActions} from "../../../hooks/useActions";
 import SongProgress from "./SongProgress";
+import {formattedTime} from "./player.untils";
 
-let audio: HTMLAudioElement;
-const audioSrcDefault = "https://assets.coderrocketfuel.com/pomodoro-times-up.mp3";
+const audio: HTMLAudioElement = new Audio();
 
 export function Player() {
-
-    const { playback, volume, currentTime, pause, duration } = useTypedSelector((state: RootState) => state.player);
-    const { playTrack, setPlayingSong, setCurrentTimeSong, setDurationSong, setVolumeSong, pauseTrack } = useActions();
+    const { playback, volume, pause, duration } = useTypedSelector((state: RootState) => state.player);
+    const { playSong, setDurationSong, setVolumeSong, pauseSong } = useActions();
+    const [ playerTime, setPlayerTime ] = useState(0);
 
     useEffect(() => {
-        if (!audio) {
-            audio = new Audio();
-        } else {
-            setSongParams();
-            playMusic();
+        if (pause) {
+            audio.pause();
+        } else if (audio.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA || audio.readyState === HTMLMediaElement.HAVE_FUTURE_DATA) {
+            audio.play();
         }
+    }, [pause]);
+
+    useEffect(() => {
+        setSongParams();
     }, [playback]);
 
     const setSongParams = () => {
@@ -30,25 +33,22 @@ export function Player() {
             audio.onloadedmetadata = () => {
                 setDurationSong(audio.duration);
             };
+            audio.oncanplay = () => {
+                if (!pause) {
+                    audio.play();
+                }
+            }
             audio.ontimeupdate = () => {
-                setCurrentTimeSong(Math.ceil(audio.currentTime));
+                setPlayerTime(Math.ceil(audio.currentTime));
             };
         }
     };
 
-    const formattedTime = (time: number) => {
-        return new Date((time + new Date().getTimezoneOffset() * 60) * 1000)
-            .toLocaleTimeString()
-            .replace(/^00:/, '');
-    };
-
-    const playMusic = () => {
+    const play = () => {
         if (pause) {
-            playTrack();
-            audio.play();
+            playSong();
         } else {
-            pauseTrack();
-            audio.pause();
+            pauseSong();
         }
     };
 
@@ -56,9 +56,10 @@ export function Player() {
         audio.volume = value / 100;
         setVolumeSong(value);
     };
+
     const changeCurrentTime = (value: number) => {
         audio.currentTime = value;
-        setCurrentTimeSong(value);
+        setPlayerTime(value);
     };
 
     return (
@@ -70,7 +71,7 @@ export function Player() {
             <div className="player__controls">
                 <div className="player__controls__icons">
                     <StepBackwardOutlined style={{ fontSize: "16px", color: "#fff" }}/>
-                    <div onClick={playMusic} className="player__controls__playpause">
+                    <div onClick={play} className="player__controls__playpause">
                         {pause
                             ? <PlayCircleFilled style={{ fontSize: "32px", color: "#fff" }}/>
                             : <PauseCircleFilled style={{ fontSize: "32px", color: "#fff" }}/>
@@ -80,9 +81,9 @@ export function Player() {
                 </div>
                 <div className="player__controls__timeline">
                     <SongProgress
-                        begin={currentTime}
+                        begin={playerTime}
                         end={duration}
-                        current={formattedTime(currentTime)}
+                        current={formattedTime(playerTime)}
                         finish={formattedTime(duration)}
                         onChange={changeCurrentTime}
                     />

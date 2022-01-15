@@ -1,23 +1,21 @@
-import {SongType} from "../../config/types";
+import {Track} from "../../config/types";
 import {PlayerAction, PlayerActionsType} from "../Actions/playerActions";
 
-type State = {
+export type PlayerReducerState = {
     pause: boolean,
-    playback: SongType | null,
+    playback: Track | null,
     duration: number,
     volume: number,
-    currentTime: number
 }
 
-const initialState: State = {
+const initialState: PlayerReducerState = {
     pause: true,
     volume: 50,
-    currentTime: 0,
     playback: null,
     duration: 0
 };
 
-const playerReducer = (state = initialState, action: PlayerAction): State => {
+export const playerReducer = (state = initialState, action: PlayerAction): PlayerReducerState => {
     switch (action.type) {
         case PlayerActionsType.PAUSE:
             return {
@@ -28,11 +26,6 @@ const playerReducer = (state = initialState, action: PlayerAction): State => {
             return {
                 ...state,
                 pause: false
-            };
-        case PlayerActionsType.SET_CURRENT_TIME:
-            return {
-                ...state,
-                currentTime: action.payload
             };
         case PlayerActionsType.SET_DURATION:
             return {
@@ -48,12 +41,8 @@ const playerReducer = (state = initialState, action: PlayerAction): State => {
             return {
                 ...state,
                 playback: action.payload,
-                duration: 0,
-                currentTime: 0
             };
         default:
             return state;
     }
 };
-
-export default playerReducer;

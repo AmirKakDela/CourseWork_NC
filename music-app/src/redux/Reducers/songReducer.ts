@@ -1,8 +1,8 @@
-import {SongType} from "../../config/types";
+import {Track} from "../../config/types";
 import {SongAction, SongActionTypes} from "../Actions/songAction";
 
 type State = {
-    tracks: SongType[],
+    tracks: Track[],
     error: string
 }
 
@@ -18,7 +18,7 @@ const songReducer = (state = initialState, action: SongAction): State => {
         case SongActionTypes.FETCH_SONGS:
             return {error: '', tracks: action.payload}
         default:
-            return state
+            return state;
     }
 }
 

@@ -1,5 +1,6 @@
 const { validationResult } = require("express-validator");
 const Album = require("../models/Album");
+const Artist = require("../models/Artist");
 
 class AlbumController {
     async getArtistAlbum(req, res) {
@@ -18,10 +19,8 @@ class AlbumController {
             let albums = [];
             if(artistId) {
                 albums = await Album.findOne(artistId);
-                console.log(albums)
             } else {
                 albums = await Album.find();
-                console.log(albums)
             }
             res.json(albums || []);
         } catch (e) {
@@ -50,13 +49,21 @@ class AlbumController {
                     });
             }
             const album = new Album(req.body);
-            await album.save();
-
-            return res.status(200)
-                .json({
-                    message: "Альбом успешно добавлен",
-                    album
-                });
+            const candidateArtist = await Artist.findOne({name: artist});
+            if (candidateArtist) {
+                candidateArtist.albums.unshift(album._id);
+                await album.save();
+                return res.status(200)
+                    .json({
+                        message: "Альбом успешно добавлен",
+                        album
+                    });
+            } else {
+                return res.status(412)
+                    .json({
+                        message: "Такого исполнителя не существует",
+                    });
+            }
         } catch (e) {
             res.status(500).json({ message: `${e.message}. Ошибка сервера при создании альбома` });
         }

@@ -2,7 +2,7 @@ import {Dispatch} from "redux";
 import {ArtistActionType, setArtist, setLoading, setArtists} from "./artistActions";
 import {url} from "../../config/config";
 import axios from "axios";
-import {ArtistType, SongType} from "../../config/types";
+import {ArtistType, Track} from "../../config/types";
 
 export const getArtist = (artistId: string) => {
     return async (dispatch: Dispatch<ArtistActionType>) => {
@@ -14,7 +14,7 @@ export const getArtist = (artistId: string) => {
                 }
             });
             const artist: ArtistType = response.data.artist;
-            const songs: Array<SongType> = response.data.songs;
+            const songs: Array<Track> = response.data.songs;
             artist.songs = [...songs];
             dispatch(setArtist(response.data.artist));
         } catch (e) {

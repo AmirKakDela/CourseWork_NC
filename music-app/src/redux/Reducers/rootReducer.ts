@@ -4,8 +4,8 @@ import searchReducer from "./searchReducer";
 import sharedReducer from "./sharedReducer";
 import artistReducer from "./artistReducer";
 import albumReducer from "./albumReducer";
-import playerReducer from "./playerReducer";
 import songReducer from "./songReducer";
+import {playerReducer} from "./playerReducer";
 
 
 export const rootReducer = combineReducers({

@@ -8,6 +8,7 @@
   width: 100%;
   border-radius: 4px;
   transition: .2s all ease-in-out;
+  user-select: none;
 
   &__main {
     display: flex;
@@ -61,6 +62,15 @@
     display: none;
     font-size: 25px;
     color: $white;
+    cursor: pointer;
+  }
+
+  &._played &__play, &:hover &__play {
+    display: block;
+  }
+
+  &._active {
+    background-color: rgba(255, 255, 255, .3);
   }
 
   &__first {
@@ -68,15 +78,13 @@
     margin-right: 10px;
   }
 
-  &:hover {
+  &:not(._active):hover {
     background-color: rgba(255, 255, 255, 0.08);
+  }
 
+  &:hover {
     .song__artist {
       color: $white;
-    }
-
-    .song__play {
-      display: block;
     }
 
     .song__number {
