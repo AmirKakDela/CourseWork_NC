@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../redux/Reducers/rootReducer";
-import Song from "../../Song/Song";
+import {Song} from "../../Song/Song";
 import {thunkUserLikedSongs} from "../../../redux/Actions/thunkUserActions";
 import {Link} from "react-router-dom";
 import {fetchSongs} from "../../../redux/Actions/thunkSongActions";

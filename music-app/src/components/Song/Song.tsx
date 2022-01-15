@@ -9,24 +9,27 @@ import {setPlayingSong} from "../../redux/action-creators/player";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {RootState} from "../../redux/Reducers/rootReducer";
 import {playMusic} from "../Layout/Player/playMusic";
+import {PlayerReducerState} from "../../redux/Reducers/playerReducer";
 
 type PropsType = {
     song: Track,
     order: number,
 }
 
-const Song = (props: PropsType) => {
+export const Song = (props: PropsType) => {
     const { song, order } = props;
-    const { pause } = useTypedSelector((state: RootState) => state.player);
+    const { pause, playback } = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
     const [songCover, setSongCover] = useState(song.cover);
     const { playSong, pauseSong, setPlayingSong } = useActions();
+    const isSelectedSong = playback?._id === song._id;
+    const isPlayed = !pause && isSelectedSong;
 
     function play() {
         setPlayingSong(song);
-        if (pause) {
-            playSong();
-        } else {
+        if (isPlayed) {
             pauseSong();
+        } else {
+            playSong();
         }
     }
 
@@ -35,15 +38,15 @@ const Song = (props: PropsType) => {
     };
 
     return (
-        <div className="song">
+        <div className={`song ${isPlayed ? "_played" : ""} ${isSelectedSong ? "_active" : ""}`}>
             <div className="song__main">
                 <div className="song__first">
-                    <h3 className="song__number">{order}</h3>
+                    {!isPlayed && <h3 className="song__number">{order}</h3>}
                     <div className="song__play"
                          onClick={play}>
-                        {pause
-                            ? <PlayIcon/>
-                            : <PauseIcon/>
+                        {isPlayed
+                            ? <PauseIcon/>
+                            : <PlayIcon/>
                         }
                     </div>
                 </div>
@@ -68,5 +71,3 @@ const Song = (props: PropsType) => {
         </div>
     );
 };
-
-export default Song;

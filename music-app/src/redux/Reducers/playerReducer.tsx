@@ -1,21 +1,21 @@
 import {Track} from "../../config/types";
 import {PlayerAction, PlayerActionsType} from "../Actions/playerActions";
 
-type State = {
+export type PlayerReducerState = {
     pause: boolean,
     playback: Track | null,
     duration: number,
     volume: number,
 }
 
-const initialState: State = {
+const initialState: PlayerReducerState = {
     pause: true,
     volume: 50,
     playback: null,
     duration: 0
 };
 
-const playerReducer = (state = initialState, action: PlayerAction): State => {
+export const playerReducer = (state = initialState, action: PlayerAction): PlayerReducerState => {
     switch (action.type) {
         case PlayerActionsType.PAUSE:
             return {
@@ -46,5 +46,3 @@ const playerReducer = (state = initialState, action: PlayerAction): State => {
             return state;
     }
 };
-
-export default playerReducer;
