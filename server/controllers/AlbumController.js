@@ -1,11 +1,20 @@
 const { validationResult } = require("express-validator");
 const Album = require("../models/Album");
+const DbSchema = require("../models/dbSchema");
 
 class AlbumController {
     async getArtistAlbum(req, res) {
         try {
-            const id = req.params["id"];
-            const album = await Album.findById(id);
+            const id = req.params["id"]; //id артиста
+            const artistId = DbSchema.findById(id)._id;
+            if (!artistId)  {
+                return res.status(412)
+                    .json({
+                        message: "Такого id артиста нет",
+                    });
+            }
+            const album = await DbSchema.albums.findById(artistId);
+            console.log(DbSchema.albums);
             res.json(album);
         } catch (e) {
             res.status(500).json({ message: `${e.message}.Ошибка сервера при получении альбома` });
