@@ -41,8 +41,19 @@ class songController {
 
             return res.json(songs);
         } catch (e) {
-            return res.send({message: "Ошибка сервера при получении списка всех треков."});
             console.log('Ошибка сервера при getAllSongs', e);
+            return res.send({message: "Ошибка сервера при получении списка всех треков."});
+        }
+    }
+
+    async getSong(req, res) {
+        try {
+            const id = req.params["id"];
+            const song = await Song.findById(id);
+            if (!song) return res.status(412).json({message: "Ошибка сервера при получении трека."});
+            return res.json(song);
+        } catch (e) {
+            return res.send({message: "Ошибка сервера при getSong."});
         }
     }
 
@@ -63,23 +74,23 @@ class songController {
                 return res.json({message: 'Удалено из списка любимых песен.'});
             }
         } catch (e) {
-            return res.send({message: "Ошибка сервера добавлении песни в список любимых песен."});
             console.log('Ошибка сервера при toggleLikeSong', e);
+            return res.send({message: "Ошибка сервера добавлении песни в список любимых песен."});
         }
     }
 
     async deleteSong(req, res) {
         try {
             const deletedSong = await Song.findByIdAndDelete(req.params.id);
-            if (!deletedSong) return res.status(412).json({message: "Ошибка сервера при удалении трека."});
+            if (!deletedSong) return res.status(412).json({message: "Такого трека не существует"});
 
             const users = await User.find({likedSongs: deletedSong._id});
 
             deleteLikeSongOnUser(users, deletedSong._id)
             return res.json({message: 'Песня успешно удалена', users});
         } catch (e) {
-            return res.send({message: "Ошибка сервера при удалении трека."});
             console.log('Ошибка сервера при deleteSong', e);
+            return res.send({message: "Ошибка сервера при удалении трека."});
         }
     }
 
@@ -91,8 +102,8 @@ class songController {
             if (!updatedSong) return res.status(412).json({message: "Песни с таким id не существует"});
             res.json({message: 'Песня успешно обновлена'});
         } catch (e) {
-            return res.send({message: "Ошибка сервера при обновлении трека."});
             console.log('Ошибка сервера при updateSong', e);
+            return res.send({message: "Ошибка сервера при обновлении трека."});
         }
     }
 
@@ -103,7 +114,8 @@ class songController {
             const songs = await Song.find({_id: user.likedSongs});
             return res.json(songs);
         } catch (e) {
-
+            console.log('Ошибка сервера при userLikedSongs', e);
+            return res.send({message: "Ошибка сервера при сохранении понравившейся песни."});
         }
     }
 }

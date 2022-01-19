@@ -13,6 +13,8 @@ router.put('/update/:id', adminMiddleware, controller.updateArtist);
 
 router.get('/all', authMiddleware, controller.getAllArtists);
 
+router.get('/artist/:id', authMiddleware, controller.getArtist)
+
 router.get('/all-songs/:id', authMiddleware, controller.getAllArtistSongs);
 
 module.exports = router;

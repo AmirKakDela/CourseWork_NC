@@ -14,7 +14,7 @@ export function Sidebar() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentTheme = useSelector((state: RootState) => state.shared.appTheme);
-    const [current, setCurrent] = useState("1");
+    const [current, setCurrent] = useState("0");
 
     const changeTheme = (value: boolean) => {
         dispatch({

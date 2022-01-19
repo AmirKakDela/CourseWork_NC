@@ -10,13 +10,15 @@ import {RootState} from '../../../redux/Reducers/rootReducer';
 import debounce from 'lodash.debounce';
 import ArtistCard from "../../ArtistCard/ArtistCard";
 import {useSearchParams} from 'react-router-dom';
-import { getAlbumByIdRequest, getAlbumsByRequest } from "../../../redux/Actions/thunkAlbumActions";
+import { getAlbumsByRequest } from "../../../redux/Actions/thunkAlbumActions";
+import {Song} from "../../Song/Song";
 
 const SearchPage = () => {
     const dispatch = useDispatch();
-    if(!useSelector((state: RootState) => state.album.albums)?.length) {
+    useEffect( () => {
         dispatch(getAlbumsByRequest());
-    }
+    },[]);
+
     const searchResult = useSelector((state: RootState) => state.search.searchResult);
     const searchError = useSelector((state: RootState) => state.search.error);
     const popularAlbums = useSelector((state: RootState) => state.album.albums); //здесь нужно получать популярные альбомы, пока получаем все из бд
@@ -78,9 +80,8 @@ const SearchPage = () => {
                                 <h2 className="search__title">Треки</h2>
                                 <div className="search__songs">
 
-                                    {searchResult.songs && searchResult.songs.map(song => {
-                                        // todo: вместо парагрфа будем возвращать комопонент песни
-                                        return <div className="song" key={song._id}>{song.artist} - {song.name}</div>
+                                    {searchResult.songs && searchResult.songs.map((song, index) => {
+                                        return <Song song={song} order={index + 1}/>
                                     })}
                                 </div>
                                 <h2 className="search__title">Исполнители</h2>

@@ -1,20 +1,12 @@
 const { validationResult } = require("express-validator");
 const Album = require("../models/Album");
-const DbSchema = require("../models/dbSchema");
+const Artist = require("../models/Artist");
 
 class AlbumController {
     async getArtistAlbum(req, res) {
         try {
-            const id = req.params["id"]; //id артиста
-            const artistId = DbSchema.findById(id)._id;
-            if (!artistId)  {
-                return res.status(412)
-                    .json({
-                        message: "Такого id артиста нет",
-                    });
-            }
-            const album = await DbSchema.albums.findById(artistId);
-            console.log(DbSchema.albums);
+            const id = req.params["id"];
+            const album = await Album.findById(id);
             res.json(album);
         } catch (e) {
             res.status(500).json({ message: `${e.message}.Ошибка сервера при получении альбома` });
@@ -27,10 +19,8 @@ class AlbumController {
             let albums = [];
             if(artistId) {
                 albums = await Album.findOne(artistId);
-                console.log(albums)
             } else {
                 albums = await Album.find();
-                console.log(albums)
             }
             res.json(albums || []);
         } catch (e) {
@@ -59,13 +49,21 @@ class AlbumController {
                     });
             }
             const album = new Album(req.body);
-            await album.save();
-
-            return res.status(200)
-                .json({
-                    message: "Альбом успешно добавлен",
-                    album
-                });
+            const candidateArtist = await Artist.findOne({name: artist});
+            if (candidateArtist) {
+                candidateArtist.albums.unshift(album._id);
+                await album.save();
+                return res.status(200)
+                    .json({
+                        message: "Альбом успешно добавлен",
+                        album
+                    });
+            } else {
+                return res.status(412)
+                    .json({
+                        message: "Такого исполнителя не существует",
+                    });
+            }
         } catch (e) {
             res.status(500).json({ message: `${e.message}. Ошибка сервера при создании альбома` });
         }
