@@ -7,7 +7,8 @@ const songRouter = require('./routes/song.router');
 const artistRouter = require('./routes/artist.router');
 const searchRouter = require('./routes/search.router');
 const albumRouter = require('./routes/album.router');
-const authMiddleware = require("./middlewares/auth.middleware");
+const genreRouter = require('./routes/genre.router');
+const playlistRouter = require('./routes/playlist.router')
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -20,6 +21,8 @@ app.use('/api/song', songRouter);
 app.use('/api/artist', artistRouter);
 app.use('/api/search', searchRouter);
 app.use('/api/album', albumRouter);
+app.use('/api/genre', genreRouter);
+app.use('/api/playlist', playlistRouter);
 
 const start = async () => {
     try {
