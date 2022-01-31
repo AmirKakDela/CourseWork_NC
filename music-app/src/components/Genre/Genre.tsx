@@ -1,20 +1,18 @@
 import React from 'react';
 import './genre.scss'
 import {Link} from "react-router-dom";
-import {colors} from "../../config/config";
+import {GenreType} from "../../config/types";
 
 type PropsType = {
-    genreName: string
+    genre: GenreType
 }
 
 const Genre: React.FC<PropsType> = (props) => {
-    const getRandomColor = (colors: Array<string>) => {
-        return colors[Math.floor(Math.random() * colors.length)];
-    }
+    const {genre} = props;
     return (
-        <Link to={`/genre/${props.genreName.toLowerCase()}`}>
-            <div className="genre" style={{backgroundColor: getRandomColor(colors)}}>
-                <span>{props.genreName}</span>
+        <Link to={`/genre/${genre.name.toLowerCase()}`}>
+            <div className="genre" style={{backgroundColor: genre.color}}>
+                <span>{genre.name}</span>
             </div>
         </Link>
     );
