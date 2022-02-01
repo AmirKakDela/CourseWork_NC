@@ -1,5 +1,6 @@
 const {validationResult} = require("express-validator");
-const Genre = require('../models/Genre')
+const Genre = require('../models/Genre');
+const Song = require('../models/Song');
 
 class GenreController {
     async createGenre(req, res) {
@@ -27,7 +28,11 @@ class GenreController {
             const genre = await Genre.findById(id);
             if(!genre) return res.status(412).json({message: "Ошибка сервера при получении жанра."});
 
-            return res.json(genre)
+            const songs = await Song.find({genre: id})
+            // const albums = await
+            // доделать потом с альбомами и плейлистами
+
+            return res.json({genre, songs})
 
         } catch (e) {
             console.log('Ошибка сервера при getGenre', e);
