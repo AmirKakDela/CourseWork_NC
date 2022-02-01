@@ -8,20 +8,20 @@ const artistRouter = require('./routes/artist.router');
 const searchRouter = require('./routes/search.router');
 const albumRouter = require('./routes/album.router');
 const playlistRouter = require('./routes/playlist.router');
-const authMiddleware = require("./middlewares/auth.middleware");
-
+const genreRouter = require('./routes/genre.router')
 const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-//app.use(authMiddleware);
+
 app.use('/api/auth', authRouter);
 app.use('/api/song', songRouter);
 app.use('/api/artist', artistRouter);
 app.use('/api/search', searchRouter);
 app.use('/api/album', albumRouter);
 app.use('/api/playlist', playlistRouter)
+app.use('/api/genre', genreRouter);
 
 const start = async () => {
     try {
