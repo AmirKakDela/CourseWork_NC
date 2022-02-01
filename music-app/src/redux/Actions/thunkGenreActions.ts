@@ -1,5 +1,4 @@
 import {Dispatch} from "redux";
-import {SearchActionType} from "./searchActions";
 import axios from "axios";
 import {url} from "../../config/config";
 import {GenreActionType, setGenres} from "./genreActions";
@@ -14,7 +13,7 @@ export const getAllGenres = () => {
             });
             dispatch(setGenres(response.data))
         } catch (e) {
-
+            console.log(e)
         }
     }
 }
