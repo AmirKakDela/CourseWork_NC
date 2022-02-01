@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react';
 import './genrePage.scss';
 import {useParams} from "react-router-dom";
 import API from "../../../API/API";
-import {GenreType} from "../../../config/types";
+import {GenreType, Track} from "../../../config/types";
 import MoonLoader from "react-spinners/MoonLoader";
+import {Song} from "../../Song/Song";
 
 
 const GenrePage: React.FC = () => {
@@ -13,13 +14,16 @@ const GenrePage: React.FC = () => {
         color: 'black',
         name: ''
     })
-    const [loading, setLoading] = useState(true)
+    const [songs, setSongs] = useState<Track[]>([]);
+    const [playlists, setPlaylists] = useState([]);
+    const [albums, setAlbums] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        console.log(urlParams.id)
         if (urlParams.id) {
             API.getGenre(urlParams.id).then(response => {
-                setGenre(response.data);
+                setGenre(response.data.genre);
+                setSongs(response.data.songs);
                 setLoading(false);
             }).catch(response => {
                 setLoading(true)
@@ -40,13 +44,15 @@ const GenrePage: React.FC = () => {
                     <div className="info__main">
                         <h2 className="main__title">Плейлисты</h2>
                         <div className="main__slider">
-                            {/*<AlbumCard/>*/}
-                            {/*<AlbumCard/>*/}
-                            {/*<AlbumCard/>*/}
+                            {!!playlists.length ? playlists.map(playlist => (
+                                ''
+                            )) : (<p className="genre-page__subtitle">У жанра {genre.name && genre.name.toUpperCase()} пока нет плейлистов. Скоро мы это исправим.</p>)}
                         </div>
                         <h2 className="main__title">Песни</h2>
                         <div className="main__songs">
-
+                            {!!songs.length ? songs.map((song, idx) => (
+                                <Song song={song} order={idx + 1}/>
+                            )) : (<p className="genre-page__subtitle">У жанра {genre.name && genre.name.toUpperCase()} пока нет песен. Скоро мы это исправим.</p>)}
                         </div>
                     </div>
                 </div>
