@@ -12,7 +12,9 @@ router.post('/create-genre', authMiddleware, adminMiddleware,
     controller.createGenre
 );
 
-router.get('/all-genres', authMiddleware, controller.getAllGenres)
+router.get('/all-genres', authMiddleware, controller.getAllGenres);
+
+router.get('/genre/:id', authMiddleware, controller.getGenre)
 
 router.put('/update-genre/:id', authMiddleware, adminMiddleware, controller.updateGenre)
 
