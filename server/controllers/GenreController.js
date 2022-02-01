@@ -21,6 +21,20 @@ class GenreController {
         }
     }
 
+    async getGenre(req,res ) {
+        try {
+            const id = req.params.id;
+            const genre = await Genre.findById(id);
+            if(!genre) return res.status(412).json({message: "Ошибка сервера при получении жанра."});
+
+            return res.json(genre)
+
+        } catch (e) {
+            console.log('Ошибка сервера при getGenre', e);
+            return res.send({message: "Ошибка сервера при получение жанра."});
+        }
+    }
+
     async getAllGenres(req, res) {
         try {
             const genres = await Genre.find();
