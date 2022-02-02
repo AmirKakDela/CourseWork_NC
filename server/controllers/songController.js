@@ -7,38 +7,45 @@ class songController {
     async createSong(req, res) {
         try {
             const errors = validationResult(req);
-            if (!errors.isEmpty()) return res.status(412).json({message: 'Ошибка при создании трека', errors})
-
-            const {name, artist} = req.body;
-
-            const candidateSong = await Song.findOne({name, artist});
-            if (candidateSong) return res.status(412).json({message: 'Такой трек уже существует', candidateSong});
-
-            const song = new Song(req.body);
-            await song.save();
-
-            const candidateArtist = await Artist.findOne({name: artist});
-            if (candidateArtist) {
-                candidateArtist.songs.unshift(song._id);
-                candidateArtist.save();
-            } else {
-                const newArtist = new Artist({name: artist, image: '', songs: [song._id]});
+            if (!errors.isEmpty())
+                return res.status(412).json({message: 'Ошибка при создании трека', errors})
+            const {name, artistName,cover,song, duration, genre} = req.body;
+            const candidateSong = await Song.findOne({name, artistName});
+            if (candidateSong)
+                return res.status(412).json({message: 'Такой трек уже существует', candidateSong});
+            const artistOfNewSong = await Artist.findOne({name: artistName});
+            if (!artistOfNewSong) {
+                const newArtist = new Artist({name: artistName, image: ''});
                 newArtist.save();
             }
-
-            return res.status(200).json({message: 'Трек успешно добавлен', song});
-
+            const newSong = new Song( {
+                name: name,
+                artistName: artistName,
+                artist: artistOfNewSong._id,
+                cover: cover,
+                song: song,
+                duration: duration,
+                genre: genre
+            });
+            await newSong.save();
+            // if (candidateArtist) {
+            //     candidateArtist.songs.unshift(song._id);
+            //     candidateArtist.save();
+            // } else {
+            //     const newArtist = new Artist({name: artist, image: '', songs: [song._id]});
+            //     newArtist.save();
+            // }
+            return res.status(200).json({message: 'Трек успешно добавлен', newSong, cover});
         } catch (e) {
-            console.log(e);
-            res.send({message: 'Ошибка сервера при создании трека'});
+            res.send({message: e + ' Ошибка сервера при создании трека'});
         }
     }
 
     async getAllSongs(req, res) {
         try {
             const songs = await Song.find();
-            if (!songs) return res.status(412).json({message: "Ошибка сервера при получении списка всех треков."});
-
+            if (!songs)
+                return res.status(412).json({message: "Ошибка сервера при получении списка всех треков."});
             return res.json(songs);
         } catch (e) {
             console.log('Ошибка сервера при getAllSongs', e);
@@ -96,10 +103,13 @@ class songController {
 
     async updateSong(req, res) {
         try {
-            if (Object.keys(req.body).length === 0 || !req.params.id) return res.status(412).json({message: "Недостаточно данных для обновления трека."});
-            if (req.body.song || req.body.artist) return res.status(412).json({message: "Нельзя обновить имя исполнителя или аудиофайл песни."});
+            if (Object.keys(req.body).length === 0 || !req.params.id)
+                return res.status(412).json({message: "Недостаточно данных для обновления трека."});
+            if (req.body.song || req.body.artist)
+                return res.status(412).json({message: "Нельзя обновить имя исполнителя или аудиофайл песни."});
             const updatedSong = await Song.findByIdAndUpdate(req.params.id, req.body);
-            if (!updatedSong) return res.status(412).json({message: "Песни с таким id не существует"});
+            if (!updatedSong)
+                return res.status(412).json({message: "Песни с таким id не существует"});
             res.json({message: 'Песня успешно обновлена'});
         } catch (e) {
             console.log('Ошибка сервера при updateSong', e);

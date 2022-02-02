@@ -7,6 +7,7 @@ const songRouter = require('./routes/song.router');
 const artistRouter = require('./routes/artist.router');
 const searchRouter = require('./routes/search.router');
 const albumRouter = require('./routes/album.router');
+const dbRouter = require('./routes/db.router');
 const playlistRouter = require('./routes/playlist.router');
 const authMiddleware = require("./middlewares/auth.middleware");
 
@@ -22,6 +23,7 @@ app.use('/api/artist', artistRouter);
 app.use('/api/search', searchRouter);
 app.use('/api/album', albumRouter);
 app.use('/api/playlist', playlistRouter)
+app.use('/api/db', dbRouter);
 
 const start = async () => {
     try {

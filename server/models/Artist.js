@@ -2,9 +2,9 @@ const {Schema, model} = require('mongoose');
 
 const Artist = new Schema({
     name: {type: String, unique: true, required: true},
-    songs: {type: [String], default: []},
-    albums: {type: [String], default: []},
-    image: {type: String}
+    image: {type: String},
+    // songs: {type: [String], default: []},
+    // albums: {type: [String], default: []},
 })
 
 module.exports = model('Artist', Artist);

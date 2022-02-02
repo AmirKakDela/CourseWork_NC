@@ -5,11 +5,12 @@ const authMiddleware = require('../middlewares/auth.middleware');
 const adminMiddleware = require('../middlewares/admin.middleware');
 const {check} = require("express-validator");
 
-router.post('/create', authMiddleware,
+router.post('/create',
     check('name', 'Обязательное поле не заполнено').notEmpty(),
-    check('artist', 'Обязательное поле не заполнено').notEmpty(),
-    check('song', 'Обязательное поле не заполнено').notEmpty(),
-    check('cover', 'Обязательное поле не заполнено').notEmpty(),
+    check('artistName', 'Обязательное поле не заполнено').notEmpty(),
+    // check('artist', 'Обязательное поле не заполнено').notEmpty(),
+    // check('song', 'Обязательное поле не заполнено').notEmpty(),
+    // check('cover', 'Обязательное поле не заполнено').notEmpty(),
     check('duration', 'Обязательное поле не заполнено').notEmpty(),
     check('genre', 'Обязательное поле не заполнено').notEmpty(),
     controller.createSong);

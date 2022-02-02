@@ -15,6 +15,7 @@ export const getArtist = (artistId: string) => {
             });
             const artist: ArtistType = response.data.artist;
             const songs: Array<Track> = response.data.songs;
+            const albums: Array<Track> = response.data.albums;
             artist.songs = [...songs];
             dispatch(setArtist(response.data.artist));
         } catch (e) {

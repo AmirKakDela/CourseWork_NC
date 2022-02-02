@@ -6,6 +6,7 @@ import {useParams} from "react-router-dom";
 import {getArtist} from "../../../redux/Actions/thunkArtistAction";
 import {Song} from "../../Song/Song";
 import MoonLoader from "react-spinners/MoonLoader";
+import {thunkUserLikedSongs} from "../../../redux/Actions/thunkUserActions";
 
 const ArtistPage = () => {
     const urlParams = useParams();
@@ -16,7 +17,7 @@ const ArtistPage = () => {
     useEffect(() => {
         if (urlParams.id) {
             dispatch(getArtist(urlParams.id));
-           // dispatch(thunkUserLikedSongs());
+            dispatch(thunkUserLikedSongs());
         }
     }, []);
 

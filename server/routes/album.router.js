@@ -5,8 +5,9 @@ const authMiddleware = require("../middlewares/auth.middleware");
 const { check } = require("express-validator");
 const adminMiddleware = require("../middlewares/admin.middleware");
 
-router.get("/all", controller.getAllArtistAlbum);
-router.get("/:id", controller.getArtistAlbum);
+router.get("/:artistId/all", controller.getAllArtistAlbum);
+router.get("/:artistId/:albumId", controller.getArtistAlbum);
+router.get("/allAlbums", controller.getAllAlbums);
 router.post("/create",adminMiddleware,
     check("name", "Обязательное поле не заполнено")
         .notEmpty(),
