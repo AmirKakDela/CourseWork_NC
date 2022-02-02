@@ -6,6 +6,7 @@ import artistReducer from "./artistReducer";
 import albumReducer from "./albumReducer";
 import songReducer from "./songReducer";
 import {playerReducer} from "./playerReducer";
+import genreReducer from "./genreReducer";
 
 
 export const rootReducer = combineReducers({
@@ -15,7 +16,8 @@ export const rootReducer = combineReducers({
     artist: artistReducer,
     album: albumReducer,
     player: playerReducer,
-    song: songReducer
+    song: songReducer,
+    genre: genreReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>;

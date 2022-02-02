@@ -49,3 +49,9 @@ export type Album = {
     songs: Array<string>,
     cover: string
 }
+
+export type GenreType = {
+    _id: string,
+    color: string,
+    name: string,
+}
