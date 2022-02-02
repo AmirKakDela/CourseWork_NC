@@ -15,19 +15,16 @@ const Like: React.FC<PropsType> = (props) => {
     const likeLoading = useSelector((state: RootState) => state.user.likeLoading)
     const dispatch = useDispatch();
 
-    if (!user || !user.likedSongs) {
-        return null;
-    }
-
     const toggleLike = () => {
         dispatch(thunkToggleLikeSong(props.song));
     }
+    const likeStatus = user.likedSongs.find(song => song._id === props.song._id)
 
     return (
         <div>
             {likeLoading
                 ? <ClipLoader color='white' css={'display: block; font-size: 10px'}/>
-                : user
+                : user && likeStatus
                     ? <HeartFilled style={{fontSize: '20px', color: "#1db954"}} onClick={toggleLike}/>
                     : <HeartOutlined style={{fontSize: '20px', color: "white"}} onClick={toggleLike}/>
             }
