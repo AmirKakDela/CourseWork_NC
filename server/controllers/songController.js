@@ -9,23 +9,19 @@ class songController {
             const errors = validationResult(req);
             if (!errors.isEmpty())
                 return res.status(412).json({message: 'Ошибка при создании трека', errors})
-            const {name, artistName,cover,song, duration, genre} = req.body;
+            const {name, artistName} = req.body;
             const candidateSong = await Song.findOne({name, artistName});
             if (candidateSong)
                 return res.status(412).json({message: 'Такой трек уже существует', candidateSong});
-            const artistOfNewSong = await Artist.findOne({name: artistName});
+            let artistOfNewSong = await Artist.findOne({name: artistName});
             if (!artistOfNewSong) {
                 const newArtist = new Artist({name: artistName, image: ''});
                 newArtist.save();
+                artistOfNewSong = newArtist;
             }
             const newSong = new Song( {
-                name: name,
-                artistName: artistName,
+                ...req.body,
                 artist: artistOfNewSong._id,
-                cover: cover,
-                song: song,
-                duration: duration,
-                genre: genre
             });
             await newSong.save();
             // if (candidateArtist) {
@@ -35,7 +31,7 @@ class songController {
             //     const newArtist = new Artist({name: artist, image: '', songs: [song._id]});
             //     newArtist.save();
             // }
-            return res.status(200).json({message: 'Трек успешно добавлен', newSong, cover});
+            return res.status(200).json({message: 'Трек успешно добавлен', newSong});
         } catch (e) {
             res.send({message: e + ' Ошибка сервера при создании трека'});
         }

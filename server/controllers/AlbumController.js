@@ -67,17 +67,17 @@ class AlbumController {
                     });
             }
 
-            const albumsSongs = await Album.findOne().populate({
-                path: "songs",
-                match: {_id: songs}
-            });
-
-            if (albumsSongs.songs.length < songs.length){
-                return res.status(412)
-                    .json({
-                        message: "Таких треков не существует",
-                    });
-            } else {
+            // const albumsSongs = await Album.findOne().populate({
+            //     path: "songs",
+            //     match: {_id: songs}
+            // });
+            //
+            // if (albumsSongs.songs.length < songs.length){
+            //     return res.status(412)
+            //         .json({
+            //             message: "Таких треков не существует",
+            //         });
+            // }
                 const newAlbum = new Album(req.body);
                 await newAlbum.save();
                 return res.status(200)
@@ -85,7 +85,6 @@ class AlbumController {
                         message: "Альбом успешно добавлен",
                         newAlbum
                     });
-            }
             //
             // const candidateArtist = await Artist.findOne({ name: artist });
             // if (candidateArtist) {
