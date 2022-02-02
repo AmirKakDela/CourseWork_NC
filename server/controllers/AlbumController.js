@@ -8,7 +8,7 @@ class AlbumController {
         try {
             //const artistId = req.params["artistId"];
             const albumId = req.params["albumId"];
-            const album = await Album.findById(albumId);
+            const album = await Album.findById(albumId).populate( "songs");
             res.json(album);
         } catch (e) {
             res.status(500).json({ message: `${e.message}.Ошибка сервера при получении альбома` });
@@ -20,7 +20,7 @@ class AlbumController {
             const artistId = req.params["artistId"];
             const albums = await Album.findOne().populate({
                 path: "songs",
-                match: {artist: artistId}
+                match: {artistId: artistId}
             });
             console.log(albums);
             res.json(albums);

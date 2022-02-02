@@ -2,8 +2,8 @@ const {Schema, model} = require('mongoose');
 
 const Song = new Schema({
     name: {type: String, required: true},
-    artistName:{type: String, required: true},
-    artist: [{type: Schema.Types.ObjectId, ref: 'Artist', required: true}],
+    artist:{type: String, required: true},
+    artistId: [{type: Schema.Types.ObjectId, ref: 'Artist', required: true}],
     cover: {type: String},
     song: {type: String},
     duration: {type: Number, required: true},

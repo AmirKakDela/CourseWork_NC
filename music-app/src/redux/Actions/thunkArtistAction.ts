@@ -3,9 +3,11 @@ import {ArtistActionType, setArtist, setLoading, setArtists} from "./artistActio
 import {url} from "../../config/config";
 import axios from "axios";
 import {ArtistType, Track} from "../../config/types";
+import {AlbumActionsType} from "./albumAction";
+import {SongActionTypes} from "./songAction";
 
 export const getArtist = (artistId: string) => {
-    return async (dispatch: Dispatch<ArtistActionType>) => {
+    return async (dispatch: Dispatch<any>) => {
         dispatch(setLoading());
         try {
             const response = await axios.get(`${url}/api/artist/artist/${artistId}`, {
@@ -16,8 +18,10 @@ export const getArtist = (artistId: string) => {
             const artist: ArtistType = response.data.artist;
             const songs: Array<Track> = response.data.songs;
             const albums: Array<Track> = response.data.albums;
-            artist.songs = [...songs];
-            dispatch(setArtist(response.data.artist));
+           // artist.songs = [...songs];
+            dispatch(setArtist(artist));
+            dispatch({ type: AlbumActionsType.SET_ALBUMS, payload: albums });
+            dispatch({ type: SongActionTypes.FETCH_SONGS, payload: songs});
         } catch (e) {
             console.log(e);
         }

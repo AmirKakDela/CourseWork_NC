@@ -21,7 +21,10 @@ export const Song = (props: PropsType) => {
     const { pause, playback } = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
     const [songCover, setSongCover] = useState(song.cover);
     const { playSong, pauseSong, setPlayingSong } = useActions();
-    const isSelectedSong = playback?._id === song._id;
+    let isSelectedSong = false;
+    if (song._id){
+        isSelectedSong = playback?._id === song._id;
+    }
     const isPlayed = !pause && isSelectedSong;
 
     function play() {

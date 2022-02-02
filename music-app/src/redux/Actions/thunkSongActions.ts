@@ -8,10 +8,10 @@ export const fetchSongs = () => {
         try {
             const response = await axios.get(`${url}/api/song/all`,
                 {
-                headers: {
-                    Authorization: "" + localStorage.getItem("token")
+                    headers: {
+                        Authorization: "" + localStorage.getItem("token")
+                    }
                 }
-            }
             );
             dispatch({ type: SongActionTypes.FETCH_SONGS, payload: response.data });
         } catch (e) {

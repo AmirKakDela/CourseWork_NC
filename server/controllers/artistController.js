@@ -55,12 +55,12 @@ class artistController {
     async getArtist(req, res) {
         try {
             const artistId = req.params.id;
-            const artist = await Artist.findById(artistId)
+            const artist = await Artist.findById(artistId);
             if(!artist) return res.status(412).json({message: "Ошибка сервера при получении артиста."});
 
             //const songs = await Song.find({_id: artist.songs});
-            const songs = await Song.find({artist: artist._id});
-            const albums = await Album.find({songs: songs._id});
+            const songs = await Song.find({artistId: artist._id});
+            const albums = await Album.find({artist: artist.name});
             return res.json({artist, songs, albums})
         } catch (e) {
             console.log('Ошибка сервера при getArtist', e);
@@ -73,7 +73,7 @@ class artistController {
             const artist = await Artist.findById(req.params.id);
             if (!artist) return res.status(412).json({message: 'Артиста с таким id не найдено.'});
 
-            const songs = await Song.find({artist: artist._id});
+            const songs = await Song.find({artistId: artist._id});
             return res.json(songs);
         } catch (e) {
             console.log('Ошибка сервера при getArtist', e);

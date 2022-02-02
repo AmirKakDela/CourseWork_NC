@@ -19,26 +19,20 @@ function MainPage() {
     const artists = useSelector((state: RootState) => state.artist.artists);
     const popularPlaylists = useSelector((state: RootState) => state.album.albums); // здесь надо получать плейлисты, а не альбомы
 
-    const openPlaylistDetailsHandler = (id: string) => {
-        // dispatch(getPlaylistByIdRequest(id));
-        //навигироваться на страницу с плейлистом и получать из роута id
-    };
-
     return (
         <div className="main-page-content">
             <ScrollComponent titleName="Не пропусти топовые плейлисты" data={
                 popularPlaylists.map(playlist => {
-                    return <AlbumCard key={playlist._id} album={playlist} onAlbumClick={openPlaylistDetailsHandler}/>; //когда будет
-                    // написана бд с плейлистом, использовать не AlbumCard, а PlaylistCard
+                    return <AlbumCard key={playlist._id} album={playlist}/>;
                 })
             }/>
             <ScrollComponent titleName="Тема1" data={
                 popularPlaylists.map(playlist => {
-                    return <AlbumCard key={playlist._id} album={playlist} onAlbumClick={openPlaylistDetailsHandler}/>;
+                    return <AlbumCard key={playlist._id} album={playlist}/>;
                 })}/>
             <ScrollComponent titleName="Тема2" data={
                 popularPlaylists.map(playlist => {
-                    return <AlbumCard key={playlist._id} album={playlist} onAlbumClick={openPlaylistDetailsHandler}/>;
+                    return <AlbumCard key={playlist._id} album={playlist}/>;
                 })}/>
             <ScrollComponent titleName="Популярные исполнители" data={
                 artists.length ? <div className="main-page__playlists-row">
