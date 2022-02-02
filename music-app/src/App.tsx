@@ -20,6 +20,7 @@ import AdminRoute from "./components/HOC/AdminRoute";
 import MyLibraryPage from "./components/Layout/MyLibraryPage/MyLibraryPage";
 import LibrarySong from "./components/Layout/MyLibraryPage/LibrarySong";
 import GenrePage from "./components/Layout/GenrePage/GenrePage";
+import { AlbumPage } from "./components/Layout/AlbumPage/AlbumPage";
 
 function App() {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
@@ -62,6 +63,7 @@ function App() {
                             <Route path='my-playlists' element={<h1>My playlists</h1>}/>
                             <Route path='search' element={<SearchPage/>}/>
                             <Route path='artist/:id' element={<ArtistPage/>}/>
+                            <Route path='album/:id' element={<AlbumPage/>}/>
                             <Route path='genre/:id' element={<GenrePage/>}/>
                             <Route path='*' element={<NotFound/>}/>
                         </Route>

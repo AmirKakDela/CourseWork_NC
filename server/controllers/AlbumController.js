@@ -4,15 +4,12 @@ const Artist = require("../models/Artist");
 const Song = require("../models/Song");
 
 class AlbumController {
-    async getArtistAlbum(req, res) {
+    async getAlbum(req, res) {
         try {
-            const artistId = req.params["artistId"];
+            //const artistId = req.params["artistId"];
             const albumId = req.params["albumId"];
-            const artistsAlbum = await Album.findById(albumId).populate({
-                path: "songs",
-                match: {_id: artistId}
-            });
-            res.json(artistsAlbum);
+            const album = await Album.findById(albumId);
+            res.json(album);
         } catch (e) {
             res.status(500).json({ message: `${e.message}.Ошибка сервера при получении альбома` });
         }
@@ -20,17 +17,13 @@ class AlbumController {
 
     async getAllArtistAlbum(req, res) {
         try {
-            const artistId = req.query["artistId"];
-            let albums = [];
-            if (!artistId) {
-                return res.status(412)
-                    .json({ message: "Артиста с таким id не существует" });
-            }
-            albums = await Album.find().populate({
+            const artistId = req.params["artistId"];
+            const albums = await Album.findOne().populate({
                 path: "songs",
-                match: {_id: artistId}
+                match: {artist: artistId}
             });
-            res.json(albums || []);
+            console.log(albums);
+            res.json(albums);
         } catch (e) {
             res.status(500)
                 .json({ message: `${e.message}.Ошибка сервера при получении всех альбомов артиста` });
@@ -39,7 +32,7 @@ class AlbumController {
 
     async getAllAlbums(req, res) {
         try {
-            const albums = await Album.find().populate( "songs");
+            const albums = await Album.find();
             res.json(albums);
         } catch (e) {
             res.status(500)
@@ -57,8 +50,8 @@ class AlbumController {
                         errors
                     });
             }
-            const { name, songs } = req.body;
-            const candidateAlbum = await Album.findOne({ name, songs });
+            const { name, artist } = req.body;
+            const candidateAlbum = await Album.findOne({ name, artist });
             if (candidateAlbum) {
                 return res.status(412)
                     .json({

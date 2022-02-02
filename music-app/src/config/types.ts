@@ -46,7 +46,7 @@ export type Album = {
     _id: string,
     name: string,
     artist: string,
-    songs: Array<string>,
+    songs: Array<Track>,
     cover: string
 }
 
