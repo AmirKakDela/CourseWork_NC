@@ -11,13 +11,11 @@ import {CaretDownFilled, LeftOutlined, RightOutlined, UserOutlined} from "@ant-d
 const Header = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
-
-    const user = useSelector(
-        (state: RootState) => state.user.currentUser
-    );
-    const dispatch = useDispatch();
+    const user = useSelector((state: RootState) => state.user.currentUser);
+    console.log(location.pathname.includes("/admin"))
 
     const logout = () => {
         dispatch(logoutCurrentUser());
@@ -55,6 +53,27 @@ const Header = () => {
                 >
                     Выйти
                 </Menu.Item>
+                {user.isAdmin &&
+                (!location.pathname.includes("/admin") ?
+                    <Menu.Item
+                        className="dropdown__item"
+                        key="2"
+                        style={{background: "inherit", color: "#fff"}}
+                    >
+                        <Link to="/admin" style={{color: "#fff", fontWeight: 700}}>
+                            ADMIN PAGE
+                        </Link>
+                    </Menu.Item> :
+                    <Menu.Item
+                        className="dropdown__item"
+                        key="3"
+                        style={{background: "inherit", color: "#fff"}}
+                    >
+                        <Link to="/" style={{color: "#fff", fontWeight: 700}}>
+                            DEFAULT PAGE
+                        </Link>
+                    </Menu.Item>)
+                }
             </Menu>
         </div>
     );
@@ -73,7 +92,7 @@ const Header = () => {
                         <button className="header__user">
                             <UserOutlined className="header__user_icon"/>
                             {user.userName || "user"}
-                            <CaretDownFilled />
+                            <CaretDownFilled/>
                         </button>
                     </Dropdown>
                 </div>

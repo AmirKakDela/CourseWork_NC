@@ -1,3 +1,5 @@
+import * as React from "react";
+
 export type CurrentUserType = {
     userId: string,
     userName: string,
@@ -54,4 +56,11 @@ export type GenreType = {
     _id: string,
     color: string,
     name: string,
+}
+
+export type SidebarItemType = {
+    path: string,
+    itemId: string,
+    icon?: React.ForwardRefExoticComponent<any>,
+    text: string
 }

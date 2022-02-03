@@ -16,7 +16,7 @@ const GenrePage: React.FC = () => {
     })
     const [songs, setSongs] = useState<Track[]>([]);
     const [playlists, setPlaylists] = useState([]);
-    const [albums, setAlbums] = useState([]);
+    // const [albums, setAlbums] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -58,8 +58,7 @@ const GenrePage: React.FC = () => {
                 </div>
             }
         </>
-    )
-        ;
+    );
 };
 
 export default GenrePage;
