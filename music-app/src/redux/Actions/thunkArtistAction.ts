@@ -21,7 +21,7 @@ export const getArtist = (artistId: string) => {
            // artist.songs = [...songs];
             dispatch(setArtist(artist));
             dispatch({ type: AlbumActionsType.SET_ALBUMS, payload: albums });
-            dispatch({ type: SongActionTypes.FETCH_SONGS, payload: songs});
+            dispatch({ type: SongActionTypes.FETCH_SONGS, payload: songs });
         } catch (e) {
             console.log(e);
         }

@@ -7,7 +7,6 @@ import {getArtist} from "../../../redux/Actions/thunkArtistAction";
 import {Song} from "../../Song/Song";
 import MoonLoader from "react-spinners/MoonLoader";
 import {thunkUserLikedSongs} from "../../../redux/Actions/thunkUserActions";
-import {ScrollComponent} from "../../ScrollComponent/ScrollComponent";
 import AlbumCard from "../../AlbumCard/AlbumCard";
 
 const ArtistPage = () => {
@@ -15,7 +14,7 @@ const ArtistPage = () => {
     const dispatch = useDispatch();
     const artist = useSelector((state: RootState) => state.artist.artists.find(it => urlParams.id === it._id));
     const albums = useSelector((state: RootState) => state.album.albums);
-    // const songs = useSelector((state: RootState) => state.song.tracks);
+    const songs = useSelector((state: RootState) => state.song.tracks);
     const isLoading = useSelector((state: RootState) => state.artist.isLoading);
     useEffect(() => {
         if (urlParams.id) {
@@ -39,21 +38,17 @@ const ArtistPage = () => {
                             <div className="info__desc">
                                 <h2 className="desc__category">Исполнитель</h2>
                                 <h1 className="desc__name">{artist.name}</h1>
-                                <p className="desc__text">{artist.songs.length} трека, {albums.length} альбома</p>
+                                <p className="desc__text">{songs.length} трека, {albums.length} альбома</p>
                             </div>
                         </div>
                         <div className="info__main">
                             <h2 className="main__title">Альбомы</h2>
                             <div className="main__slider">
-                                <ScrollComponent data={
-                                    albums.map(album => {
-                                        return <AlbumCard key={album._id} album={album}/>;
-                                    })
-                                }/>
+                                {albums.map(album => <AlbumCard key={album._id} album={album}/>)}
                             </div>
                             <h2 className="main__title">Песни</h2>
                             <div className="main__songs">
-                                {artist.songs.map((s, index) => (
+                                {songs.map((s, index) => (
                                     <Song song={s} order={index + 1} key={s._id}/>
                                 ))}
                             </div>

@@ -101,8 +101,8 @@ class songController {
         try {
             if (Object.keys(req.body).length === 0 || !req.params.id)
                 return res.status(412).json({message: "Недостаточно данных для обновления трека."});
-            if (req.body.song || req.body.artist)
-                return res.status(412).json({message: "Нельзя обновить имя исполнителя или аудиофайл песни."});
+            if (req.body.song || req.body.artistId)
+                return res.status(412).json({message: "Нельзя обновить id исполнителя или аудиофайл песни."});
             const updatedSong = await Song.findByIdAndUpdate(req.params.id, req.body);
             if (!updatedSong)
                 return res.status(412).json({message: "Песни с таким id не существует"});

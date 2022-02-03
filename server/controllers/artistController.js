@@ -56,8 +56,8 @@ class artistController {
         try {
             const artistId = req.params.id;
             const artist = await Artist.findById(artistId);
-            if(!artist) return res.status(412).json({message: "Ошибка сервера при получении артиста."});
-
+            if (!artist)
+                return res.status(412).json({message: "Ошибка сервера при получении артиста."});
             //const songs = await Song.find({_id: artist.songs});
             const songs = await Song.find({artistId: artist._id});
             const albums = await Album.find({artist: artist.name});
