@@ -8,8 +8,8 @@ import {useActions} from "../../hooks/useActions";
 import {setPlayingSong} from "../../redux/action-creators/player";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {RootState} from "../../redux/Reducers/rootReducer";
-import {playMusic} from "../Layout/Player/playMusic";
 import {PlayerReducerState} from "../../redux/Reducers/playerReducer";
+import {formattedTime} from "../Layout/Player/player.untils";
 
 type PropsType = {
     song: Track,
@@ -68,7 +68,7 @@ export const Song = (props: PropsType) => {
                     <Like song={song}/>
                 </div>
                 <h3 className="song__duration">
-                    {song.duration}
+                    {formattedTime(song.duration)}
                 </h3>
             </div>
         </div>
