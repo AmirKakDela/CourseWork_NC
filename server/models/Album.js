@@ -8,4 +8,3 @@ const Album = new Schema({
     }
 );
 module.exports = model('Album', Album);
-// artist: { type: Schema.Types.ObjectId, ref: 'Artist', required: true },

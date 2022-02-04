@@ -22,7 +22,6 @@ class AlbumController {
                 path: "songs",
                 match: {artistId: artistId}
             });
-            console.log(albums);
             res.json(albums);
         } catch (e) {
             res.status(500)
@@ -64,13 +63,6 @@ class AlbumController {
             //     path: "songs",
             //     match: {_id: songs}
             // });
-            //
-            // if (albumsSongs.songs.length < songs.length){
-            //     return res.status(412)
-            //         .json({
-            //             message: "Таких треков не существует",
-            //         });
-            // }
                 const newAlbum = new Album(req.body);
                 await newAlbum.save();
                 return res.status(200)
@@ -78,23 +70,6 @@ class AlbumController {
                         message: "Альбом успешно добавлен",
                         newAlbum
                     });
-            //
-            // const candidateArtist = await Artist.findOne({ name: artist });
-            // if (candidateArtist) {
-            //     candidateArtist.albums.unshift(album._id);
-            //     await album.save();
-            //     return res.status(200)
-            //         .json({
-            //             message: "Альбом успешно добавлен",
-            //             album
-            //         });
-            // } else {
-            //     return res.status(412)
-            //         .json({
-            //             message: "Такого исполнителя не существует",
-            //         });
-            //}
-
         } catch (e) {
             res.status(500)
                 .json({ message: `${e.message}. Ошибка сервера при создании альбома` });
