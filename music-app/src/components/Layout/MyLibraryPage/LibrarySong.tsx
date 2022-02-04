@@ -17,9 +17,8 @@ const LibrarySong: React.FC = () => {
         dispatch(fetchSongs());
     }, [])
 
-    const tracks = useSelector((state: RootState) => state.song.tracks);
     const error = useSelector((state: RootState) => state.song.error);
-    if (error){
+    if (error) {
         return (
             <div>
                 <h1>{error}</h1>
@@ -28,16 +27,18 @@ const LibrarySong: React.FC = () => {
     }
 
     return (
-            <div className="library__info">
-                <h1 className="library__title">Любимые треки</h1>
-                <h2 className="library__subtitle"><span>{user.userName}  &bull; </span> {user.likedSongs.length} треков
-                </h2>
-
+        <div className="library__info">
+            <h1 className="library__title">Любимые треки</h1>
+            <h2 className="library__subtitle"><span>{user.userName}  &bull; </span> {user.likedSongs.length} треков
+            </h2>
+            <div className="library__songs-wrap">
                 {user.likedSongs.length > 0 ? user.likedSongs.map((song, index) => {
                     return <Song key={song._id} song={song} order={index + 1}/>
-                }) : <h1 className="library__notsongs">Треков пока нет. Но их можно <Link to='/search'>добавить</Link>!</h1>
+                }) : <h1 className="library__notsongs">Треков пока нет. Но их можно <Link to='/search'>добавить</Link>!
+                </h1>
                 }
             </div>
+        </div>
     );
 };
 

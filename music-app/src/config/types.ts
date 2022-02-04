@@ -1,3 +1,5 @@
+import * as React from "react";
+
 export type CurrentUserType = {
     userId: string,
     userName: string,
@@ -52,4 +54,11 @@ export type SearchResultType = {
 export enum AppTheme {
     DARK = 'dark',
     LIGHT = 'light'
+}
+
+export type SidebarItemType = {
+    path: string,
+    itemId: string,
+    icon?: React.ForwardRefExoticComponent<any>,
+    text: string
 }

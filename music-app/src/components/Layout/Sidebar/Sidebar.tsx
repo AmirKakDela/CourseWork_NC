@@ -2,15 +2,18 @@ import React, {useCallback, useState} from "react";
 import {Menu, Switch} from "antd";
 import "./Sidebar.scss";
 import SpotifyLogo from "../../../assets/icons/Spotify-Logo.wine.svg";
-import {AppTheme} from "../../../config/types";
+import {AppTheme, SidebarItemType} from "../../../config/types";
 import {SharedActionsType} from "../../../redux/Actions/sharedActions";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../redux/Reducers/rootReducer";
-import {items} from "./items";
 import {MenuInfo} from "rc-menu/lib/interface";
 
-export function Sidebar() {
+type PropsType = {
+    items: SidebarItemType[]
+}
+
+const Sidebar: React.FC<PropsType> = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentTheme = useSelector((state: RootState) => state.shared.appTheme);
@@ -45,7 +48,7 @@ export function Sidebar() {
                         <img src={SpotifyLogo} className="home-logo" alt="SpotifyLogo"/>
                     </a>
                 </div>
-                {items.map((item, index) => {
+                {props.items.map((item, index) => {
                     return (
                         <Menu.Item key={index}
                                    onClick={() => navigate(item.path)}
@@ -59,3 +62,5 @@ export function Sidebar() {
         </div>
     );
 }
+
+export default Sidebar;
