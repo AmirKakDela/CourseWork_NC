@@ -30,7 +30,13 @@ export const login = (email: string, password: string) => {
         try {
             const response = await axios.post(`${url}/api/auth/login`, {email, password})
             const {userId, userName, isAdmin} = response.data
-            dispatch(setCurrentUser({userId, userName, isAdmin, likedSongs: []}))
+            dispatch(setCurrentUser({
+                userId,
+                userName,
+                isAdmin,
+                likedSongs: [],
+                likeLoading: {status: false, songId: ''}
+            }))
             dispatch(setAuthError(null))
             localStorage.setItem('token', response.data.token)
         } catch (e) {
@@ -48,7 +54,13 @@ export const auth = () => {
             if (localStorage.getItem('token') === null) return dispatch(userLoading(false))
             const response = await axios.get(`${url}/api/auth/auth`, AuthorizationHeaderConfig)
             const {userId, userName, isAdmin} = response.data
-            dispatch(setCurrentUser({userId, userName, isAdmin, likedSongs: []}));
+            dispatch(setCurrentUser({
+                userId,
+                userName,
+                isAdmin,
+                likedSongs: [],
+                likeLoading: {status: false, songId: ''}
+            }));
             localStorage.setItem('token', response.data.token)
         } catch (e) {
             console.log('ошибка при авторизации на фронте', e)
@@ -75,15 +87,15 @@ export const thunkUserLikedSongs = () => {
 
 export const thunkToggleLikeSong = (song: SongType) => {
     return async (dispatch: Dispatch<UserActionTypes>) => {
-        dispatch(likeLoading(true))
+        dispatch(likeLoading({status: true, songId: song._id}))
         try {
             await axios.put(`${url}/api/song/user/like/${song._id}`, '', AuthorizationHeaderConfig)
             dispatch(toggleLikeSong(song))
-            dispatch(likeLoading(false))
+            dispatch(likeLoading({status: false, songId: ''}))
         } catch (e) {
             const u = e as ErrorType
             dispatch(setAuthError(u.response.data.message))
-            dispatch(likeLoading(false))
+            dispatch(likeLoading({status: false, songId: ''}))
         }
     }
 }
