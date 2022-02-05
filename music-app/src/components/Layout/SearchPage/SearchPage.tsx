@@ -12,14 +12,15 @@ import ArtistCard from "../../ArtistCard/ArtistCard";
 import {useSearchParams} from 'react-router-dom';
 import {getAlbumsByRequest} from "../../../redux/Actions/thunkAlbumActions";
 import {Song} from "../../Song/Song";
-import {getAllGenres} from "../../../redux/Actions/thunkGenreActions";
+import GenreAPI from "../../../API/GenreAPI";
+import {GenreType} from "../../../config/types";
 
 const SearchPage = () => {
     const dispatch = useDispatch();
     const searchResult = useSelector((state: RootState) => state.search.searchResult);
     const searchError = useSelector((state: RootState) => state.search.error);
     const popularAlbums = useSelector((state: RootState) => state.album.albums); //здесь нужно получать популярные альбомы, пока получаем все из бд
-    const genres = useSelector((state: RootState) => state.genre.genres)
+    const [genres, setGenres] = useState<GenreType[]>([])
     const [searchQuery, setSearchQuery] = useSearchParams();
     const searchString = searchQuery.get('query');
     const [queryValue, setQueryValue] = useState(searchString || '');
@@ -37,13 +38,12 @@ const SearchPage = () => {
 
     useEffect(() => {
         dispatch(getAlbumsByRequest());
-    }, []);
-
-    useEffect(() => {
         if (genres.length === 0) {
-            dispatch(getAllGenres())
+            GenreAPI.getAllGenre().then(data => {
+                setGenres(data);
+            })
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
         if (searchString !== null && queryValue.trim()) {

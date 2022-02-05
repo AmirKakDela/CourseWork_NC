@@ -2,7 +2,7 @@ import {SidebarItemType} from "../../config/types";
 
 export const adminSidebarItems: SidebarItemType[] = [
     {
-        path: '/admin/home',
+        path: '/admin',
         itemId: 'admin-home',
         text: 'Главная'
     },
