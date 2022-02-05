@@ -1,4 +1,4 @@
-import {Track} from "../../config/types";
+import {SongType} from "../../config/types";
 
 export enum SongActionTypes {
     FETCH_SONGS = 'FETCH_SONGS',
@@ -7,7 +7,7 @@ export enum SongActionTypes {
 
 type FetchTracksAction = {
     type: SongActionTypes.FETCH_SONGS;
-    payload: Track[]
+    payload: SongType[]
 }
 
 type FetchTracksErrorAction = {

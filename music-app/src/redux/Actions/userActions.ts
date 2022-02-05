@@ -1,4 +1,4 @@
-import {CurrentUserType, Track} from "../../config/types";
+import {CurrentUserType, SongType} from "../../config/types";
 
 export enum UserActionTypeTypes {
     SET_CURRENT_USER = 'SET_CURRENT_USER',
@@ -67,10 +67,10 @@ export const userLoading = (status: boolean): UserLoadingType => {
 
 export type SetUserLikedSongsType = {
     type: UserActionTypeTypes.SET_USER_LIKED_SONGS,
-    payload: Array<Track>
+    payload: Array<SongType>
 }
 
-export const setUserLikedSongs = (likedSongs: Array<Track>): SetUserLikedSongsType => {
+export const setUserLikedSongs = (likedSongs: Array<SongType>): SetUserLikedSongsType => {
     return {
         type: UserActionTypeTypes.SET_USER_LIKED_SONGS,
         payload: likedSongs
@@ -79,10 +79,10 @@ export const setUserLikedSongs = (likedSongs: Array<Track>): SetUserLikedSongsTy
 
 export type ToggleLikeSongType = {
     type: UserActionTypeTypes.TOGGLE_LIKE_SONG,
-    payload: Track
+    payload: SongType
 }
 
-export const toggleLikeSong = (song: Track): ToggleLikeSongType => {
+export const toggleLikeSong = (song: SongType): ToggleLikeSongType => {
     return {
         type: UserActionTypeTypes.TOGGLE_LIKE_SONG,
         payload: song

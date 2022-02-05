@@ -10,7 +10,7 @@ import {
 } from "./userActions";
 import {Dispatch} from "redux";
 import {url} from "../../config/config";
-import {ErrorType, Track} from "../../config/types";
+import {ErrorType, SongType} from "../../config/types";
 
 
 export const signup = (email: string, password: string, name: string) => {
@@ -79,7 +79,7 @@ export const thunkUserLikedSongs = () => {
     }
 }
 
-export const thunkToggleLikeSong = (song: Track) => {
+export const thunkToggleLikeSong = (song: SongType) => {
     return async (dispatch: Dispatch<UserActionTypes>) => {
         dispatch(likeLoading(true))
         try {

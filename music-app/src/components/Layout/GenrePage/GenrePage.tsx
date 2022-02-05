@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './genrePage.scss';
 import {useParams} from "react-router-dom";
 import API from "../../../API/API";
-import {GenreType, Track} from "../../../config/types";
+import {GenreType, SongType} from "../../../config/types";
 import MoonLoader from "react-spinners/MoonLoader";
 import {Song} from "../../Song/Song";
 
@@ -14,7 +14,7 @@ const GenrePage: React.FC = () => {
         color: 'black',
         name: ''
     })
-    const [songs, setSongs] = useState<Track[]>([]);
+    const [songs, setSongs] = useState<SongType[]>([]);
     const [playlists, setPlaylists] = useState([]);
     // const [albums, setAlbums] = useState([]);
     const [loading, setLoading] = useState(true);

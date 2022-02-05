@@ -1,8 +1,8 @@
-import {Track} from "../../config/types";
+import {SongType} from "../../config/types";
 import {SongAction, SongActionTypes} from "../Actions/songAction";
 
 type State = {
-    tracks: Track[],
+    tracks: SongType[],
     error: string
 }
 

@@ -4,7 +4,7 @@ export type CurrentUserType = {
     userId: string,
     userName: string,
     isAdmin: boolean,
-    likedSongs: Array<Track>
+    likedSongs: Array<SongType>
 }
 
 export type ErrorType = {
@@ -15,7 +15,7 @@ export type ErrorType = {
     }
 }
 
-export type Track = {
+export type SongType = {
     _id: string;
     name: string,
     artist: string,
@@ -25,11 +25,11 @@ export type Track = {
     genre: string
 }
 
-export type Album = {
+export type AlbumType = {
     _id: string,
     name: string,
     artist: string,
-    songs: Array<Track>,
+    songs: Array<SongType>,
     cover: string
 }
 
@@ -46,7 +46,7 @@ export type ArtistType = {
 }
 
 export type SearchResultType = {
-    songs: Array<Track> | [],
+    songs: Array<SongType> | [],
     artists: Array<ArtistType> | [],
     // playlists>: todo: потом добавить плейлисты
 }

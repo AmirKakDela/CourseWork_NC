@@ -2,7 +2,7 @@ import {AlbumAction, AlbumActionsType} from "./albumAction";
 import {Dispatch} from "redux";
 import {url} from "../../config/config";
 import axios from "axios";
-import {Album} from "../../config/types";
+import {AlbumType} from "../../config/types";
 
 export function getAlbumsByRequest() {
     return async (dispatch: Dispatch<AlbumAction>) => {
@@ -19,7 +19,7 @@ export function getAlbumsByRequest() {
     };
 }
 
-export function createAlbumByRequest(newAlbum: Album) {
+export function createAlbumByRequest(newAlbum: AlbumType) {
     return async (dispatch: Dispatch<AlbumAction>) => {
         try {
             const response = await axios.post(`${url}/api/album/create`, newAlbum, {
@@ -34,7 +34,7 @@ export function createAlbumByRequest(newAlbum: Album) {
     };
 }
 
-export function updateAlbumByRequest(albumId: string, editAlbum: Album) {
+export function updateAlbumByRequest(albumId: string, editAlbum: AlbumType) {
     return async (dispatch: Dispatch<AlbumAction>) => {
         try {
             const response = await axios.put(`${url}/api/album/update/${albumId}`, editAlbum, {

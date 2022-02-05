@@ -1,4 +1,4 @@
-import {Album} from "../../config/types";
+import {AlbumType} from "../../config/types";
 
 export enum AlbumActionsType {
     SET_ALBUM = 'SET_ALBUM',
@@ -9,5 +9,5 @@ export enum AlbumActionsType {
 
 export type AlbumAction = {
     type: AlbumActionsType,
-    payload: Album[] | Album | string | null | Promise<any>,
+    payload: AlbumType[] | AlbumType | string | null | Promise<any>,
 }

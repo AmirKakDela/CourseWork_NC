@@ -1,4 +1,4 @@
-import {Track} from "../../config/types";
+import {SongType} from "../../config/types";
 
 export enum PlayerActionsType {
     PLAY = "PLAY",
@@ -16,7 +16,7 @@ type PauseAction = {
 }
 type SetPlaybackAction = {
     type: PlayerActionsType.SET_PLAYBACK,
-    payload: Track;
+    payload: SongType;
 }
 type SetDurationAction = {
     type: PlayerActionsType.SET_DURATION,
