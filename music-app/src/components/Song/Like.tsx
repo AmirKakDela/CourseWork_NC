@@ -12,7 +12,7 @@ type PropsType = {
 
 const Like: React.FC<PropsType> = (props) => {
     const user = useSelector((state: RootState) => state.user.currentUser)
-    const likeLoading = useSelector((state: RootState) => state.user.likeLoading)
+    const likeLoading = useSelector((state: RootState) => state.user.currentUser.likeLoading)
     const dispatch = useDispatch();
 
     const toggleLike = () => {
@@ -22,8 +22,8 @@ const Like: React.FC<PropsType> = (props) => {
 
     return (
         <div>
-            {likeLoading
-                ? <ClipLoader color='white' css={'display: block; font-size: 10px'}/>
+            {likeLoading.status && likeLoading.songId === props.song._id
+                ? <ClipLoader color='white' css={'display: block; width: 18px; height: 18px'}/>
                 : user && likeStatus
                     ? <HeartFilled style={{fontSize: '20px', color: "#1db954"}} onClick={toggleLike}/>
                     : <HeartOutlined style={{fontSize: '20px', color: "white"}} onClick={toggleLike}/>

@@ -1,4 +1,4 @@
-import {CurrentUserType, SongType} from "../../config/types";
+import {CurrentUserType, LikeLoadingType, SongType} from "../../config/types";
 
 export enum UserActionTypeTypes {
     SET_CURRENT_USER = 'SET_CURRENT_USER',
@@ -17,7 +17,7 @@ export type UserActionTypes = SetCurrentUserType
     | SetUserLikedSongsType
     | UserLoadingType
     | ToggleLikeSongType
-    | LikeLoadingType
+    | LikeLoadingTypeAction
     | LibraryLoadingType
 
 
@@ -91,15 +91,15 @@ export const toggleLikeSong = (song: SongType): ToggleLikeSongType => {
     }
 }
 
-export type LikeLoadingType = {
+export type LikeLoadingTypeAction = {
     type: UserActionTypeTypes.LIKE_LOADING,
-    payload: boolean
+    payload: LikeLoadingType
 }
 
-export const likeLoading = (status: boolean): LikeLoadingType => {
+export const likeLoading = (likeSong: LikeLoadingType): LikeLoadingTypeAction => {
     return {
         type: UserActionTypeTypes.LIKE_LOADING,
-        payload: status
+        payload: likeSong
     }
 }
 

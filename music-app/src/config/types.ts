@@ -4,7 +4,8 @@ export type CurrentUserType = {
     userId: string,
     userName: string,
     isAdmin: boolean,
-    likedSongs: Array<SongType>
+    likedSongs: Array<SongType>,
+    likeLoading: LikeLoadingType
 }
 
 export type ErrorType = {
@@ -61,4 +62,9 @@ export type SidebarItemType = {
     itemId: string,
     icon?: React.ForwardRefExoticComponent<any>,
     text: string
+}
+
+export type LikeLoadingType = {
+    songId: string,
+    status: boolean
 }
