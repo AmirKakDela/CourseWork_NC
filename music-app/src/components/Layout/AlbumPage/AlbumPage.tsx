@@ -33,7 +33,7 @@ export function AlbumPage() {
         !album
             ? <div>Ошибка при получении альбома</div>
             : <div className="info">
-                <div className="info__header">
+                <div className="info__header info__header_album">
                     <div className="info__cover">
                         <img
                             src={album.cover}
