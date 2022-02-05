@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './genrePage.scss';
 import {useParams} from "react-router-dom";
-import API from "../../../API/API";
+import API from "../../../API/GenreAPI";
 import {GenreType, SongType} from "../../../config/types";
 import MoonLoader from "react-spinners/MoonLoader";
 import {Song} from "../../Song/Song";
@@ -21,12 +21,10 @@ const GenrePage: React.FC = () => {
 
     useEffect(() => {
         if (urlParams.id) {
-            API.getGenre(urlParams.id).then(response => {
-                setGenre(response.data.genre);
-                setSongs(response.data.songs);
+            API.getGenre(urlParams.id).then(data => {
+                setGenre(data.genre);
+                setSongs(data.songs);
                 setLoading(false);
-            }).catch(response => {
-                setLoading(true)
             })
         }
     }, [])

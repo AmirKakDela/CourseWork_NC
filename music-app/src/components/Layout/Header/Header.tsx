@@ -15,7 +15,6 @@ const Header = () => {
 
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
     const user = useSelector((state: RootState) => state.user.currentUser);
-    console.log(location.pathname.includes("/admin"))
 
     const logout = () => {
         dispatch(logoutCurrentUser());
@@ -80,7 +79,7 @@ const Header = () => {
 
     return (
         <div className="header">
-            {location.pathname == "/welcome" ? (
+            {location.pathname === "/welcome" ? (
                 <div className="header__logo">Crackerfy</div>
             ) : (
                 nav

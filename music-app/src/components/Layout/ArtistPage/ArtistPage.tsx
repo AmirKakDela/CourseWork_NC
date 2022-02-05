@@ -16,10 +16,10 @@ const ArtistPage = () => {
 
     useEffect(() => {
         if (urlParams.id) {
-            ArtistAPI.getArtistById(urlParams.id).then(response => {
-                setArtist(response.data.artist);
-                setSongs(response.data.songs);
-                setAlbums(response.data.albums);
+            ArtistAPI.getArtistById(urlParams.id).then(data => {
+                setArtist(data.artist);
+                setSongs(data.songs);
+                setAlbums(data.albums);
                 setIsLoading(false);
                 console.log(artist)
             })

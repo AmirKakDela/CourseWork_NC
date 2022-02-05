@@ -6,7 +6,8 @@ type InitialStateType = {
     isAuth: boolean,
     error: string | null,
     isLoading: boolean,
-    likeLoading: boolean
+    likeLoading: boolean,
+    libraryLoading: boolean
 }
 
 const initialState: InitialStateType = {
@@ -14,12 +15,13 @@ const initialState: InitialStateType = {
         userId: '',
         userName: '',
         isAdmin: false,
-        likedSongs: []
+        likedSongs: [],
     },
     isAuth: false,
     error: null,
     isLoading: true,
-    likeLoading: false
+    likeLoading: false,
+    libraryLoading: true
 }
 
 const userReducer = (state = initialState, action: UserActionTypes): InitialStateType => {
@@ -42,7 +44,7 @@ const userReducer = (state = initialState, action: UserActionTypes): InitialStat
             }
         case UserActionTypeTypes.SET_USER_LIKED_SONGS:
             return {
-                ...state, currentUser: {...state.currentUser, likedSongs: action.payload}
+                ...state, libraryLoading: false, currentUser: {...state.currentUser, likedSongs: action.payload}
             }
         case UserActionTypeTypes.TOGGLE_LIKE_SONG:
             return {
