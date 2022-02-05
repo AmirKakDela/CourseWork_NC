@@ -19,7 +19,7 @@ function MainPage() {
         ArtistAPI.getAllArtists().then(data => {
             setArtists(data)
         })
-    }, []);
+    }, [dispatch]);
 
     const popularPlaylists = useSelector((state: RootState) => state.album.albums); // здесь надо получать плейлисты, а не альбомы
 

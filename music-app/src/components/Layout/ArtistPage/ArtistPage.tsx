@@ -21,10 +21,9 @@ const ArtistPage = () => {
                 setSongs(data.songs);
                 setAlbums(data.albums);
                 setIsLoading(false);
-                console.log(artist)
             })
         }
-    }, [])
+    }, [urlParams.id])
 
     return (
         <>

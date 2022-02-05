@@ -37,13 +37,16 @@ const SearchPage = () => {
     }
 
     useEffect(() => {
-        dispatch(getAlbumsByRequest());
         if (genres.length === 0) {
             GenreAPI.getAllGenre().then(data => {
                 setGenres(data);
             })
         }
-    }, []);
+    }, [genres.length]);
+
+    useEffect(() => {
+        dispatch(getAlbumsByRequest());
+    }, [dispatch])
 
     useEffect(() => {
         if (searchString !== null && queryValue.trim()) {
@@ -68,7 +71,7 @@ const SearchPage = () => {
                                 <h2 className="search__title">Топ жанров</h2>
                                 <div className="search__genres-row">
                                     {genres && genres.map(genre => (
-                                        <Genre genre={genre}/>
+                                        <Genre key={genre._id} genre={genre}/>
                                     ))}
                                 </div>
                                 <h2 className="search__title">Популярные плейлисты и альбомы</h2>
@@ -83,9 +86,8 @@ const SearchPage = () => {
                                 <div className="search__content">
                                     <h2 className="search__title">Треки</h2>
                                     <div className="search__songs">
-
                                         {searchResult.songs && searchResult.songs.map((song, index) => {
-                                            return <Song song={song} order={index + 1}/>
+                                            return <Song key={song._id} song={song} order={index + 1}/>
                                         })}
                                     </div>
                                     <h2 className="search__title">Исполнители</h2>
