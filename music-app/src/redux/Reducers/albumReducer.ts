@@ -1,9 +1,9 @@
-import {Album} from "../../config/types";
+import {AlbumType} from "../../config/types";
 import {AlbumAction, AlbumActionsType} from "../Actions/albumAction";
 
 type State = {
-    albums: Album[],
-    popularAlbums: Album[]
+    albums: AlbumType[],
+    popularAlbums: AlbumType[]
 }
 
 const initialState: State = {
@@ -16,10 +16,10 @@ const albumReducer = (state = initialState, action: AlbumAction): State => {
         case AlbumActionsType.SET_ALBUMS:
             return {
                 ...state,
-                albums: action.payload as Album[] || initialState.albums,
+                albums: action.payload as AlbumType[] || initialState.albums,
             };
         case AlbumActionsType.SET_ALBUM:
-            const album = action.payload as Album;
+            const album = action.payload as AlbumType;
             const filteredAlbums = state.albums.filter(value => value._id !== album._id);
             return {
                 ...state,
@@ -28,7 +28,7 @@ const albumReducer = (state = initialState, action: AlbumAction): State => {
         case AlbumActionsType.SET_POPULAR_ALBUMS:
             return {
                 ...state,
-                popularAlbums: action.payload as Album[] || initialState.popularAlbums,
+                popularAlbums: action.payload as AlbumType[] || initialState.popularAlbums,
             };
         case AlbumActionsType.DELETE_ALBUM:
             const id = action.payload as string;

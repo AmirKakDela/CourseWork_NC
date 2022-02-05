@@ -41,7 +41,7 @@ export function AlbumPage() {
                     </div>
                     <div className="info__desc">
                         <h2 className="desc__category">Альбом</h2>
-                        <h1 className="desc__name">{album.name}</h1>
+                        <h1 className="desc__name desc__name_album">{album.name}</h1>
                         <span className="desc__text">{album.artist} &bull; {album.songs.length} трека, { getTimesOfTracks()}</span>
                     </div>
                 </div>

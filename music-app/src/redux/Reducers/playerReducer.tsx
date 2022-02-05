@@ -1,9 +1,9 @@
-import {Track} from "../../config/types";
+import {SongType} from "../../config/types";
 import {PlayerAction, PlayerActionsType} from "../Actions/playerActions";
 
 export type PlayerReducerState = {
     pause: boolean,
-    playback: Track | null,
+    playback: SongType | null,
     duration: number,
     volume: number,
 }

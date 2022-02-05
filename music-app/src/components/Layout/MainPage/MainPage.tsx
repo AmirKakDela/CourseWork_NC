@@ -1,22 +1,26 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import AlbumCard from "../../AlbumCard/AlbumCard";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../redux/Reducers/rootReducer";
 import {getAlbumsByRequest} from "../../../redux/Actions/thunkAlbumActions";
 import ArtistCard from "../../ArtistCard/ArtistCard";
-import {getAllArtists} from "../../../redux/Actions/thunkArtistAction";
 import {ScrollComponent} from "../../ScrollComponent/ScrollComponent";
 import "./MainPage.scss";
+import {ArtistType} from "../../../config/types";
+import ArtistAPI from "../../../API/ArtistAPI";
 
 function MainPage() {
-
     const dispatch = useDispatch();
+    const [artists, setArtists] = useState<ArtistType[]>([]);
+
+
     useEffect(() => {
         dispatch(getAlbumsByRequest());
-        dispatch(getAllArtists());
+        ArtistAPI.getAllArtists().then(data => {
+            setArtists(data)
+        })
     }, []);
 
-    const artists = useSelector((state: RootState) => state.artist.artists);
     const popularPlaylists = useSelector((state: RootState) => state.album.albums); // здесь надо получать плейлисты, а не альбомы
 
     return (

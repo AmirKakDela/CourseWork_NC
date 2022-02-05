@@ -1,32 +1,35 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import "./artistPage.scss";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../../redux/Reducers/rootReducer";
 import {useParams} from "react-router-dom";
-import {getArtist} from "../../../redux/Actions/thunkArtistAction";
 import {Song} from "../../Song/Song";
 import MoonLoader from "react-spinners/MoonLoader";
-import {thunkUserLikedSongs} from "../../../redux/Actions/thunkUserActions";
 import AlbumCard from "../../AlbumCard/AlbumCard";
+import {AlbumType, ArtistType, SongType} from "../../../config/types";
+import ArtistAPI from "../../../API/ArtistAPI";
 
 const ArtistPage = () => {
     const urlParams = useParams();
-    const dispatch = useDispatch();
-    const artist = useSelector((state: RootState) => state.artist.artists.find(it => urlParams.id === it._id));
-    const albums = useSelector((state: RootState) => state.album.albums);
-    const songs = useSelector((state: RootState) => state.song.tracks);
-    const isLoading = useSelector((state: RootState) => state.artist.isLoading);
+    const [artist, setArtist] = useState<ArtistType>({image: '', _id: '', name: ''});
+    const [songs, setSongs] = useState<SongType[]>([]);
+    const [albums, setAlbums] = useState<AlbumType[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
     useEffect(() => {
         if (urlParams.id) {
-            dispatch(getArtist(urlParams.id));
-            dispatch(thunkUserLikedSongs());
+            ArtistAPI.getArtistById(urlParams.id).then(response => {
+                setArtist(response.data.artist);
+                setSongs(response.data.songs);
+                setAlbums(response.data.albums);
+                setIsLoading(false);
+                console.log(artist)
+            })
         }
-    }, []);
+    }, [])
 
     return (
         <>
             {
-                !artist || isLoading
+                isLoading
                     ? <MoonLoader color={"white"} css={"margin: 0 auto"}/>
                     : <div className="info">
                         <div className="info__header">
