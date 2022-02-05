@@ -17,12 +17,12 @@ type PropsType = {
 }
 
 export const Song = (props: PropsType) => {
-    const { song, order } = props;
-    const { pause, playback } = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
+    const {song, order} = props;
+    const {pause, playback} = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
     const [songCover, setSongCover] = useState(song.cover);
-    const { playSong, pauseSong, setPlayingSong } = useActions();
+    const {playSong, pauseSong, setPlayingSong} = useActions();
     let isSelectedSong = false;
-    if (song._id){
+    if (song._id) {
         isSelectedSong = playback?._id === song._id;
     }
     const isPlayed = !pause && isSelectedSong;
@@ -54,7 +54,7 @@ export const Song = (props: PropsType) => {
                     </div>
                 </div>
                 <img src={songCover || songDefault}
-                     alt="Song Picture"
+                     alt="Song"
                      className="song__img"
                      onError={onImageError}
                 />

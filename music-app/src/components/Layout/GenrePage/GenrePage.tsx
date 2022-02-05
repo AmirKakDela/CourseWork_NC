@@ -27,7 +27,7 @@ const GenrePage: React.FC = () => {
                 setLoading(false);
             })
         }
-    }, [])
+    }, [urlParams.id])
 
     return (
 
@@ -49,7 +49,7 @@ const GenrePage: React.FC = () => {
                         <h2 className="main__title">Песни</h2>
                         <div className="main__songs">
                             {!!songs.length ? songs.map((song, idx) => (
-                                <Song song={song} order={idx + 1}/>
+                                <Song key={song._id} song={song} order={idx + 1}/>
                             )) : (<p className="genre-page__subtitle">У жанра {genre.name && genre.name.toUpperCase()} пока нет песен. Скоро мы это исправим.</p>)}
                         </div>
                     </div>

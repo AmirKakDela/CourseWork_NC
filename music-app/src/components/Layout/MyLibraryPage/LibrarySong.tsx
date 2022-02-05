@@ -12,10 +12,10 @@ const LibrarySong: React.FC = () => {
     const isLoading = useSelector((state: RootState) => state.user.libraryLoading);
     console.log(isLoading)
     useEffect(() => {
-        if(user.likedSongs.length === 0 && isLoading) {
+        if (user.likedSongs.length === 0 && isLoading) {
             dispatch(thunkUserLikedSongs());
         }
-    }, [dispatch])
+    }, [user.likedSongs.length, isLoading, dispatch])
 
 
     return (

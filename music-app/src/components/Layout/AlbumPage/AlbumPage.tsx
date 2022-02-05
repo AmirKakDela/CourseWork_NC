@@ -14,7 +14,7 @@ export function AlbumPage() {
         if (urlParams.id) {
             dispatch(getAlbumByIdRequest(urlParams.id));
         }
-    }, []);
+    }, [urlParams.id, dispatch]);
 
     const getTimesOfTracks = () => {
         let time: number;

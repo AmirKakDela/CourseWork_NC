@@ -4,7 +4,7 @@ import "./Sidebar.scss";
 import SpotifyLogo from "../../../assets/icons/Spotify-Logo.wine.svg";
 import {AppTheme, SidebarItemType} from "../../../config/types";
 import {SharedActionsType} from "../../../redux/Actions/sharedActions";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../redux/Reducers/rootReducer";
 import {MenuInfo} from "rc-menu/lib/interface";
@@ -28,26 +28,20 @@ const Sidebar: React.FC<PropsType> = (props) => {
         });
     };
 
-    const handleClick = useCallback((e: MenuInfo) =>  setCurrent(e.key), []);
+    const handleClick = useCallback((e: MenuInfo) => setCurrent(e.key), []);
 
     return (
         <div className="sidebar">
+            <div className="home-logo">
+                <Link to='/'>
+                    <img src={SpotifyLogo} alt="SpotifyLogo"/>
+                </Link>
+            </div>
             <Menu className="menu"
                   onClick={handleClick}
                   selectedKeys={[current]}
                   theme={currentTheme}
             >
-                <Switch
-                    checked={currentTheme === "dark"}
-                    onChange={changeTheme}
-                    checkedChildren="Dark"
-                    unCheckedChildren="Light"
-                />
-                <div className="home-logo">
-                    <a onClick={() => navigate("/")}>
-                        <img src={SpotifyLogo} className="home-logo" alt="SpotifyLogo"/>
-                    </a>
-                </div>
                 {props.items.map((item, index) => {
                     return (
                         <Menu.Item key={index}
@@ -59,6 +53,12 @@ const Sidebar: React.FC<PropsType> = (props) => {
                     );
                 })}
             </Menu>
+            <Switch
+                checked={currentTheme === "dark"}
+                onChange={changeTheme}
+                checkedChildren="Dark"
+                unCheckedChildren="Light"
+            />
         </div>
     );
 }

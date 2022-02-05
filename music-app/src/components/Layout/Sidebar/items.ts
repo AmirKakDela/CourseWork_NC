@@ -33,7 +33,7 @@ export const items: SidebarItemType[] = [
         text: 'Создать плейлист',
     },
     {
-        path: "/loved",
+        path: "/my-library",
         itemId: "favourite-tracks",
         icon: HeartOutlined,
         text: 'Любимые треки',
