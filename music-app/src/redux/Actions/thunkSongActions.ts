@@ -13,12 +13,9 @@ export const fetchSongs = () => {
                     }
                 }
             );
-            dispatch({ type: SongActionTypes.FETCH_SONGS, payload: response.data });
+            dispatch({type: SongActionTypes.FETCH_SONGS, payload: response.data});
         } catch (e) {
-            dispatch({
-                type: SongActionTypes.FETCH_SONGS_ERROR,
-                payload: "Произошла ошибка при загрузке песен"
-            });
+            console.log(e)
         }
     };
 };

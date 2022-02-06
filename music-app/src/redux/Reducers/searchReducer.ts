@@ -3,13 +3,11 @@ import {SearchActionsTypeTypes, SearchActionType} from "../Actions/searchActions
 
 type StateType = {
     isLoading: boolean,
-    error: string | null,
     searchResult: SearchResultType
 }
 
 const initialState: StateType = {
     isLoading: false,
-    error: null,
     searchResult: {songs: [], artists: []}
 }
 
@@ -22,10 +20,6 @@ const searchReducer = (state = initialState, action: SearchActionType): StateTyp
         case SearchActionsTypeTypes.SEARCH_LOADING:
             return {
                 ...state, isLoading: true
-            }
-        case SearchActionsTypeTypes.SET_SEARCH_ERROR:
-            return {
-                ...state, isLoading: false, error: action.payload
             }
         default:
             return state;

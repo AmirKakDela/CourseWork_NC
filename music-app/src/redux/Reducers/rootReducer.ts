@@ -5,6 +5,7 @@ import sharedReducer from "./sharedReducer";
 import albumReducer from "./albumReducer";
 import songReducer from "./songReducer";
 import {playerReducer} from "./playerReducer";
+import errorReducer from "./errorReducer";
 
 
 export const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ export const rootReducer = combineReducers({
     album: albumReducer,
     player: playerReducer,
     song: songReducer,
+    error: errorReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>;
