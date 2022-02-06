@@ -20,20 +20,23 @@ import AdminRoute from "./components/HOC/AdminRoute";
 import MyLibraryPage from "./components/Layout/MyLibraryPage/MyLibraryPage";
 import LibrarySong from "./components/Layout/MyLibraryPage/LibrarySong";
 import GenrePage from "./components/Layout/GenrePage/GenrePage";
-import { AlbumPage } from "./components/Layout/AlbumPage/AlbumPage";
+import {AlbumPage} from "./components/Layout/AlbumPage/AlbumPage";
+import ErrorAlert from "./components/Alert/ErrorAlert/ErrorAlert";
 
 function App() {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
-    const isAdmin = useSelector((state: RootState) => state.user.currentUser.isAdmin)
+    const isAdmin = useSelector((state: RootState) => state.user.currentUser.isAdmin);
     const userLoading = useSelector((state: RootState) => state.user.isLoading);
+    const error = useSelector((state: RootState) => state.error.errorText);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(auth());
     }, [dispatch])
 
-    return (<>
-            {userLoading ? <AppLoading/> :
+    return <>
+        {userLoading ? <AppLoading/> :
+            <>
                 <BrowserRouter>
                     <Routes>
                         <Route path='/auth'>
@@ -79,9 +82,11 @@ function App() {
                         </Route>
                     </Routes>
                 </BrowserRouter>
-            }
-        </>
-    );
+                {error !== null ? <ErrorAlert error={error}/> : null}
+            </>
+        }
+    </>
+        ;
 }
 
 export default App;
