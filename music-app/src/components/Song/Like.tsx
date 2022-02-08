@@ -25,8 +25,8 @@ const Like: React.FC<PropsType> = (props) => {
             {likeLoading.status && likeLoading.songId === props.song._id
                 ? <ClipLoader color='white' css={'display: block; width: 18px; height: 18px'}/>
                 : user && likeStatus
-                    ? <HeartFilled style={{fontSize: '20px', color: "#1db954"}} onClick={toggleLike}/>
-                    : <HeartOutlined style={{fontSize: '20px', color: "white"}} onClick={toggleLike}/>
+                    ? <HeartFilled style={{fontSize: '20px', color: "#1db954", marginLeft: 10}} onClick={toggleLike}/>
+                    : <HeartOutlined style={{fontSize: '20px', color: "white", marginLeft: 10}} onClick={toggleLike}/>
             }
         </div>
     );
