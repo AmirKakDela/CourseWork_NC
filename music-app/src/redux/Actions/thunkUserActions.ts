@@ -12,6 +12,7 @@ import {
 import {Dispatch} from "redux";
 import {AuthorizationHeaderConfig, url} from "../../config/config";
 import {ErrorType, SongType} from "../../config/types";
+import {ErrorActionType, setError} from "./errorAction";
 
 
 export const signup = (email: string, password: string, name: string) => {
@@ -47,7 +48,7 @@ export const login = (email: string, password: string) => {
 }
 
 export const auth = () => {
-    return async (dispatch: Dispatch<UserActionTypes>) => {
+    return async (dispatch: Dispatch<UserActionTypes | ErrorActionType>) => {
         dispatch(userLoading(true))
         try {
             console.log(localStorage.getItem('token'))
@@ -63,9 +64,9 @@ export const auth = () => {
             }));
             localStorage.setItem('token', response.data.token)
         } catch (e) {
-            console.log('ошибка при авторизации на фронте', e)
             const u = e as ErrorType
-            dispatch(setAuthError(u.response.data.message))
+            dispatch(setError(u.response.data.message))
+            dispatch(userLoading(false))
             localStorage.removeItem('token');
         }
     }

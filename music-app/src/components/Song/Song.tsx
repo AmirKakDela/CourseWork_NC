@@ -13,7 +13,7 @@ import {formattedTime} from "../Layout/Player/player.untils";
 
 type PropsType = {
     song: SongType,
-    order: number,
+    order?: number,
 }
 
 export const Song = (props: PropsType) => {
@@ -53,7 +53,7 @@ export const Song = (props: PropsType) => {
                         }
                     </div>
                 </div>
-                <img src={songCover || songDefault}
+                <img src={songCover}
                      alt="Song"
                      className="song__img"
                      onError={onImageError}
