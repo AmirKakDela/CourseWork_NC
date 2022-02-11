@@ -1,0 +1,225 @@
+@import "./src/config/colors";
+
+
+.playlist {
+  &__info {
+    .info {
+
+      &__header {
+        background: rgb(0, 0, 0);
+        background: linear-gradient(284deg, rgba(0, 0, 0, 0.7749474789915967) 0%, rgba(34, 96, 15, 0.5816701680672269) 100%);
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        align-items: flex-end;
+      }
+
+      &__actions {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 30px;
+
+
+        .actions {
+          &__play {
+            margin-right: 30px;
+            width: 56px;
+            height: 56px;
+            background: $btn-green;
+            border-radius: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: $black;
+
+            &:hover {
+              transform: scale(1.06);
+            }
+          }
+
+          &__options {
+            padding: 0;
+            background: none;
+            color: $darkwhite;
+            border: none;
+            font-size: 50px;
+            line-height: 0;
+
+            &:hover {
+              background: none;
+              color: $white;
+            }
+
+
+          }
+        }
+      }
+
+      &__main {
+        height: max-content;
+        padding: 0 30px 30px;
+
+        .main {
+          &__title {
+            color: $white;
+            font-size: 40px;
+            font-weight: 700;
+            margin: 20px 0;
+
+            &:first-child {
+              margin-top: 0;
+            }
+          }
+
+          &__slider {
+            display: flex;
+            column-gap: 30px;
+          }
+
+          &__songs {
+            display: flex;
+            flex-direction: column;
+          }
+        }
+      }
+
+      &__cover {
+        margin-right: 30px;
+
+        img {
+          width: 250px;
+          height: 250px;
+          display: block;
+          border-radius: 3px;
+          object-fit: cover;
+          box-shadow: 2px 2px 11px -3px rgba(0, 0, 0, 0.65);
+          transition: .2s box-shadow ease-in-out;
+        }
+      }
+
+      &__desc {
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.22);
+        color: $white;
+        padding: 10px;
+        border-radius: 10px;
+
+        .desc {
+          &__category {
+            color: $darkwhite;
+            text-transform: lowercase;
+          }
+
+          &__name {
+            color: white;
+            font-size: 70px;
+            font-weight: 700;
+            line-height: 110%;
+            text-transform: uppercase;
+          }
+
+          &__author {
+            color: white;
+          }
+
+          &__text {
+            font-size: 17px;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+
+  &__addsongs {
+    height: max-content;
+    padding: 0 30px 30px;
+
+    .addsongs {
+      &__open, &__close {
+        padding: 0;
+        background: none;
+        color: $darkwhite;
+        border-radius: 500px;
+        border: none;
+
+        &:hover {
+          background: none;
+          color: $white;
+        }
+
+        span {
+          font-size: 18px;
+          color: inherit;
+        }
+      }
+
+      &__header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      &__title {
+        color: $white;
+        font-size: 25px;
+        font-weight: 700;
+        margin: 0;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
+
+.ant {
+  &-popover {
+    &-arrow {
+      display: none;
+    }
+
+    &-inner {
+      background: $black40;
+
+      &-content {
+        padding: 5px;
+        background: inherit;
+        border-radius: 10px !important;
+
+        .ant-menu {
+          background: inherit;
+
+          &-vertical {
+            border: none;
+          }
+
+          &-item {
+            margin: 0 !important;
+            color: $white !important;
+            font-size: 13px;
+            border-radius: 4px;
+            width: 100%;
+
+            &-active {
+              background-color: $lightgrey !important;
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+
+}
+
+
+[ant-click-animating-without-extra-node='true']::after {
+  display: none;
+}

@@ -14,6 +14,7 @@ export const fetchSongs = () => {
             }
             );
             dispatch({ type: SongActionTypes.FETCH_SONGS, payload: response.data });
+            console.log(response)
         } catch (e) {
             dispatch({
                 type: SongActionTypes.FETCH_SONGS_ERROR,

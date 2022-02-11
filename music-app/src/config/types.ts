@@ -34,6 +34,7 @@ export type ArtistType = {
 export type SearchResultType = {
     songs: Array<Track> | [],
     artists: Array<ArtistType> | [],
+    // playlists: Array<PlaylistType> | []
     // playlists>: todo: потом добавить плейлисты
 }
 
@@ -48,4 +49,12 @@ export type Album = {
     artist: string,
     songs: Array<string>,
     cover: string
+}
+
+export type PlaylistType = {
+    _id?: string,
+    name: string,
+    user: string,
+    songs: Array<Track>,
+    cover?: string
 }
