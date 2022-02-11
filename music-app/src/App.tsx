@@ -22,6 +22,7 @@ import LibrarySong from "./components/Layout/MyLibraryPage/LibrarySong";
 import GenrePage from "./components/Layout/GenrePage/GenrePage";
 import {AlbumPage} from "./components/Layout/AlbumPage/AlbumPage";
 import ErrorAlert from "./components/Alert/ErrorAlert/ErrorAlert";
+import {CreateSong} from "./components/AdminPage/AdminLayout/createSong/CreateSong";
 
 function App() {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
@@ -75,7 +76,7 @@ function App() {
                             <AdminRoute isAdmin={isAdmin} isAuth={isAuth}>
                                 <AdminLayout/>
                             </AdminRoute>}>
-                            <Route path="songs" element={<h1>All songs</h1>}/>
+                            <Route path="songs" element={<CreateSong/>}/>
                             <Route path="artists" element={<h1>All Artists</h1>}/>
                             <Route path="playlists" element={<h1>All Playlists</h1>}/>
                             <Route path="albums" element={<h1>All Albums</h1>}/>
