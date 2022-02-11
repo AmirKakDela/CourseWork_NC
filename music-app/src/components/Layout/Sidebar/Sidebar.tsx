@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import {Menu, Switch} from "antd";
 import "./Sidebar.scss";
 import SpotifyLogo from "../../../assets/icons/Spotify-Logo.wine.svg";
-import {AppTheme, PlaylistType} from "../../../config/types";
+import {AppTheme, PlaylistType, SidebarItemType} from "../../../config/types";
 import {SharedActionsType} from "../../../redux/Actions/sharedActions";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -12,7 +12,11 @@ import {MenuInfo} from "rc-menu/lib/interface";
 import {createPlaylistByRequest, getPlaylistsByRequest} from "../../../redux/Actions/thunkPlaylistActions";
 import {HeartOutlined, PlusSquareFilled} from "@ant-design/icons";
 
-export function Sidebar() {
+type PropsType = {
+    items: SidebarItemType[]
+}
+
+const Sidebar: React.FC<PropsType> = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentTheme = useSelector((state: RootState) => state.shared.appTheme);
@@ -80,12 +84,7 @@ export function Sidebar() {
                 selectedKeys={[current]}
                 theme={currentTheme}
             >
-                <Switch
-                    checked={currentTheme === "dark"}
-                    onChange={changeTheme}
-                    checkedChildren="Dark"
-                    unCheckedChildren="Light"
-                />
+
                 <div className="home-logo">
                     <a onClick={() => navigate("/")}>
                         <img src={SpotifyLogo} className="home-logo" alt="SpotifyLogo"/>
@@ -125,8 +124,13 @@ export function Sidebar() {
                         );
                     })}
                 </Menu.ItemGroup>}
-
             </Menu>
+            <Switch
+                checked={currentTheme === "dark"}
+                onChange={changeTheme}
+                checkedChildren="Dark"
+                unCheckedChildren="Light"
+            />
         </div>
     );
 }

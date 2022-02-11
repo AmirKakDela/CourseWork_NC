@@ -13,7 +13,7 @@ export type ErrorType = {
     }
 }
 
-export type Track = {
+export type SongType = {
     _id: string;
     name: string,
     artist: string,
@@ -23,18 +23,29 @@ export type Track = {
     genre: string
 }
 
+export type AlbumType = {
+    _id: string,
+    name: string,
+    artist: string,
+    songs: Array<SongType>,
+    cover: string
+}
+
+export type GenreType = {
+    _id: string,
+    color: string,
+    name: string,
+}
+
 export type ArtistType = {
     _id: string;
     name: string,
-    songs: Array<Track>,
-    albums: Array<string>,
     image: string
 }
 
 export type SearchResultType = {
-    songs: Array<Track> | [],
+    songs: Array<SongType> | [],
     artists: Array<ArtistType> | [],
-    // playlists: Array<PlaylistType> | []
     // playlists>: todo: потом добавить плейлисты
 }
 
@@ -43,18 +54,22 @@ export enum AppTheme {
     LIGHT = 'light'
 }
 
-export type Album = {
-    _id: string,
-    name: string,
-    artist: string,
-    songs: Array<string>,
-    cover: string
+export type SidebarItemType = {
+    path: string,
+    itemId: string,
+    icon?: React.ForwardRefExoticComponent<any>,
+    text: string
+}
+
+export type LikeLoadingType = {
+    songId: string,
+    status: boolean
 }
 
 export type PlaylistType = {
     _id?: string,
     name: string,
     user: string,
-    songs: Array<Track>,
+    songs: Array<SongType>,
     cover?: string
 }
