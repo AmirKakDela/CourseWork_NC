@@ -2,7 +2,8 @@ export type CurrentUserType = {
     userId: string,
     userName: string,
     isAdmin: boolean,
-    likedSongs: Array<Track>
+    likedSongs: Array<SongType>,
+    likeLoading: LikeLoadingType
 }
 
 export type ErrorType = {

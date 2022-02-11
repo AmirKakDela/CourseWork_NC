@@ -50,39 +50,50 @@
 .home-logo {
   display: flex;
   justify-content: flex-start;
-  width: 225px;
-  height: 47px;
-  margin-bottom: 18px;
+  align-items: center;
+  height: 100px;
+  width: 241px;
+
+  img {
+    width: 180px;
+    height: 70px;
+    text-align: start;
+  }
 }
 
-#menu__item,
-#create-playlist,
-#favourite-tracks,
-#my-playlists {
+#create-playlist, #favourite-tracks {
   display: flex;
   justify-items: start;
   align-items: center;
-  padding: 0 8px;
-  height: 55px;
-  gap: 16px;
 }
 
 #create-playlist {
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
+.ant-menu-item {
+  display: flex;
+  justify-items: start;
+  align-items: center;
 
-.ant-menu-item-selected {
-  width: 100%;
-  border-radius: 4px;
+  &-icon {
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &-selected {
+    border-radius: 4px;
+  }
 }
 
-.ant-menu.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-  background-color: $hover-color-for-light-items;
-  color: $black0;
+.ant-menu.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{
+    background-color: $hover-color-for-light-items;
+    color: $black0;
 }
 
 .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
-  background-color: $black40;
-  color: $white;
+    background-color: $black40;
+    color: $white;
 }

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import "./song.scss";
-import {Track} from "../../config/types";
+import {SongType} from "../../config/types";
 import songDefault from "../../assets/imgs/song_default.jpg";
 import Like from "./Like";
 import {CaretRightFilled as PlayIcon, PauseOutlined as PauseIcon} from "@ant-design/icons";
@@ -8,20 +8,23 @@ import {useActions} from "../../hooks/useActions";
 import {setPlayingSong} from "../../redux/action-creators/player";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {RootState} from "../../redux/Reducers/rootReducer";
-import {playMusic} from "../Layout/Player/playMusic";
 import {PlayerReducerState} from "../../redux/Reducers/playerReducer";
+import {formattedTime} from "../Layout/Player/player.untils";
 
 type PropsType = {
-    song: Track,
-    order: number,
+    song: SongType,
+    order?: number,
 }
 
 export const Song = (props: PropsType) => {
-    const { song, order } = props;
-    const { pause, playback } = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
+    const {song, order} = props;
+    const {pause, playback} = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
     const [songCover, setSongCover] = useState(song.cover);
-    const { playSong, pauseSong, setPlayingSong } = useActions();
-    const isSelectedSong = playback?._id === song._id;
+    const {playSong, pauseSong, setPlayingSong} = useActions();
+    let isSelectedSong = false;
+    if (song._id) {
+        isSelectedSong = playback?._id === song._id;
+    }
     const isPlayed = !pause && isSelectedSong;
 
     function play() {
@@ -50,8 +53,8 @@ export const Song = (props: PropsType) => {
                         }
                     </div>
                 </div>
-                <img src={songCover || songDefault}
-                     alt="Song Picture"
+                <img src={songCover}
+                     alt="Song"
                      className="song__img"
                      onError={onImageError}
                 />
@@ -65,7 +68,7 @@ export const Song = (props: PropsType) => {
                     <Like song={song}/>
                 </div>
                 <h3 className="song__duration">
-                    {song.duration}
+                    {formattedTime(song.duration)}
                 </h3>
             </div>
         </div>

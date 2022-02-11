@@ -22,7 +22,6 @@ const Sidebar: React.FC<PropsType> = (props) => {
     const currentTheme = useSelector((state: RootState) => state.shared.appTheme);
     const [current, setCurrent] = useState("0");
 
-
     const changeTheme = (value: boolean) => {
         dispatch({
             type: SharedActionsType.SET_APP_THEME,
@@ -78,19 +77,17 @@ const Sidebar: React.FC<PropsType> = (props) => {
 
     return (
         <div className="sidebar">
-            <Menu
-                className="menu"
-                onClick={handleClick}
-                selectedKeys={[current]}
-                theme={currentTheme}
+            <div className="home-logo">
+                <Link to='/'>
+                    <img src={SpotifyLogo} alt="SpotifyLogo"/>
+                </Link>
+            </div>
+            <Menu className="menu"
+                  onClick={handleClick}
+                  selectedKeys={[current]}
+                  theme={currentTheme}
             >
-
-                <div className="home-logo">
-                    <a onClick={() => navigate("/")}>
-                        <img src={SpotifyLogo} className="home-logo" alt="SpotifyLogo"/>
-                    </a>
-                </div>
-                {items.map((item, index) => {
+                {props.items.map((item, index) => {
                     return (
                         <Menu.Item
                             key={index}
@@ -134,3 +131,5 @@ const Sidebar: React.FC<PropsType> = (props) => {
         </div>
     );
 }
+
+export default Sidebar;

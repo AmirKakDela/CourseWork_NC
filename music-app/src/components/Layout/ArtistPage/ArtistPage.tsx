@@ -1,29 +1,34 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import "./artistPage.scss";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../../redux/Reducers/rootReducer";
 import {useParams} from "react-router-dom";
-import {getArtist} from "../../../redux/Actions/thunkArtistAction";
 import {Song} from "../../Song/Song";
 import MoonLoader from "react-spinners/MoonLoader";
+import AlbumCard from "../../AlbumCard/AlbumCard";
+import {AlbumType, ArtistType, SongType} from "../../../config/types";
+import ArtistAPI from "../../../API/ArtistAPI";
 
 const ArtistPage = () => {
     const urlParams = useParams();
-    const dispatch = useDispatch();
-    const artist = useSelector((state: RootState) => state.artist.artists.find(it => urlParams.id === it._id));
-    const isLoading = useSelector((state: RootState) => state.artist.isLoading);
-    console.log(isLoading);
+    const [artist, setArtist] = useState<ArtistType>({image: '', _id: '', name: ''});
+    const [songs, setSongs] = useState<SongType[]>([]);
+    const [albums, setAlbums] = useState<AlbumType[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
     useEffect(() => {
         if (urlParams.id) {
-            dispatch(getArtist(urlParams.id));
-           // dispatch(thunkUserLikedSongs());
+            ArtistAPI.getArtistById(urlParams.id).then(data => {
+                setArtist(data.artist);
+                setSongs(data.songs);
+                setAlbums(data.albums);
+                setIsLoading(false);
+            })
         }
-    }, []);
+    }, [urlParams.id])
 
     return (
         <>
             {
-                !artist || isLoading
+                isLoading
                     ? <MoonLoader color={"white"} css={"margin: 0 auto"}/>
                     : <div className="info">
                         <div className="info__header">
@@ -35,19 +40,17 @@ const ArtistPage = () => {
                             <div className="info__desc">
                                 <h2 className="desc__category">Исполнитель</h2>
                                 <h1 className="desc__name">{artist.name}</h1>
-                                <p className="desc__text">{artist.songs.length} трека, {artist.albums.length} альбома</p>
+                                <p className="desc__text">{songs.length} трека, {albums.length} альбома</p>
                             </div>
                         </div>
                         <div className="info__main">
                             <h2 className="main__title">Альбомы</h2>
                             <div className="main__slider">
-                                {/*<AlbumCard/>*/}
-                                {/*<AlbumCard/>*/}
-                                {/*<AlbumCard/>*/}
+                                {albums.map(album => <AlbumCard key={album._id} album={album}/>)}
                             </div>
                             <h2 className="main__title">Песни</h2>
                             <div className="main__songs">
-                                {artist.songs.map((s, index) => (
+                                {songs.map((s, index) => (
                                     <Song song={s} order={index + 1} key={s._id}/>
                                 ))}
                             </div>

@@ -8,18 +8,14 @@ export const fetchSongs = () => {
         try {
             const response = await axios.get(`${url}/api/song/all`,
                 {
-                headers: {
-                    Authorization: "" + localStorage.getItem("token")
+                    headers: {
+                        Authorization: "" + localStorage.getItem("token")
+                    }
                 }
-            }
             );
-            dispatch({ type: SongActionTypes.FETCH_SONGS, payload: response.data });
-            console.log(response)
+            dispatch({type: SongActionTypes.FETCH_SONGS, payload: response.data});
         } catch (e) {
-            dispatch({
-                type: SongActionTypes.FETCH_SONGS_ERROR,
-                payload: "Произошла ошибка при загрузке песен"
-            });
+            console.log(e)
         }
     };
 };

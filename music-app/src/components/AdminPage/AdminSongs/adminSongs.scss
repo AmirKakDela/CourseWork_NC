@@ -1,0 +1,13 @@
+@import "src/config/colors";
+
+.admin {
+  &-song {
+    &__wrap {
+      padding: 10px 30px;
+      border-bottom: .5px solid $lightgrey;
+      display: flex;
+      align-items: center;
+      column-gap: 15px;
+    }
+  }
+}

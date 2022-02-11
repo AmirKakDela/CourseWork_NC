@@ -6,7 +6,7 @@ type InitialStateType = {
     isAuth: boolean,
     error: string | null,
     isLoading: boolean,
-    likeLoading: boolean
+    libraryLoading: boolean
 }
 
 const initialState: InitialStateType = {
@@ -14,12 +14,16 @@ const initialState: InitialStateType = {
         userId: '',
         userName: '',
         isAdmin: false,
-        likedSongs: []
+        likedSongs: [],
+        likeLoading: {
+            songId: '',
+            status: false
+        }
     },
     isAuth: false,
     error: null,
     isLoading: true,
-    likeLoading: false
+    libraryLoading: true
 }
 
 const userReducer = (state = initialState, action: UserActionTypes): InitialStateType => {
@@ -30,7 +34,12 @@ const userReducer = (state = initialState, action: UserActionTypes): InitialStat
             }
         case UserActionTypeTypes.LOGOUT_CURRENT_USER:
             return {
-                ...state, isAuth: false, currentUser: {userId: '', userName: '', isAdmin: false, likedSongs: []}
+                ...state, isAuth: false, currentUser: {
+                    userId: '', userName: '', isAdmin: false, likedSongs: [], likeLoading: {
+                        songId: '',
+                        status: false
+                    }
+                }
             }
         case UserActionTypeTypes.SET_AUTH_ERROR:
             return {
@@ -42,7 +51,7 @@ const userReducer = (state = initialState, action: UserActionTypes): InitialStat
             }
         case UserActionTypeTypes.SET_USER_LIKED_SONGS:
             return {
-                ...state, currentUser: {...state.currentUser, likedSongs: action.payload}
+                ...state, libraryLoading: false, currentUser: {...state.currentUser, likedSongs: action.payload}
             }
         case UserActionTypeTypes.TOGGLE_LIKE_SONG:
             return {
@@ -55,7 +64,7 @@ const userReducer = (state = initialState, action: UserActionTypes): InitialStat
             }
         case UserActionTypeTypes.LIKE_LOADING:
             return {
-                ...state, likeLoading: action.payload
+                ...state, currentUser: {...state.currentUser, likeLoading: action.payload}
             }
         default:
             return state

@@ -1,11 +1,12 @@
-import {SearchActionType, setSearchError, setSearchResult} from "./searchActions";
+import {SearchActionType, setSearchResult} from "./searchActions";
 import {Dispatch} from "redux";
 import axios from "axios";
 import {url} from "../../config/config";
 import {ErrorType} from "../../config/types";
+import {ErrorActionType, setError} from "./errorAction";
 
 export const getSearchResult = (queryValue: string) => {
-    return async (dispatch: Dispatch<SearchActionType>) => {
+    return async (dispatch: Dispatch<SearchActionType | ErrorActionType>) => {
         try {
             const response = await axios.get(`${url}/api/search/?query=${queryValue.trim()}`, {
                 headers: {
@@ -18,7 +19,7 @@ export const getSearchResult = (queryValue: string) => {
             dispatch(setSearchResult(response.data));
         } catch (e) {
             const u = e as ErrorType
-            dispatch(setSearchError(u.response.data.message))
+            dispatch(setError(u.response.data.message))
         }
     }
 }

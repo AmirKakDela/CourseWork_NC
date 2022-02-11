@@ -12,7 +12,7 @@ const audio: HTMLAudioElement = new Audio();
 export function Player() {
     const { playback, volume, pause, duration } = useTypedSelector((state: RootState) => state.player);
     const { playSong, setDurationSong, setVolumeSong, pauseSong } = useActions();
-    const [ playerTime, setPlayerTime ] = useState(0);
+    const [playerTime, setPlayerTime] = useState(0);
 
     useEffect(() => {
         if (pause) {
@@ -30,6 +30,8 @@ export function Player() {
         if (playback) {
             audio.src = playback?.song;
             audio.volume = volume / 100;
+            audio.autoplay = false;
+            audio.loop = true;
             audio.onloadedmetadata = () => {
                 setDurationSong(audio.duration);
             };
@@ -37,14 +39,14 @@ export function Player() {
                 if (!pause) {
                     audio.play();
                 }
-            }
+            };
             audio.ontimeupdate = () => {
-                setPlayerTime(Math.ceil(audio.currentTime));
+                setPlayerTime(audio.currentTime);
             };
         }
     };
 
-    const play = () => {
+    const onSwitchPlay = () => {
         if (pause) {
             playSong();
         } else {
@@ -71,7 +73,7 @@ export function Player() {
             <div className="player__controls">
                 <div className="player__controls__icons">
                     <StepBackwardOutlined style={{ fontSize: "16px", color: "#fff" }}/>
-                    <div onClick={play} className="player__controls__playpause">
+                    <div onClick={onSwitchPlay} className="player__controls__playpause">
                         {pause
                             ? <PlayCircleFilled style={{ fontSize: "32px", color: "#fff" }}/>
                             : <PauseCircleFilled style={{ fontSize: "32px", color: "#fff" }}/>

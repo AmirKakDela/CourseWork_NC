@@ -20,19 +20,26 @@ import AdminRoute from "./components/HOC/AdminRoute";
 import MyLibraryPage from "./components/Layout/MyLibraryPage/MyLibraryPage";
 import LibrarySong from "./components/Layout/MyLibraryPage/LibrarySong";
 import PlaylistPage from './components/Layout/PlaylistPage/PlaylistPage';
+import GenrePage from "./components/Layout/GenrePage/GenrePage";
+import {AlbumPage} from "./components/Layout/AlbumPage/AlbumPage";
+import ErrorAlert from "./components/Alert/ErrorAlert/ErrorAlert";
+import AdminSongs from "./components/AdminPage/AdminSongs/AdminSongs";
+import AdminSongForm from "./components/AdminPage/AdminSongForm/AdminSongForm";
 
 function App() {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
-    const isAdmin = useSelector((state: RootState) => state.user.currentUser.isAdmin)
+    const isAdmin = useSelector((state: RootState) => state.user.currentUser.isAdmin);
     const userLoading = useSelector((state: RootState) => state.user.isLoading);
+    const error = useSelector((state: RootState) => state.error.errorText);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(auth());
     }, [dispatch])
 
-    return (<>
-            {userLoading ? <AppLoading/> :
+    return <>
+        {userLoading ? <AppLoading/> :
+            <>
                 <BrowserRouter>
                     <Routes>
                         <Route path='/auth'>
@@ -63,6 +70,8 @@ function App() {
                             <Route path='search' element={<SearchPage/>}/>
                             <Route path='artist/:id' element={<ArtistPage/>}/>
                             <Route path='playlist/:id' element={<PlaylistPage/>}/>
+                            <Route path='album/:id' element={<AlbumPage/>}/>
+                            <Route path='genre/:id' element={<GenrePage/>}/>
                             <Route path='*' element={<NotFound/>}/>
                         </Route>
 
@@ -70,16 +79,19 @@ function App() {
                             <AdminRoute isAdmin={isAdmin} isAuth={isAuth}>
                                 <AdminLayout/>
                             </AdminRoute>}>
-                            <Route path="songs" element={<h1>All songs</h1>}/>
+                            <Route path="songs" element={<AdminSongs/>}/>
+                            <Route path="song/:id" element={<AdminSongForm/>}/>
                             <Route path="artists" element={<h1>All Artists</h1>}/>
                             <Route path="playlists" element={<h1>All Playlists</h1>}/>
                             <Route path="albums" element={<h1>All Albums</h1>}/>
                         </Route>
                     </Routes>
                 </BrowserRouter>
-            }
-        </>
-    );
+                {error !== null ? <ErrorAlert error={error}/> : null}
+            </>
+        }
+    </>
+        ;
 }
 
 export default App;

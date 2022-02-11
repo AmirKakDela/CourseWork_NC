@@ -1,4 +1,4 @@
-import {CurrentUserType, Track} from "../../config/types";
+import {CurrentUserType, LikeLoadingType, SongType} from "../../config/types";
 
 export enum UserActionTypeTypes {
     SET_CURRENT_USER = 'SET_CURRENT_USER',
@@ -7,7 +7,8 @@ export enum UserActionTypeTypes {
     SET_USER_LIKED_SONGS = 'SET_USER_LIKED_SONGS',
     TOGGLE_LIKE_SONG = 'TOGGLE_LIKE_SONG',
     USER_LOADING = 'USER_LOADING',
-    LIKE_LOADING = 'LIKE_LOADING'
+    LIKE_LOADING = 'LIKE_LOADING',
+    LIBRARY_LOADING = 'LIBRARY_LOADING',
 }
 
 export type UserActionTypes = SetCurrentUserType
@@ -16,7 +17,8 @@ export type UserActionTypes = SetCurrentUserType
     | SetUserLikedSongsType
     | UserLoadingType
     | ToggleLikeSongType
-    | LikeLoadingType
+    | LikeLoadingTypeAction
+    | LibraryLoadingType
 
 
 type LogoutCurrentUserType = {
@@ -67,10 +69,10 @@ export const userLoading = (status: boolean): UserLoadingType => {
 
 export type SetUserLikedSongsType = {
     type: UserActionTypeTypes.SET_USER_LIKED_SONGS,
-    payload: Array<Track>
+    payload: Array<SongType>
 }
 
-export const setUserLikedSongs = (likedSongs: Array<Track>): SetUserLikedSongsType => {
+export const setUserLikedSongs = (likedSongs: Array<SongType>): SetUserLikedSongsType => {
     return {
         type: UserActionTypeTypes.SET_USER_LIKED_SONGS,
         payload: likedSongs
@@ -79,24 +81,36 @@ export const setUserLikedSongs = (likedSongs: Array<Track>): SetUserLikedSongsTy
 
 export type ToggleLikeSongType = {
     type: UserActionTypeTypes.TOGGLE_LIKE_SONG,
-    payload: Track
+    payload: SongType
 }
 
-export const toggleLikeSong = (song: Track): ToggleLikeSongType => {
+export const toggleLikeSong = (song: SongType): ToggleLikeSongType => {
     return {
         type: UserActionTypeTypes.TOGGLE_LIKE_SONG,
         payload: song
     }
 }
 
-export type LikeLoadingType = {
+export type LikeLoadingTypeAction = {
     type: UserActionTypeTypes.LIKE_LOADING,
+    payload: LikeLoadingType
+}
+
+export const likeLoading = (likeSong: LikeLoadingType): LikeLoadingTypeAction => {
+    return {
+        type: UserActionTypeTypes.LIKE_LOADING,
+        payload: likeSong
+    }
+}
+
+export type LibraryLoadingType = {
+    type: UserActionTypeTypes.LIBRARY_LOADING,
     payload: boolean
 }
 
-export const likeLoading = (status: boolean): LikeLoadingType => {
+export const libraryLoading = (status: boolean): LibraryLoadingType => {
     return {
-        type: UserActionTypeTypes.LIKE_LOADING,
+        type: UserActionTypeTypes.LIBRARY_LOADING,
         payload: status
     }
 }
