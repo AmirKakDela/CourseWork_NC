@@ -26,6 +26,7 @@ import AdminSongs from "./components/AdminPage/AdminSongs/AdminSongs";
 import AdminSongForm from "./components/AdminPage/AdminSongForm/AdminSongForm";
 import AdminGenres from "./components/AdminPage/AdminGenres/AdminGenres";
 import AdminGenreForm from "./components/AdminPage/AdminGenreForm/AdminGenreForm";
+import AdminMain from "./components/AdminPage/AdminMain/AdminMain";
 
 function App() {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
@@ -79,6 +80,7 @@ function App() {
                             <AdminRoute isAdmin={isAdmin} isAuth={isAuth}>
                                 <AdminLayout/>
                             </AdminRoute>}>
+                            <Route index element={<AdminMain/>}/>
                             <Route path="songs" element={<AdminSongs/>}/>
                             <Route path="song/:id" element={<AdminSongForm/>}/>
                             <Route path="song/create" element={<AdminSongForm/>}/>

@@ -53,6 +53,11 @@
         border-color: $red_error;
       }
     }
+
+    &_color {
+      height: 50px !important;
+      padding: 5px 12px ;
+    }
   }
 
   &__error {

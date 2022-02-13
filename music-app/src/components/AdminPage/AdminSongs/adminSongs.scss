@@ -3,7 +3,13 @@
 .admin {
   &__button {
     width: 300px;
-    margin: 20px;
+    &_main {
+      margin-bottom: 20px;
+    }
+  }
+
+  &__title {
+    font-size: 30px !important;
   }
 
   &-item {
@@ -28,8 +34,9 @@
     height: auto;
     display: flex;
     align-items: center;
-    &:hover {
 
+    &__header {
+      height: 100px;
     }
 
     &__title {

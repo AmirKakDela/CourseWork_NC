@@ -32,9 +32,10 @@ const AdminSongs: React.FC = () => {
     return (
         <>
             {isLoading ? <Skeleton active/> :
-                <>
+                <div className="info__main">
+                    <h2 className="main__title">Песни</h2>
                     <Link to="/admin/song/create">
-                        <button className="form__button admin__button">Создать новую песню</button>
+                        <button className="form__button admin__button admin__button_main">Создать новую песню</button>
                     </Link>
                     {songs && songs.map((song, index) => {
                         return <div className="admin-item__wrap" key={song._id}>
@@ -56,7 +57,7 @@ const AdminSongs: React.FC = () => {
                             </Link>
                         </div>
                     })}
-                </>
+                </div>
             }
         </>
     );

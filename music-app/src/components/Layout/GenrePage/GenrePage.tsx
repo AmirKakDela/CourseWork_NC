@@ -24,9 +24,9 @@ const GenrePage: React.FC = () => {
             API.getGenre(urlParams.id).then(data => {
                 setGenre(data.genre);
                 setSongs(data.songs);
-                setLoading(false);
             })
         }
+        setLoading(false);
     }, [urlParams.id])
 
     return (
@@ -44,13 +44,17 @@ const GenrePage: React.FC = () => {
                         <div className="main__slider">
                             {!!playlists.length ? playlists.map(playlist => (
                                 ''
-                            )) : (<p className="genre-page__subtitle">У жанра {genre.name && genre.name.toUpperCase()} пока нет плейлистов. Скоро мы это исправим.</p>)}
+                            )) : (<p className="genre-page__subtitle">У
+                                жанра {genre.name && genre.name.toUpperCase()} пока нет плейлистов. Скоро мы это
+                                исправим.</p>)}
                         </div>
                         <h2 className="main__title">Песни</h2>
                         <div className="main__songs">
                             {!!songs.length ? songs.map((song, idx) => (
                                 <Song key={song._id} song={song} order={idx + 1}/>
-                            )) : (<p className="genre-page__subtitle">У жанра {genre.name && genre.name.toUpperCase()} пока нет песен. Скоро мы это исправим.</p>)}
+                            )) : (<p className="genre-page__subtitle">У
+                                жанра {genre.name && genre.name.toUpperCase()} пока нет песен. Скоро мы это
+                                исправим.</p>)}
                         </div>
                     </div>
                 </div>
