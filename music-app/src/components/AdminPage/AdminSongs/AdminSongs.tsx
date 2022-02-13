@@ -45,16 +45,15 @@ const AdminSongs: React.FC = () => {
                                 okText="Да"
                                 cancelText="Нет"
                             >
-                       <button className="form__button admin-song__action">
-                        <DeleteOutlined style={{fontSize: 20, color: 'white', cursor: "pointer"}}/>
-                    </button>
+                                <button className="form__button admin-song__action">
+                                    <DeleteOutlined style={{fontSize: 20, color: 'white', cursor: "pointer"}}/>
+                                </button>
                             </Popconfirm>
-
-                            <button className="form__button admin-song__action">
-                        <Link to={`/admin/song/${song._id}`}>
-                            <EditOutlined style={{fontSize: 20, color: 'white', cursor: "pointer"}}/>
-                        </Link>
-                    </button>
+                            <Link to={`/admin/song/${song._id}`}>
+                                <button className="form__button admin-song__action">
+                                    <EditOutlined style={{fontSize: 20, color: 'white', cursor: "pointer"}}/>
+                                </button>
+                            </Link>
                         </div>
                     })}
                 </>

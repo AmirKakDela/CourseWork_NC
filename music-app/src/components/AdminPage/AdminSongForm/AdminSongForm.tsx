@@ -16,6 +16,7 @@ import {setError} from "../../../redux/Actions/errorAction";
 export type SongTypeWithoutId = {
     name: string,
     artist: string,
+    artistId: string,
     cover: string,
     song: string,
     genre: string,
@@ -25,6 +26,7 @@ export type SongTypeWithoutId = {
 const initialValues: SongTypeWithoutId = {
     name: '',
     artist: '',
+    artistId: '',
     cover: '',
     song: '',
     genre: '',
@@ -39,8 +41,10 @@ const AdminSongForm: React.FC = () => {
     const params = useParams();
     const dispatch = useDispatch();
 
+
     const onSubmit = (data: SongTypeWithoutId) => {
         console.log('onSubmit', data);
+        data.artist = artists.find(artist => artist._id === data.artistId)?.name || ''
         SongsAPI.createSong(data).then(res => {
             res.data.message && dispatch(setError(res.data.message));
         })
@@ -60,11 +64,20 @@ const AdminSongForm: React.FC = () => {
             SongsAPI.getSongById(params.id).then((data: SongType) => {
                 console.log(data)
                 initialValues.name = data.name
-                initialValues.artist = data.artistId[0];
+                initialValues.artistId = data.artistId;
                 initialValues.genre = data.genre;
             })
         }
         setIsLoading(false);
+    }, [])
+
+    useEffect(() => {
+        return () => {
+            for (let key in initialValues) {
+                // @ts-ignore
+                initialValues[key] = ''
+            }
+        }
     }, [])
 
 
@@ -76,9 +89,9 @@ const AdminSongForm: React.FC = () => {
                     <h1 className='admin-form__title'>Создание песни</h1>
                     <Formik initialValues={initialValues}
                             onSubmit={onSubmit}
-                            validationSchema={validateSchema}>
-
-                        {({values, touched, errors, handleSubmit, handleBlur, handleChange}) => {
+                            validationSchema={validateSchema}
+                    >
+                        {({values, touched, errors, handleSubmit, handleBlur, handleChange, setFieldValue}) => {
                             return <form onSubmit={handleSubmit}>
                                 <label htmlFor="name">Название песни</label> <br/>
                                 <Input name='name'
@@ -93,18 +106,19 @@ const AdminSongForm: React.FC = () => {
                                 />
                                 {errors.name && touched.name && <p className="form__error_text">{errors.name}</p>}
 
-                                <label htmlFor="artist">Исполнитель</label> <br/>
+                                <label htmlFor="artistId">Исполнитель</label> <br/>
                                 <select className={`form__input`}
-                                        name='artist'
-                                        id='artist'
-                                        value={values.artist}
+                                        name='artistId'
+                                        id='artistId'
+                                        value={values.artistId}
                                         onChange={handleChange}>
                                     <option value="" disabled>Выберите исполнителя</option>
                                     {artists && artists.map(artist => (
                                         <option key={artist._id} value={artist._id}>{artist.name}</option>
                                     ))}
                                 </select>
-                                {errors.artist && touched.artist && <p className="form__error_text">{errors.artist}</p>}
+                                {errors.artistId && touched.artistId &&
+                                    <p className="form__error_text">{errors.artistId}</p>}
 
                                 <label htmlFor="cover">Обложка песни</label> <br/>
                                 <Input name='cover'
@@ -113,9 +127,8 @@ const AdminSongForm: React.FC = () => {
                                        type="file"
                                        autoComplete='off'
                                        placeholder="Загрузите обложку для песни"
-                                       value={values.cover}
                                        onBlur={handleBlur}
-                                       onChange={handleChange}
+                                       onChange={(e) => setFieldValue('cover', e.target.files && e.target.files[0])}
                                 />
                                 {errors.cover && touched.cover && <p className="form__error_text">{errors.cover}</p>}
 
@@ -126,9 +139,8 @@ const AdminSongForm: React.FC = () => {
                                        type="file"
                                        autoComplete='off'
                                        placeholder="Загрузите песню"
-                                       value={values.song}
                                        onBlur={handleBlur}
-                                       onChange={handleChange}
+                                       onChange={(e) => setFieldValue('song', e.target.files && e.target.files[0])}
                                 />
                                 {errors.song && touched.song && <p className="form__error_text">{errors.song}</p>}
 
@@ -151,11 +163,9 @@ const AdminSongForm: React.FC = () => {
                                 </button>
                             </form>
                         }}
-
                     </Formik>
                 </div>
             }
-
         </>
     );
 };
