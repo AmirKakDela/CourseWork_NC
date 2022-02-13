@@ -1,7 +1,6 @@
 const Song = require("../models/Song");
 const User = require("../models/User");
 const {validationResult} = require("express-validator");
-const Artist = require("../models/Artist");
 
 class songController {
     async createSong(req, res) {
@@ -9,31 +8,20 @@ class songController {
             const errors = validationResult(req);
             if (!errors.isEmpty())
                 return res.status(412).json({message: 'Ошибка при создании трека', errors})
-            const {name, artist} = req.body;
-            const candidateSong = await Song.findOne({name, artist});
+
+            const {name, artistId} = req.body;
+
+            const candidateSong = await Song.findOne({name, artistId});
             if (candidateSong)
                 return res.status(412).json({message: 'Такой трек уже существует', candidateSong});
-            let artistOfNewSong = await Artist.findOne({name: artist});
-            if (!artistOfNewSong) {
-                const newArtist = new Artist({name: artist, image: ''});
-                newArtist.save();
-                artistOfNewSong = newArtist;
-            }
-            const newSong = new Song( {
-                ...req.body,
-                artistId: artistOfNewSong._id,
+
+            const newSong = new Song({
+                ...req.body
             });
             await newSong.save();
-            // if (candidateArtist) {
-            //     candidateArtist.songs.unshift(song._id);
-            //     candidateArtist.save();
-            // } else {
-            //     const newArtist = new Artist({name: artist, image: '', songs: [song._id]});
-            //     newArtist.save();
-            // }
-            return res.status(200).json({message: 'Трек успешно добавлен', newSong});
+            return res.status(200).json(newSong);
         } catch (e) {
-            res.send({message: e + ' Ошибка сервера при создании трека'});
+            res.send({message: 'Ошибка сервера при создании трека'});
         }
     }
 
