@@ -15,6 +15,12 @@ class SongAPI {
             console.log(res.data)
         })
     }
+
+    async getSongById(id: string) {
+        return await axios.get(`${url}/api/song/${id}`, AuthorizationHeaderConfig).then(res => {
+            return res.data
+        })
+    }
 }
 
 export default new SongAPI();

@@ -32,27 +32,33 @@ const AdminSongs: React.FC = () => {
     return (
         <>
             {isLoading ? <Skeleton active/> :
-                songs && songs.map((song, index) => {
-                    return <div className="admin-song__wrap">
-                        <Song key={song._id} song={song} order={index + 1}/>
-                        <Popconfirm
-                            title="Вы действительно хотите удалить данную песню?"
-                            onConfirm={() => deleteSong(song._id)}
-                            okText="Да"
-                            cancelText="Нет"
-                        >
-                       <span className="admin-song__action">
-                        <DeleteOutlined style={{fontSize: 25, color: 'white', cursor: "pointer"}}/>
-                    </span>
-                        </Popconfirm>
+                <>
+                    <Link to="/admin/song/create">
+                        <button className="form__button admin__button">Создать новую песню</button>
+                    </Link>
+                    {songs && songs.map((song, index) => {
+                        return <div className="admin-song__wrap" key={song._id}>
+                            <Song song={song} order={index + 1}/>
+                            <Popconfirm
+                                title="Вы действительно хотите удалить данную песню?"
+                                onConfirm={() => deleteSong(song._id)}
+                                okText="Да"
+                                cancelText="Нет"
+                            >
+                       <button className="form__button admin-song__action">
+                        <DeleteOutlined style={{fontSize: 20, color: 'white', cursor: "pointer"}}/>
+                    </button>
+                            </Popconfirm>
 
-                        <span className="admin-song__action">
+                            <button className="form__button admin-song__action">
                         <Link to={`/admin/song/${song._id}`}>
-                            <EditOutlined style={{fontSize: 25, color: 'white', cursor: "pointer"}}/>
+                            <EditOutlined style={{fontSize: 20, color: 'white', cursor: "pointer"}}/>
                         </Link>
-                    </span>
-                    </div>
-                })}
+                    </button>
+                        </div>
+                    })}
+                </>
+            }
         </>
     );
 };

@@ -20,6 +20,7 @@ export type SongType = {
     _id: string;
     name: string,
     artist: string,
+    artistId: string,
     cover: string,
     song: string,
     duration: number,
