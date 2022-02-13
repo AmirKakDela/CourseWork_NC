@@ -25,5 +25,10 @@ export const adminSidebarItems: SidebarItemType[] = [
         path: '/admin/artists',
         itemId: 'admin-artists',
         text: 'Все исполнители'
+    },
+    {
+        path: '/admin/genres',
+        itemId: 'admin-genres',
+        text: 'Все жанры'
     }
 ]
