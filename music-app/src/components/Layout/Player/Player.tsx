@@ -1,37 +1,47 @@
-import {MenuUnfoldOutlined, PauseCircleFilled, PlayCircleFilled, SoundOutlined, StepBackwardOutlined, StepForwardOutlined} from "@ant-design/icons";
+import {LoadingOutlined, MenuUnfoldOutlined, PauseCircleFilled, PlayCircleFilled, SoundOutlined, StepBackwardOutlined, StepForwardOutlined} from "@ant-design/icons";
 import React, {useEffect, useState} from "react";
 import {RootState} from "../../../redux/Reducers/rootReducer";
 import "./Player.scss";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import {useActions} from "../../../hooks/useActions";
 import SongProgress from "./SongProgress";
-import {formattedTime} from "./player.untils";
+import {formattedTime} from "../../../utils/time-format.utils";
+import Like from "../../Song/Like";
+import songDefault from "../../../assets/imgs/song_default.jpg";
 
-const audio: HTMLAudioElement = new Audio();
+let audio: HTMLAudioElement = new Audio();
 
 export function Player() {
-    const { playback, volume, pause, duration } = useTypedSelector((state: RootState) => state.player);
-    const { playSong, setDurationSong, setVolumeSong, pauseSong } = useActions();
+    const { track, volume, pause, duration, playerList } = useTypedSelector((state: RootState) => state.player);
+    const { playSong, setDurationSong, setVolumeSong, pauseSong, setPlayingSong } = useActions();
     const [playerTime, setPlayerTime] = useState(0);
+    let [songCover, setSongCover] = useState(track?.cover);
+    const isReady = audio.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA
+        || audio.readyState === HTMLMediaElement.HAVE_FUTURE_DATA;
 
     useEffect(() => {
         if (pause) {
             audio.pause();
-        } else if (audio.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA || audio.readyState === HTMLMediaElement.HAVE_FUTURE_DATA) {
+        } else if (isReady && !pause) {
             audio.play();
         }
     }, [pause]);
 
     useEffect(() => {
         setSongParams();
-    }, [playback]);
+    }, [track]);
+
+
+    const onImageError = () => {
+        setSongCover(songDefault);
+    };
 
     const setSongParams = () => {
-        if (playback) {
-            audio.src = playback?.song;
-            audio.volume = volume / 100;
+        if (track) {
+            audio.src = track?.song;
             audio.autoplay = false;
-            audio.loop = true;
+            audio.volume = volume / 100;
+            // audio.loop = true; //добавить кнопку по кругу
             audio.onloadedmetadata = () => {
                 setDurationSong(audio.duration);
             };
@@ -43,6 +53,34 @@ export function Player() {
             audio.ontimeupdate = () => {
                 setPlayerTime(audio.currentTime);
             };
+            audio.onended = () => {
+                if (playerList?.length) {
+                    onNextClick();
+                } else {
+                    pauseSong();
+                    setSongParams();
+                }
+            };
+        }
+    };
+
+    const onPrevClick = () => {
+        if (track && playerList?.length) {
+            const index = playerList.findIndex(it => it._id === track._id);
+            if (index >= 0) {
+                setPlayingSong(playerList[(playerList.length + index - 1) % playerList.length]);
+            }
+        } else {
+            setSongParams();
+        }
+    };
+
+    const onNextClick = () => {
+        if (track && playerList?.length) {
+            const index = playerList.findIndex(it => it._id === track._id);
+            if (index >= 0) {
+                setPlayingSong(playerList[(index + 1) % playerList.length]);
+            }
         }
     };
 
@@ -66,20 +104,46 @@ export function Player() {
 
     return (
         <div className="player">
-            <div className="player__now-playing">
-                <div>{playback?.name}</div>
-                <div>{playback?.artist}</div>
-            </div>
+            {track
+                ? <div className="player__now-playing">
+                    <div className="player__now-playing__cover">
+                        <img src={songCover}
+                             alt="Song"
+                             className="song__img"
+                             aria-hidden="false"
+                             draggable="false"
+                             onError={onImageError}
+                        />
+                    </div>
+                    <div className="player__now-playing__info">
+                        <div className="player__now-playing__track-name">{track.name}</div>
+                        <div className="player__now-playing__track-artist">{track.artist}</div>
+                    </div>
+                    <div className="player__now-playing__song-like">
+                        <Like song={track}/>
+                    </div>
+                </div>
+                : <div className="player__now-playing"/>
+            }
+
             <div className="player__controls">
                 <div className="player__controls__icons">
-                    <StepBackwardOutlined style={{ fontSize: "16px", color: "#fff" }}/>
+                    <StepBackwardOutlined
+                        style={{ fontSize: "16px", color: "#fff" }}
+                        onClick={onPrevClick}
+                    />
                     <div onClick={onSwitchPlay} className="player__controls__playpause">
-                        {pause
-                            ? <PlayCircleFilled style={{ fontSize: "32px", color: "#fff" }}/>
-                            : <PauseCircleFilled style={{ fontSize: "32px", color: "#fff" }}/>
+                        {!pause
+                            ? isReady
+                                ? <PauseCircleFilled style={{ fontSize: "32px", color: "#fff" }}/>
+                                : <LoadingOutlined style={{ fontSize: "32px" }} spin/>
+                            : <PlayCircleFilled style={{ fontSize: "32px", color: "#fff" }}/>
                         }
                     </div>
-                    <StepForwardOutlined style={{ fontSize: "16px", color: "#fff" }}/>
+                    <StepForwardOutlined
+                        style={{ fontSize: "16px", color: "#fff" }}
+                        onClick={onNextClick}
+                    />
                 </div>
                 <div className="player__controls__timeline">
                     <SongProgress

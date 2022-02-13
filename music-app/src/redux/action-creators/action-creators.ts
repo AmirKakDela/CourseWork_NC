@@ -14,5 +14,8 @@ export const setVolumeSong = (payload: number): PlayerAction => {
     return { type: PlayerActionsType.SET_VOLUME, payload };
 };
 export const setPlayingSong = (payload: SongType): PlayerAction => {
-    return { type: PlayerActionsType.SET_PLAYBACK, payload };
+    return { type: PlayerActionsType.SET_TRACK, payload };
+};
+export const setPlayingSongList = (payload: SongType[]): PlayerAction => {
+    return { type: PlayerActionsType.SET_PLAYER_LIST, payload };
 };

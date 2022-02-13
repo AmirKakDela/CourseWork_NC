@@ -6,8 +6,7 @@ export enum SongActionTypes {
 
 type FetchTracksAction = {
     type: SongActionTypes.FETCH_SONGS;
-    payload: SongType[]
+    payload: SongType[];
 }
 
-
-export type SongAction = FetchTracksAction
+export type SongAction = FetchTracksAction;

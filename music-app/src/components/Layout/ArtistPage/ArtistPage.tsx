@@ -6,6 +6,8 @@ import MoonLoader from "react-spinners/MoonLoader";
 import AlbumCard from "../../AlbumCard/AlbumCard";
 import {AlbumType, ArtistType, SongType} from "../../../config/types";
 import ArtistAPI from "../../../API/ArtistAPI";
+import {formWordAlbum, formWordTrack} from "../../../utils/declension.utils";
+import {useActions} from "../../../hooks/useActions";
 
 const ArtistPage = () => {
     const urlParams = useParams();
@@ -13,6 +15,7 @@ const ArtistPage = () => {
     const [songs, setSongs] = useState<SongType[]>([]);
     const [albums, setAlbums] = useState<AlbumType[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const { setPlayingSong, setPlayingSongList } = useActions();
 
     useEffect(() => {
         if (urlParams.id) {
@@ -23,7 +26,12 @@ const ArtistPage = () => {
                 setIsLoading(false);
             })
         }
-    }, [urlParams.id])
+    }, [urlParams.id]);
+
+    function onPlay(song: SongType) {
+        setPlayingSongList(songs);
+        setPlayingSong(song);
+    }
 
     return (
         <>
@@ -40,7 +48,8 @@ const ArtistPage = () => {
                             <div className="info__desc">
                                 <h2 className="desc__category">Исполнитель</h2>
                                 <h1 className="desc__name">{artist.name}</h1>
-                                <p className="desc__text">{songs.length} трека, {albums.length} альбома</p>
+                                <p className="desc__text">{songs.length} {formWordTrack(songs.length)}
+                                    , {albums.length} {formWordAlbum(albums.length)}</p>
                             </div>
                         </div>
                         <div className="info__main">
@@ -51,7 +60,7 @@ const ArtistPage = () => {
                             <h2 className="main__title">Песни</h2>
                             <div className="main__songs">
                                 {songs.map((s, index) => (
-                                    <Song song={s} order={index + 1} key={s._id}/>
+                                    <Song song={s} order={index + 1} key={s._id} onPlay={onPlay.bind(this, s)}/>
                                 ))}
                             </div>
                         </div>
