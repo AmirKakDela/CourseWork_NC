@@ -3,7 +3,8 @@ import {PlayerAction, PlayerActionsType} from "../Actions/playerActions";
 
 export type PlayerReducerState = {
     pause: boolean,
-    playback: SongType | null,
+    track: SongType | null,
+    playerList: SongType[] | null,
     duration: number,
     volume: number,
 }
@@ -11,7 +12,8 @@ export type PlayerReducerState = {
 const initialState: PlayerReducerState = {
     pause: true,
     volume: 50,
-    playback: null,
+    track: null,
+    playerList: null,
     duration: 0
 };
 
@@ -37,10 +39,15 @@ export const playerReducer = (state = initialState, action: PlayerAction): Playe
                 ...state,
                 volume: action.payload
             };
-        case PlayerActionsType.SET_PLAYBACK:
+        case PlayerActionsType.SET_TRACK:
             return {
                 ...state,
-                playback: action.payload,
+                track: action.payload,
+            };
+        case PlayerActionsType.SET_PLAYER_LIST:
+            return {
+                ...state,
+                playerList: action.payload,
             };
         default:
             return state;

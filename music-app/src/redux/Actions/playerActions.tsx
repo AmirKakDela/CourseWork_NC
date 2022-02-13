@@ -3,7 +3,8 @@ import {SongType} from "../../config/types";
 export enum PlayerActionsType {
     PLAY = "PLAY",
     PAUSE = "PAUSE",
-    SET_PLAYBACK = "SET_PLAYBACK",
+    SET_TRACK = "SET_TRACK",
+    SET_PLAYER_LIST = "SET_PLAYER_LIST",
     SET_VOLUME = "SET_VOLUME",
     SET_DURATION = "SET_DURATION",
 }
@@ -14,9 +15,13 @@ type PlayAction = {
 type PauseAction = {
     type: PlayerActionsType.PAUSE
 }
-type SetPlaybackAction = {
-    type: PlayerActionsType.SET_PLAYBACK,
+type SetTrackAction = {
+    type: PlayerActionsType.SET_TRACK,
     payload: SongType;
+}
+type SetTrackListAction = {
+    type: PlayerActionsType.SET_PLAYER_LIST,
+    payload: SongType[];
 }
 type SetDurationAction = {
     type: PlayerActionsType.SET_DURATION,
@@ -30,6 +35,7 @@ type SetVolumeAction = {
 export type PlayerAction =
     PlayAction
     | PauseAction
-    | SetPlaybackAction
+    | SetTrackAction
+    | SetTrackListAction
     | SetDurationAction
     | SetVolumeAction;

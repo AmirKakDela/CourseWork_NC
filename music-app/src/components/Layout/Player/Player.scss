@@ -22,8 +22,24 @@
   color: white;
 
   &__now-playing {
+    display: inline-flex;
+    align-items: center;
     min-width: 180px;
     width: 30%;
+    &__cover{
+
+    }
+    &__info{
+    }
+    &__song-like{
+      padding: 0 8px;
+    }
+    &__track-name{
+      font-size: 14px;
+    }
+    &__track-artist{
+      font-size: 11px;
+    }
   }
 
   &__controls {
