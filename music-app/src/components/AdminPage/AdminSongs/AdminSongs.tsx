@@ -37,7 +37,7 @@ const AdminSongs: React.FC = () => {
                         <button className="form__button admin__button">Создать новую песню</button>
                     </Link>
                     {songs && songs.map((song, index) => {
-                        return <div className="admin-song__wrap" key={song._id}>
+                        return <div className="admin-item__wrap" key={song._id}>
                             <Song song={song} order={index + 1}/>
                             <Popconfirm
                                 title="Вы действительно хотите удалить данную песню?"
@@ -45,12 +45,12 @@ const AdminSongs: React.FC = () => {
                                 okText="Да"
                                 cancelText="Нет"
                             >
-                                <button className="form__button admin-song__action">
+                                <button className="form__button admin-item__action">
                                     <DeleteOutlined style={{fontSize: 20, color: 'white', cursor: "pointer"}}/>
                                 </button>
                             </Popconfirm>
                             <Link to={`/admin/song/${song._id}`}>
-                                <button className="form__button admin-song__action">
+                                <button className="form__button admin-item__action">
                                     <EditOutlined style={{fontSize: 20, color: 'white', cursor: "pointer"}}/>
                                 </button>
                             </Link>

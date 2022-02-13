@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import GenreAPI from "../../../API/GenreAPI";
 import {GenreType} from "../../../config/types";
 import {Link} from "react-router-dom";
-import Genre from "../../Genre/Genre";
+import {Popconfirm} from "antd";
+import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
 
 const AdminGenres: React.FC = () => {
     const [genres, setGenres] = useState<GenreType[]>([]);
@@ -24,9 +25,26 @@ const AdminGenres: React.FC = () => {
                     </Link>
 
                     {genres && genres.map((genre, index) => (
-                        <div className="admin-song__wrap" key={genre._id}>
-                            <h1>{index + 1}</h1>
-                            <Genre genre={genre}/>
+                        <div className="admin-item__wrap" key={genre._id}>
+                            <div className="admin-genre genre" style={{backgroundColor: genre.color}}>
+                                <h1 className="admin-genre__title">{index + 1}. &nbsp;</h1>
+                                <h1 className="admin-genre__title">{genre.name}</h1>
+                            </div>
+                            <Popconfirm
+                                title="Вы действительно хотите удалить данный жанр?"
+                                // onConfirm={() => deleteSong(genre._id)}
+                                okText="Да"
+                                cancelText="Нет"
+                            >
+                                <button className="form__button admin-item__action">
+                                    <DeleteOutlined style={{fontSize: 20, color: 'white', cursor: "pointer"}}/>
+                                </button>
+                            </Popconfirm>
+                            <Link to={`/admin/genre/${genre._id}`}>
+                                <button className="form__button admin-item__action">
+                                    <EditOutlined style={{fontSize: 20, color: 'white', cursor: "pointer"}}/>
+                                </button>
+                            </Link>
                         </div>
                     ))}
                 </>
