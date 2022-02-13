@@ -19,7 +19,7 @@ class songController {
                 newArtist.save();
                 artistOfNewSong = newArtist;
             }
-            const newSong = new Song( {
+            const newSong = new Song({
                 ...req.body,
                 artistId: artistOfNewSong._id,
             });
@@ -31,9 +31,9 @@ class songController {
             //     const newArtist = new Artist({name: artist, image: '', songs: [song._id]});
             //     newArtist.save();
             // }
-            return res.status(200).json({message: 'Трек успешно добавлен', newSong});
+            return res.status(200).json(newSong);
         } catch (e) {
-            res.send({message: e + ' Ошибка сервера при создании трека'});
+            res.send({message: 'Ошибка сервера при создании трека'});
         }
     }
 
