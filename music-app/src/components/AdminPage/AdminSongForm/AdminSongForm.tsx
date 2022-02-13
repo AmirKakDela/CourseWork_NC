@@ -9,8 +9,11 @@ import {validationRulesSong} from "../../../config/ValidationRules";
 import {useParams} from "react-router-dom";
 import ArtistAPI from "../../../API/ArtistAPI";
 import SongsAPI from "../../../API/SongsAPI";
+import {useDispatch} from "react-redux";
+import {setError} from "../../../redux/Actions/errorAction";
 
-type SongTypeWithoutId = {
+
+export type SongTypeWithoutId = {
     name: string,
     artist: string,
     cover: string,
@@ -34,8 +37,14 @@ const AdminSongForm: React.FC = () => {
     const [artists, setArtists] = useState<ArtistType[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const params = useParams();
+    const dispatch = useDispatch();
 
-    const onSubmit = (data: SongTypeWithoutId) => console.log('Submit', data)
+    const onSubmit = (data: SongTypeWithoutId) => {
+        console.log('onSubmit', data);
+        SongsAPI.createSong(data).then(res => {
+            res.data.message && dispatch(setError(res.data.message));
+        })
+    }
 
     useEffect(() => {
         GenreAPI.getAllGenre().then(data => {
@@ -53,9 +62,9 @@ const AdminSongForm: React.FC = () => {
                 initialValues.name = data.name
                 initialValues.artist = data.artistId[0];
                 initialValues.genre = data.genre;
-                setIsLoading(false);
             })
         }
+        setIsLoading(false);
     }, [])
 
 
