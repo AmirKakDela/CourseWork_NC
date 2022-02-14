@@ -10,7 +10,7 @@ router.post('/create',adminMiddleware,
     check('artist', 'Обязательное поле не заполнено').notEmpty(),
     check('song', 'Обязательное поле не заполнено').notEmpty(),
     check('cover', 'Обязательное поле не заполнено').notEmpty(),
-    check('duration', 'Обязательное поле не заполнено').notEmpty(),
+    // check('duration', 'Обязательное поле не заполнено').notEmpty(),
     check('genre', 'Обязательное поле не заполнено').notEmpty(),
     controller.createSong);
 
