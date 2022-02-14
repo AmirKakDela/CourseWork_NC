@@ -89,6 +89,7 @@ function App() {
                             <Route path="albums" element={<h1>All Albums</h1>}/>
                             <Route path="genres" element={<AdminGenres/>}/>
                             <Route path="genre/:id" element={<AdminGenreForm/>}/>
+                            <Route path="genre/create" element={<AdminGenreForm/>}/>
                         </Route>
                     </Routes>
                 </BrowserRouter>

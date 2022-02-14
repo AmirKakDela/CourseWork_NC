@@ -6,7 +6,13 @@ import {GenreType, SongType} from "../../../config/types";
 import {Input, Skeleton} from "antd";
 import {Formik} from "formik";
 
-const initialValues = {
+export type GenreTypeWithoutId = {
+    _id?: string,
+    color: string,
+    name: string
+}
+
+const initialValues: GenreTypeWithoutId = {
     _id: '',
     color: '#be39dc',
     name: ''
@@ -24,6 +30,9 @@ const AdminGenreForm: React.FC = () => {
 
     const onSubmit = (data: any) => {
         console.log(data)
+        GenreAPI.createGenre(data).then(res => {
+
+        })
     }
 
     useEffect(() => {

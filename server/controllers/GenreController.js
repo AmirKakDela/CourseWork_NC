@@ -15,7 +15,6 @@ class GenreController {
             genre.save();
 
             return res.json({message: 'Жанр успешно добавлен', genre})
-
         } catch (e) {
             console.log('Ошибка сервера при createGenre', e);
             return res.send({message: "Ошибка сервера при создании жанра."});
