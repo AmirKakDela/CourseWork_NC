@@ -34,10 +34,6 @@ function App() {
     const error = useSelector((state: RootState) => state.error.errorText);
     const dispatch = useDispatch();
 
-    // const [theme, setTheme] = useState(themes.light);
-    // const toggleTheme = () => {
-    //     setTheme(() => theme === themes.dark ? themes.light : themes.dark);
-    // }
     const currentTheme = useSelector((state: RootState) => state.shared.appTheme);
     const changeTheme = (value: boolean) => {
         dispatch({
@@ -75,7 +71,7 @@ function App() {
                                 </ThemeContext.Provider>
                             </RequireAuth>}>
                             <Route index element={<MainPage/>}/>
-                            <Route path='loved' element={<h1>Loved Songs</h1>}/>
+                            <Route path='loved' element={<LibrarySong/>}/>
                             <Route path='my-library' element={<MyLibraryPage/>}>
                                 <Route index element={<Navigate to='songs'/>}/>
                                 <Route path='songs' element={<LibrarySong/>}/>
@@ -93,7 +89,9 @@ function App() {
 
                         <Route path='/admin' element={
                             <AdminRoute isAdmin={isAdmin} isAuth={isAuth}>
-                                <AdminLayout/>
+                                <ThemeContext.Provider value={currentTheme}>
+                                    <AdminLayout/>
+                                </ThemeContext.Provider>
                             </AdminRoute>}>
                             <Route path="songs" element={<AdminSongs/>}/>
                             <Route path="song/:id" element={<AdminSongForm/>}/>

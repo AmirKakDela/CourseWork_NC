@@ -7,17 +7,6 @@
   min-width: 100%;
   overflow-x: scroll;
 
-  &._dark {
-    &::-webkit-scrollbar {
-      background-color: $black26;
-    }
-  }
-  &._light {
-    &::-webkit-scrollbar {
-      background-color: #b6b6b6;
-    }
-  }
-
   &::-webkit-scrollbar {
     width: 15px;
     border-radius: 2px;
@@ -51,12 +40,6 @@
       letter-spacing: -.04em;
       line-height: 28px;
       font-weight: 700;
-      &._dark {
-        color: $white;
-      }
-      &._light {
-        color: $color-text-for-light-theme;
-      }
       &:hover {
         text-decoration: underline;
         cursor: pointer;

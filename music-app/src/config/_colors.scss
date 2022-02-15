@@ -20,17 +20,17 @@ $black50: rgb(50, 50, 50);
 $darkwhite: #c4c4c4;
 
 $black26: rgb(26, 26, 26);
-$background-main-content-color: linear-gradient( rgba(0,0,0,.6),rgb(18, 18, 18) 100%);
+$main-content-bg-color: linear-gradient( rgba(0,0,0,.6),rgb(18, 18, 18) 100%);
 $background-base:rgb(18, 18, 18);
 $black0: rgb(0, 0, 0);
 $hover-color-for-light-items: #1DB95426;
 $text-more: #b3b3b3;
-$background-color-for-dark-player: rgb(24, 24, 24);
-$background-color-for-light-player: $white;
+$player-dark-bg-color: rgb(24, 24, 24);
+$player-light-bg-color: $white;
 
-$background-main-content-color-for-light-items: #F1F7F1;
-$background-base-for-light-items:rgb(82, 82, 82);
+$main-content-light-bg-color: #F1F7F1;
+$background-base-light:rgb(82, 82, 82);
 $switch-color: #1DB954;
 $player-border-light:#F1F1F1;
 $player-slider-light: rgba(196, 196, 196, 1);
-$color-text-for-light-theme: rgba(25, 20, 20, 1);
+$text-light-color: rgba(25, 20, 20, 1);

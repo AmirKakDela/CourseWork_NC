@@ -10,42 +10,62 @@
   height: 100%;
 }
 
+.layout {
+  &._dark {
+    --header-bg-color: #121212FF;
+    --main-bg-color: #1A1A1AFF;
+    --text-color: #FFFFFFFF;
+    --sidebar-bg-color: #000000FF;
+    --player-bg-color: #181818FF;
+    --player-border-color: #282828FF;
+    --webkit-scrollbar-bg-color: #1A1A1AFF;
+    --album-card-bg-color: #202020;
+    --hover-color: #282828;
+    --text-artist-color: #C4C4C4FF;
+
+    //--header-bg-color: $header_color;
+    //--main-bg-color: $black26;
+    //--text-color: $white;
+    //--sidebar-bg-color: $black0;
+    //--player-bg-color: $player-dark-bg-color;
+    //--player-border-color: $black40;
+    //--webkit-scrollbar-bg-color: $black26;
+  }
+
+  &._light {
+    --header-bg-color: #F1F7F1FF;
+    --main-bg-color: #F1F7F1FF;
+    --text-color: #191414FF;
+    --sidebar-bg-color: #FFFFFFFF;
+    --player-bg-color: #FFFFFFFF;
+    --player-border-color: #F1F1F1FF;
+    --webkit-scrollbar-bg-color: #b6b6b6;
+    --album-card-bg-color: #F1F1F1;
+    --hover-color: #1DB95426;
+    --text-artist-color: #121212FF;
+
+    //--header-bg-color: $main-content-light-bg-color;
+    //--main-bg-color: $main-content-light-bg-color;
+    //--text-color: $text-light-color;
+    //--sidebar-bg-color: $white;
+    //--player-bg-color: $player-light-bg-color;
+    //--player-border-color: $player-border-light;
+    //--webkit-scrollbar-bg-color: #b6b6b6;
+    //--text-artist-color: $darkwhite;
+  }
+}
+
 .header {
   grid-area: header;
-  &._light{
-    background-color: $background-main-content-color-for-light-items
-  }
-  &._dark{
-    background-color: $header_color
-  }
+  background-color: var(--header-bg-color, $header_color);
 }
 
 .sidebar {
   grid-area: sidebar;
-  &._light{
-    background-color: $white;
-  }
-  &._dark{
-    background-color: $black0;
-  }
 }
 
-.player {
-  grid-area: player;
-  &._light{
-    background-color: $background-color-for-light-player;
-    color: $color-text-for-light-theme;
-    border-top: 1px solid $player-border-light;
-  }
-  &._dark{
-    background-color: $background-color-for-dark-player;
-    color: $white;
-    border-top: 1px solid $black40;
-  }
-}
-
-.switch{
-  background: $switch-color;
+.ant-menu.ant-menu-dark {
+  background: var(--sidebar-bg-color, $black0);
 }
 
 .main-content {
@@ -53,22 +73,12 @@
   flex: 1;
   overflow-y: scroll;
   min-height: calc(((100vh - 64px) - 90px) - 519px);
-  &._light{
-    background: $background-main-content-color-for-light-items;
-    &::-webkit-scrollbar {
-      background-color: #b6b6b6;
-    }
-  }
-  &._dark{
-    background-color: $black26;
-    &::-webkit-scrollbar {
-      background-color: $black26;
-    }
-  }
+  background: var(--main-bg-color, $black26);
 
   &::-webkit-scrollbar {
     width: 15px;
     border-radius: 2px;
+    background-color: var(--webkit-scrollbar-bg-color, $black26);
   }
 
   &::-webkit-scrollbar-thumb {
@@ -82,7 +92,72 @@
     &:active {
       background-color: rgba(255, 255, 255, .5);
     }
+
     width: 15px;
     border-radius: 2px;
+  }
+}
+
+.player {
+  grid-area: player;
+  background-color: var(--player-bg-color, $player-dark-bg-color);
+  color: var(--text-color, $white);
+  border-top: 1px solid var(--player-border-color, $black40);
+}
+
+.switch {
+  background: $switch-color;
+}
+
+//scrollComponent
+.collections {
+  &::-webkit-scrollbar {
+    background-color: var(--webkit-scrollbar-bg-color, $black26);
+  }
+
+  &__title {
+    &__name {
+      color: var(--text-color, $white);
+    }
+  }
+}
+
+//album-card
+.album {
+  background-color: var(--album-card-bg-color, $black32);
+
+  &__name {
+    color: var(--text-color, $white);
+  }
+
+  &__artist {
+    color: var(--text-artist-color, $background-base);
+  }
+
+  &:hover {
+    background-color: var(--hover-color, $black40);
+  }
+}
+
+//sidebar
+.ant-menu-dark {
+  color: var(--text-color, $white);
+  &.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: var(--hover-color, $black40);
+  }
+  & .ant-menu-item:hover {
+    background-color: var(--hover-color, $black40);
+  }
+}
+.ant-menu-light {
+  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: var(--hover-color, $black40);
+  }
+  & .ant-menu-item {
+    color: var(--text-color, $white);
+    &:hover {
+      background-color: var(--hover-color, $black40);
+      color: var(--text-color, $white);
+    }
   }
 }

@@ -14,27 +14,20 @@ const Layout = (props: any) => {
 
     const layout = (theme: MenuTheme | undefined) => {
         const themeClassName = cx({
-            "_dark":theme === darkTheme,
+            "_dark": theme === darkTheme,
             "_light": theme === lightTheme
         });
-        console.log(theme);
         return (
-            <div className="layout">
-                <div className={`sidebar ${themeClassName}`}>
-                    <Sidebar items={items} currentTheme={theme} changeTheme={props.changeTheme}/>
-                </div>
-                <div className={`header ${themeClassName}`}>
-                    <Header/>
-                </div>
-                <div className={`main-content ${themeClassName}`}>
+            <div className={`layout ${themeClassName}`}>
+                <Sidebar items={items} currentTheme={theme} changeTheme={props.changeTheme}/>
+                <Header/>
+                <div className={`main-content`}>
                     <Outlet/>
                 </div>
-                <div className={`player ${themeClassName}`}>
-                    <Player/>
-                </div>
+                <Player/>
             </div>
-        )
-    }
+        );
+    };
     return <ThemeContext.Consumer>{(theme: MenuTheme | undefined) => layout(theme)}</ThemeContext.Consumer>;
 };
 

@@ -14,6 +14,7 @@ import {getAlbumsByRequest} from "../../../redux/Actions/thunkAlbumActions";
 import {Song} from "../../Song/Song";
 import GenreAPI from "../../../API/GenreAPI";
 import {GenreType} from "../../../config/types";
+import {ScrollComponent} from "../../ScrollComponent/ScrollComponent";
 
 const SearchPage = () => {
     const dispatch = useDispatch();
@@ -63,12 +64,16 @@ const SearchPage = () => {
                    onChange={handleChange}
             />
             {!queryValue ? <div className="search__content">
-                    <h2 className="search__title">Топ жанров</h2>
-                    <div className="search__genres-row">
-                        {genres && genres.map(genre => (
+                    {/*<h2 className="search__title">Топ жанров</h2>*/}
+                    {/*<div className="search__genres-row">*/}
+                    {/*    {genres && genres.map(genre => (*/}
+                    {/*        <Genre key={genre._id} genre={genre}/>*/}
+                    {/*    ))}*/}
+                    {/*</div>*/}
+                    <ScrollComponent className="search__genres-row" titleName="Топ жанров" data={
+                        genres && genres.map(genre => (
                             <Genre key={genre._id} genre={genre}/>
-                        ))}
-                    </div>
+                        ))}/>
                     <h2 className="search__title">Популярные плейлисты и альбомы</h2>
                     <div className="search__other">
                         {popularAlbums.map(album => {

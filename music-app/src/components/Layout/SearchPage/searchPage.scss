@@ -1,8 +1,13 @@
 @import "./src/config/colors";
 
+.collections__title {
+  margin-top: 40px;
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
 .search {
-  background-color: $black26;
-  color: $white;
   height: 100vh;
   padding: 20px 30px;
 
@@ -98,4 +103,4 @@
 .search__songs {
   display: flex;
   flex-direction: column;
-} 
+}

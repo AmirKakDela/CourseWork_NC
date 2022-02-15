@@ -8,12 +8,12 @@
   transition: .25s background-color ease-in-out;
   padding: 17px;
   z-index: 0;
-  &._light{
-    background-color: $player-border-light;
-  }
-  &._dark{
-    background-color: $black32;
-  }
+  //&._light{
+  //  background-color: $player-border-light;
+  //}
+  //&._dark{
+  //  background-color: $black32;
+  //}
 
     &__img {
       width: 160px;
@@ -57,12 +57,12 @@
     text-overflow: ellipsis;
     bottom: 0;
     right: 0;
-    &._light{
-      color:$color-text-for-light-theme;
-    }
-    &._dark{
-      color: $white;
-    }
+    //&._light{
+    //  color: $text-light-color;
+    //}
+    //&._dark{
+    //  color: $white;
+    //}
   }
 
   &__artist {
@@ -74,23 +74,23 @@
     text-overflow: ellipsis;
     bottom: 0;
     right: 0;
-    &._light{
-      color:$background-base;
-    }
-    &._dark{
-      color: $darkwhite;
-    }
+    //&._light{
+    //  color:$background-base;
+    //}
+    //&._dark{
+    //  color: $darkwhite;
+    //}
   }
 
   &._light:hover {
-    background-color: $hover-color-for-light-items;
+    //background-color: $hover-color-for-light-items;
     .album__btn{
       display: block;
     }
   }
 
   &._dark:hover {
-    background-color: $black40;
+    //background-color: $black40;
     .album__btn{
       display: block;
     }
