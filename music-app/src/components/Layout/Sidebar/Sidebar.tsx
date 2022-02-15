@@ -1,47 +1,34 @@
 import React, {useCallback, useState} from "react";
-import {Menu, Switch} from "antd";
+import {Menu, MenuTheme, Switch} from "antd";
 import "./Sidebar.scss";
 import SpotifyLogo from "../../../assets/icons/Spotify-Logo.wine.svg";
-import {AppTheme, SidebarItemType} from "../../../config/types";
-import {SharedActionsType} from "../../../redux/Actions/sharedActions";
+import {SidebarItemType} from "../../../config/types";
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../../redux/Reducers/rootReducer";
 import {MenuInfo} from "rc-menu/lib/interface";
 
 type PropsType = {
-    items: SidebarItemType[]
+    items: SidebarItemType[],
+    currentTheme?: MenuTheme,
+    changeTheme?: (e: boolean) => void
 }
 
 const Sidebar: React.FC<PropsType> = (props) => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const currentTheme = useSelector((state: RootState) => state.shared.appTheme);
     const [current, setCurrent] = useState("0");
-
-    const changeTheme = (value: boolean) => {
-        dispatch({
-            type: SharedActionsType.SET_APP_THEME,
-            payload: {
-                appTheme: value ? AppTheme.DARK : AppTheme.LIGHT
-            }
-        });
-    };
-
     const handleClick = useCallback((e: MenuInfo) => setCurrent(e.key), []);
 
     return (
-        <div className="sidebar">
-            <div className="home-logo">
-                <Link to='/'>
-                    <img src={SpotifyLogo} alt="SpotifyLogo"/>
-                </Link>
-            </div>
-            <Menu className="menu"
-                  onClick={handleClick}
-                  selectedKeys={[current]}
-                  theme={currentTheme}
-            >
+        <Menu className="menu"
+              onClick={handleClick}
+              selectedKeys={[current]}
+              theme={props.currentTheme}
+        >
+            <div className="sidebar">
+                <div className="home-logo">
+                    <Link to="/">
+                        <img src={SpotifyLogo} alt="SpotifyLogo"/>
+                    </Link>
+                </div>
                 {props.items.map((item, index) => {
                     return (
                         <Menu.Item key={index}
@@ -52,15 +39,15 @@ const Sidebar: React.FC<PropsType> = (props) => {
                         </Menu.Item>
                     );
                 })}
-            </Menu>
-            <Switch
-                checked={currentTheme === "dark"}
-                onChange={changeTheme}
-                checkedChildren="Dark"
-                unCheckedChildren="Light"
-            />
-        </div>
+                <Switch className="switch"
+                    checked={props.currentTheme === "dark"}
+                    onChange={props.changeTheme}
+                    checkedChildren="Dark"
+                    unCheckedChildren="Light"
+                />
+            </div>
+        </Menu>
     );
-}
+};
 
 export default Sidebar;

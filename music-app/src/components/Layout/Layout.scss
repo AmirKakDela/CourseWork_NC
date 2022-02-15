@@ -12,26 +12,61 @@
 
 .header {
   grid-area: header;
+  &._light{
+    background-color: $background-main-content-color-for-light-items
+  }
+  &._dark{
+    background-color: $header_color
+  }
 }
 
 .sidebar {
   grid-area: sidebar;
-  background-color: $black0;
-  padding: 0 8px;
+  &._light{
+    background-color: $white;
+  }
+  &._dark{
+    background-color: $black0;
+  }
 }
 
-.player{
+.player {
   grid-area: player;
+  &._light{
+    background-color: $background-color-for-light-player;
+    color: $color-text-for-light-theme;
+    border-top: 1px solid $player-border-light;
+  }
+  &._dark{
+    background-color: $background-color-for-dark-player;
+    color: $white;
+    border-top: 1px solid $black40;
+  }
+}
+
+.switch{
+  background: $switch-color;
 }
 
 .main-content {
+  grid-area: content;
   flex: 1;
   overflow-y: scroll;
-  background-color: rgb(26, 26, 26); //TODO: fix with theme
   min-height: calc(((100vh - 64px) - 90px) - 519px);
+  &._light{
+    background: $background-main-content-color-for-light-items;
+    &::-webkit-scrollbar {
+      background-color: #b6b6b6;
+    }
+  }
+  &._dark{
+    background-color: $black26;
+    &::-webkit-scrollbar {
+      background-color: $black26;
+    }
+  }
 
   &::-webkit-scrollbar {
-    background-color: $black26;
     width: 15px;
     border-radius: 2px;
   }
@@ -47,7 +82,6 @@
     &:active {
       background-color: rgba(255, 255, 255, .5);
     }
-
     width: 15px;
     border-radius: 2px;
   }

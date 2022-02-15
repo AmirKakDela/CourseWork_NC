@@ -1,4 +1,12 @@
-import {LoadingOutlined, MenuUnfoldOutlined, PauseCircleFilled, PlayCircleFilled, SoundOutlined, StepBackwardOutlined, StepForwardOutlined} from "@ant-design/icons";
+import {
+    LoadingOutlined,
+    MenuUnfoldOutlined,
+    PauseCircleOutlined,
+    PlayCircleOutlined,
+    SoundOutlined,
+    StepBackwardOutlined,
+    StepForwardOutlined
+} from "@ant-design/icons";
 import React, {useEffect, useState} from "react";
 import {RootState} from "../../../redux/Reducers/rootReducer";
 import "./Player.scss";
@@ -129,19 +137,19 @@ export function Player() {
             <div className="player__controls">
                 <div className="player__controls__icons">
                     <StepBackwardOutlined
-                        style={{ fontSize: "16px", color: "#fff" }}
+                        style={{ fontSize: "16px" }}
                         onClick={onPrevClick}
                     />
                     <div onClick={onSwitchPlay} className="player__controls__playpause">
                         {!pause
                             ? isReady
-                                ? <PauseCircleFilled style={{ fontSize: "32px", color: "#fff" }}/>
+                                ? <PauseCircleOutlined style={{ fontSize: "32px"}}/>
                                 : <LoadingOutlined style={{ fontSize: "32px" }} spin/>
-                            : <PlayCircleFilled style={{ fontSize: "32px", color: "#fff" }}/>
+                            : <PlayCircleOutlined style={{ fontSize: "32px"}}/>
                         }
                     </div>
                     <StepForwardOutlined
-                        style={{ fontSize: "16px", color: "#fff" }}
+                        style={{ fontSize: "16px" }}
                         onClick={onNextClick}
                     />
                 </div>
@@ -156,8 +164,8 @@ export function Player() {
                 </div>
             </div>
             <div className="player__control-button-bar">
-                <MenuUnfoldOutlined style={{ fontSize: "14px", color: "#fff" }}/>
-                <SoundOutlined style={{ fontSize: "14px", color: "#fff" }}/>
+                <MenuUnfoldOutlined style={{ fontSize: "14px"}}/>
+                <SoundOutlined style={{ fontSize: "14px"}}/>
                 <div className="player__control-button-bar__volume">
                     <SongProgress
                         begin={volume}
