@@ -2,8 +2,8 @@
 
 .info {
   &__header {
-    background: rgb(0, 0, 0);
-    background: linear-gradient(284deg, rgba(0, 0, 0, 0.7749474789915967) 0%, rgba(34, 96, 15, 0.5816701680672269) 100%);
+    //background: rgb(0, 0, 0);
+    //background: linear-gradient(284deg, rgba(0, 0, 0, 0.7749474789915967) 0%, rgba(34, 96, 15, 0.5816701680672269) 100%);
     width: 100%;
     padding: 20px;
     display: flex;
@@ -20,6 +20,7 @@
         font-size: 40px;
         font-weight: 700;
         margin: 20px 0;
+
         &:first-child {
           margin-top: 0;
         }
@@ -65,7 +66,7 @@
       }
 
       &__name {
-        color: white;
+        //color: white;
         font-size: 70px;
         font-weight: 700;
         line-height: 110%;
@@ -73,7 +74,7 @@
       }
 
       &__author {
-        color: white;
+        //color: white;
       }
 
       &__text {
@@ -82,6 +83,4 @@
       }
     }
   }
-
-
 }

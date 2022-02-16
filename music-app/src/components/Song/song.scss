@@ -1,5 +1,21 @@
 @import "src/config/colors";
 
+.clip-loader{
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+.heart-outlined{
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.heart-filled{
+  color: #1db954;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
 .song {
   padding: 10px 16px;
   display: flex;
@@ -29,9 +45,8 @@
   }
 
   &__name {
-    color: $white;
+    //color: $white;
     font-weight: 600;
-    line-height: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

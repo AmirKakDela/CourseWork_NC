@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import Sidebar from "../../Layout/Sidebar/Sidebar";
 import Header from "../../Layout/Header/Header";
 import {Outlet} from "react-router-dom";

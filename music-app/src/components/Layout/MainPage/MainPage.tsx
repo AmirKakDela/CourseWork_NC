@@ -13,12 +13,11 @@ function MainPage() {
     const dispatch = useDispatch();
     const [artists, setArtists] = useState<ArtistType[]>([]);
 
-
     useEffect(() => {
         dispatch(getAlbumsByRequest());
         ArtistAPI.getAllArtists().then(data => {
-            setArtists(data)
-        })
+            setArtists(data);
+        });
     }, [dispatch]);
 
     const popularPlaylists = useSelector((state: RootState) => state.album.albums); // здесь надо получать плейлисты, а не альбомы
@@ -39,10 +38,9 @@ function MainPage() {
                     return <AlbumCard key={playlist._id} album={playlist}/>;
                 })}/>
             <ScrollComponent titleName="Популярные исполнители" data={
-                artists.length ? <div className="main-page__playlists-row">
-                    {artists.map(art => {
-                        return (<ArtistCard key={art._id} artist={art}/>);
-                    })}</div> : null}/>
+                artists.map(art => {
+                    return (<ArtistCard key={art._id} artist={art}/>);
+                })}/>
         </div>
     );
 }
