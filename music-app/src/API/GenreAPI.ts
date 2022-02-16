@@ -21,7 +21,10 @@ class GenreAPI {
 
     async createGenre(genre: GenreTypeWithoutId) {
         return await axios.post(`${url}/api/genre/create-genre`, genre, AuthorizationHeaderConfig).then(res => {
-            console.log(res)
+            return res.data
+        }).catch(err => {
+            console.log(err.data)
+            return err.data
         })
     }
 }

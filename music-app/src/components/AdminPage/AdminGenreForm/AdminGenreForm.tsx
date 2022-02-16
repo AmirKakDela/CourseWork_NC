@@ -7,13 +7,12 @@ import {Input, Skeleton} from "antd";
 import {Formik} from "formik";
 
 export type GenreTypeWithoutId = {
-    _id?: string,
+    _id?: string
     color: string,
     name: string
 }
 
 const initialValues: GenreTypeWithoutId = {
-    _id: '',
     color: '#be39dc',
     name: ''
 }
@@ -24,7 +23,7 @@ const AdminGenreForm: React.FC = () => {
     const [songs, setSongs] = useState<SongType[]>([]);
     const [genre, setGenre] = useState<GenreType>({
         _id: '',
-        color: 'black',
+        color: '#000000',
         name: ''
     })
 
@@ -32,6 +31,8 @@ const AdminGenreForm: React.FC = () => {
         console.log(data)
         GenreAPI.createGenre(data).then(res => {
 
+        }).catch(err => {
+            console.log(err)
         })
     }
 
@@ -40,6 +41,8 @@ const AdminGenreForm: React.FC = () => {
             GenreAPI.getGenre(params.id).then(data => {
                 setGenre(data.genre)
                 setSongs(data.songs)
+                initialValues.color = genre.color;
+                initialValues.name = genre.name;
             })
         }
         setIsLoading(false);
