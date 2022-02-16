@@ -1,5 +1,5 @@
-import React, {useCallback, useState} from "react";
-import {Menu, MenuTheme, Switch} from "antd";
+import React, {useCallback} from "react";
+import {Menu, MenuTheme} from "antd";
 import "./Sidebar.scss";
 import SpotifyLogo from "../../../assets/icons/Spotify-Logo.wine.svg";
 import {SidebarItemType} from "../../../config/types";
@@ -9,7 +9,7 @@ import {MenuInfo} from "rc-menu/lib/interface";
 type PropsType = {
     items: SidebarItemType[],
     currentTheme?: MenuTheme,
-    changeTheme?: (e: boolean) => void
+    // changeTheme?: (e: boolean) => void
 }
 
 const Sidebar: React.FC<PropsType> = (props) => {
@@ -30,7 +30,7 @@ const Sidebar: React.FC<PropsType> = (props) => {
                         <img src={SpotifyLogo} alt="SpotifyLogo"/>
                     </Link>
                 </div>
-                {props.items.map((item, index) => {
+                {props.items.map((item) => {
                     return (
                         <Menu.Item key={item.path}
                                    onClick={() => navigate(item.path)}
@@ -40,12 +40,6 @@ const Sidebar: React.FC<PropsType> = (props) => {
                         </Menu.Item>
                     );
                 })}
-                <Switch className="switch"
-                        checked={props.currentTheme === "dark"}
-                        onChange={props.changeTheme}
-                        checkedChildren="Dark"
-                        unCheckedChildren="Light"
-                />
             </Menu>
         </div>
     );

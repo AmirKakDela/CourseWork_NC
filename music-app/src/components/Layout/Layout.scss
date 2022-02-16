@@ -18,6 +18,8 @@
     --sidebar-bg-color: #000000FF;
     --player-bg-color: #181818FF;
     --player-border-color: #282828FF;
+    --player-slider-rail: #b3b3b3;
+    --player-slider-track:#535353;
     --webkit-scrollbar-bg-color: #1A1A1AFF;
     --webkit-scrollbar-thumb-color: #FFFFFF4C;
     --webkit-scrollbar-thumb-hover-color: rgba(255, 255, 255, 0.4);
@@ -56,6 +58,8 @@
     --sidebar-bg-color: #FFFFFFFF;
     --player-bg-color: #FFFFFFFF;
     --player-border-color: #F1F1F1FF;
+    --player-slider-rail: #C4C4C4;
+    --player-slider-track:#191414FF;
     --webkit-scrollbar-bg-color: #C4C4C4FF;
     --webkit-scrollbar-thumb-color: #1914144C;
     --webkit-scrollbar-thumb-hover-color: rgba(25, 20, 20, 0.4);
@@ -134,11 +138,23 @@
   color: var(--text-color, $white);
   border-top: 1px solid var(--player-border-color, $black40);
 }
+.song-progress__slider .ant-slider-rail{
+  background-color: var(--player-slider-rail, #b3b3b3);
+}
+.song-progress__slider {
+  .ant-slider-track{
+    background-color: var(--player-slider-track, #535353);
+  }
+}
+
 
 .ant-switch-checked {
   background: $switch-color;
 }
 
+.main-content .search__title{
+  color: var(--text-color, $white);
+}
 //scrollComponent
 .collections {
   &::-webkit-scrollbar {
@@ -156,7 +172,6 @@
       background-color: var(--webkit-scrollbar-thumb-active-color, rgba(255, 255, 255, .5));
     }
   }
-
 
   &__title {
     &__name {
@@ -194,10 +209,6 @@
     & .ant-menu-item {
       color: var(--text-color, $white);
 
-      &.dropdown__item{
-        color: var(--text-color, $white);
-      }
-
       &:hover {
         background-color: var(--hover-color, $black40);
         color: var(--text-color, $white);
@@ -205,7 +216,6 @@
     }
   }
 }
-
 
 //header
 .header__user {
@@ -220,21 +230,6 @@
   &:focus {
     background-color: var(--hover-color, $black40);
   }
-}
-
-.dropdown{
-    background-color: var(--dropdown-menu-color, $black0);
-    &__menu {
-      background-color: var(--dropdown-menu-color, $black0);
-      color: var(--text-color, $white);
-    }
-    &__item {
-      color: var(--text-color, $white);
-      background-color: var(--dropdown-menu-color, $black0);
-      a {
-        color: var(--text-color, $white);
-      }
-    }
 }
 
 .navigation__button {

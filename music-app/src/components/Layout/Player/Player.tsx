@@ -56,6 +56,8 @@ export function Player() {
             audio.oncanplay = () => {
                 if (!pause) {
                     audio.play();
+                }else {
+                    audio.pause();
                 }
             };
             audio.ontimeupdate = () => {

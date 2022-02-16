@@ -19,8 +19,8 @@ const Layout = (props: any) => {
         });
         return (
             <div className={`layout ${themeClassName}`}>
-                <Sidebar items={items} currentTheme={theme} changeTheme={props.changeTheme}/>
-                <Header/>
+                <Sidebar items={items} currentTheme={theme} />
+                <Header currentTheme={theme} changeTheme={props.changeTheme}/>
                 <div className={`main-content`}>
                     <Outlet/>
                 </div>
