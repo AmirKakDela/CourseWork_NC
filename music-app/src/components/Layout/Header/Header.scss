@@ -14,7 +14,7 @@
   &__logo {
     width: 170px;
     font-size: 20px;
-    color: #fff;
+    //color: #fff;
   }
 
   &__navigation {
@@ -23,8 +23,8 @@
     .navigation__button {
       width: 32px;
       height: 32px;
-      background-color: rgba(0, 0, 0, 0.7);
-      color: lightgrey;
+      //background-color: rgba(0, 0, 0, 0.7);
+      //color: lightgrey;
       border: none;
       border-radius: 50%;
       font-size: 20px;
@@ -36,12 +36,11 @@
     margin-right: auto;
     height: 40px;
     max-width: 350px;
-    background: #fff;
     border-radius: 500px;
-
-    &:hover {
-      background: #fff;
-    }
+    //background: #fff;
+    //&:hover {
+    //  background: #fff;
+    //}
   }
 
   &__auth {
@@ -62,21 +61,21 @@
 
       &-registry {
         background: none;
-        color: #ffffff;
+        //color: #ffffff;
       }
 
       &-login {
-        background-color: #fff;
         border-radius: 500px;
-        color: rgb(18, 18, 18);
+        //background-color: #fff;
+        //color: rgb(18, 18, 18);
       }
     }
   }
 
   &__user {
     padding: 6px 10px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #fff;
+    //background-color: rgba(0, 0, 0, 0.7);
+    //color: #fff;
     font-size: 14px;
     border: none;
     border-radius: 500px;
@@ -86,16 +85,16 @@
     column-gap: 7px;
 
     &_icon {
-      background-color: $lightgrey;
+      //background-color: $lightgrey;
       padding: 6px;
       border-radius: 100%;
       font-size: 15px;
     }
 
-    &:hover,
-    &:focus {
-      background-color: #282828;
-    }
+    //&:hover,
+    //&:focus {
+    //  background-color: #282828;
+    //}
   }
 }
 
@@ -103,7 +102,7 @@
   width: 100%;
   margin: 0;
   padding: 0;
-  background-color: #282828;
+  //background-color: #282828;
   border-radius: 4px;
 
   &__menu {

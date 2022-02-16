@@ -38,16 +38,16 @@ const Header = () => {
                 <Menu.Item
                     className="dropdown__item"
                     key="0"
-                    style={{background: "inherit"}}
+                    // style={{background: "inherit"}}
                 >
-                    <Link to="/" style={{color: "#fff"}}>
+                    <Link to="/">
                         Профиль
                     </Link>
                 </Menu.Item>
                 <Menu.Item
                     className="dropdown__item"
                     key="1"
-                    style={{background: "inherit", color: "#fff"}}
+                    // style={{background: "inherit", color: "#fff"}}
                     onClick={logout}
                 >
                     Выйти
@@ -57,18 +57,18 @@ const Header = () => {
                     <Menu.Item
                         className="dropdown__item"
                         key="2"
-                        style={{background: "inherit", color: "#fff"}}
+                        // style={{background: "inherit", color: "#fff"}}
                     >
-                        <Link to="/admin" style={{color: "#fff", fontWeight: 700}}>
+                        <Link to="/admin" style={{ fontWeight: 700}}>
                             ADMIN PAGE
                         </Link>
                     </Menu.Item> :
                     <Menu.Item
                         className="dropdown__item"
                         key="3"
-                        style={{background: "inherit", color: "#fff"}}
+                        // style={{background: "inherit", color: "#fff"}}
                     >
-                        <Link to="/" style={{color: "#fff", fontWeight: 700}}>
+                        <Link to="/" style={{ fontWeight: 700}}>
                             DEFAULT PAGE
                         </Link>
                     </Menu.Item>)

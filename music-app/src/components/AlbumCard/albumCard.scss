@@ -8,12 +8,6 @@
   transition: .25s background-color ease-in-out;
   padding: 17px;
   z-index: 0;
-  //&._light{
-  //  background-color: $player-border-light;
-  //}
-  //&._dark{
-  //  background-color: $black32;
-  //}
 
     &__img {
       width: 160px;
@@ -46,51 +40,29 @@
       }
   }
 
-
   &__name {
     position: relative;
     margin-top: 17px;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 16px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     bottom: 0;
     right: 0;
-    //&._light{
-    //  color: $text-light-color;
-    //}
-    //&._dark{
-    //  color: $white;
-    //}
   }
 
   &__artist {
     position: relative;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 14px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     bottom: 0;
     right: 0;
-    //&._light{
-    //  color:$background-base;
-    //}
-    //&._dark{
-    //  color: $darkwhite;
-    //}
   }
-
-  &._light:hover {
-    //background-color: $hover-color-for-light-items;
-    .album__btn{
-      display: block;
-    }
-  }
-
-  &._dark:hover {
-    //background-color: $black40;
+  &:hover {
     .album__btn{
       display: block;
     }

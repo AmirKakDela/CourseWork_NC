@@ -89,9 +89,7 @@ function App() {
 
                         <Route path='/admin' element={
                             <AdminRoute isAdmin={isAdmin} isAuth={isAuth}>
-                                <ThemeContext.Provider value={currentTheme}>
-                                    <AdminLayout/>
-                                </ThemeContext.Provider>
+                                <AdminLayout/>
                             </AdminRoute>}>
                             <Route path="songs" element={<AdminSongs/>}/>
                             <Route path="song/:id" element={<AdminSongForm/>}/>

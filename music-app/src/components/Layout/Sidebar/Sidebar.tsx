@@ -16,8 +16,6 @@ const Sidebar: React.FC<PropsType> = (props) => {
     const navigate = useNavigate();
     let location = useLocation();
     let current = props.items?.find(item => item?.path.includes(location.pathname))?.path || '/';
-    console.log(location);
-    // const [current, setCurrent] = useState('/');
     const handleClick = useCallback((e: MenuInfo) => current = e.key, []);
 
     return (
