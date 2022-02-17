@@ -20,3 +20,19 @@ export let validationRulesSong = {
         .required('Выберите соотвествующий жанр для песни.')
 }
 
+export let validationRulesAlbum = {
+    name: yup.string().trim()
+        .required('Введите название альбома.'),
+    artist: yup.string().trim()
+        .required('Введите имя исполнителя.'),
+    song: yup
+        .mixed()
+        .required("Выберите песни."),
+        // .test("fileFormat", "Неподдерживаемый формат файла. Загрузите файл типа audio.",
+        //     value => value && SUPPORTED_FORMATS_AUDIO.includes(value.type)),
+    cover: yup
+        .mixed()
+        .required("Загрузите обложку для альбома.")
+        .test("fileFormat", "Неподдерживаемый формат файла. Загрузите файл типа image.",
+                value => value && SUPPORTED_FORMATS_IMAGE.includes(value.type))
+}

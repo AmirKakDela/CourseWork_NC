@@ -9,7 +9,8 @@ class AlbumController {
             //const artistId = req.params["artistId"];
             const albumId = req.params["albumId"];
             const album = await Album.findById(albumId).populate( "songs");
-            res.json(album);
+            const songs = album.songs;
+            return res.json({ album, songs });
         } catch (e) {
             res.status(500).json({ message: `${e.message}.Ошибка сервера при получении альбома` });
         }
@@ -32,6 +33,17 @@ class AlbumController {
     async getAllAlbums(req, res) {
         try {
             const albums = await Album.find();
+            res.json(albums);
+        } catch (e) {
+            res.status(500)
+                .json({ message: `${e.message}.Ошибка сервера при получении всех альбомов` });
+        }
+    }
+
+    async getAllAlbumsWithSongs(req, res) {
+        try {
+            const albums = await Album.find().populate( "songs");
+            //const songs = albums.map(album => album.songs);
             res.json(albums);
         } catch (e) {
             res.status(500)
