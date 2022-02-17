@@ -16,6 +16,7 @@
   align-items: flex-start;
   justify-content: center;
   padding: 5px;
+  height: 100%;
   border: none;
   font-weight: bold;
 
@@ -90,6 +91,7 @@
   display: flex;
   justify-items: start;
   align-items: center;
+  border-radius: 4px;
 
   &-icon {
     svg {
@@ -97,18 +99,14 @@
       height: 20px;
     }
   }
-
-  &-selected {
-    border-radius: 4px;
-  }
 }
 
-.ant-menu.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-  background-color: $hover-color-for-light-items;
-  color: $black0;
-}
-
-.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
-  background-color: $black40;
-  color: $white;
-}
+//.ant-menu.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+//  background-color: $hover-color-for-light-items;
+//  color: $black0;
+//}
+//
+//.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+//  background-color: $black40;
+//  color: $white;
+//}

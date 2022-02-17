@@ -13,7 +13,9 @@ import {useSearchParams} from 'react-router-dom';
 import {getAlbumsByRequest} from "../../../redux/Actions/thunkAlbumActions";
 import {Song} from "../../Song/Song";
 import GenreAPI from "../../../API/GenreAPI";
-import {GenreType} from "../../../config/types";
+import {GenreType, SongType} from "../../../config/types";
+import {ScrollComponent} from "../../ScrollComponent/ScrollComponent";
+import {useActions} from "../../../hooks/useActions";
 import PlaylistCard from "../../PlaylistCard/PlaylistCard";
 
 const SearchPage = () => {
@@ -34,6 +36,11 @@ const SearchPage = () => {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setQueryValue(e.target.value);
         debouncedGetSearch(e.target.value);
+    }
+    const { setPlayingSong, setPlayingSongList } = useActions();
+    function onPlay(song: SongType) {
+        setPlayingSongList(searchResult.songs);
+        setPlayingSong(song);
     }
 
     useEffect(() => {
@@ -64,12 +71,16 @@ const SearchPage = () => {
                    onChange={handleChange}
             />
             {!queryValue ? <div className="search__content">
-                    <h2 className="search__title">Топ жанров</h2>
-                    <div className="search__genres-row">
-                        {genres && genres.map(genre => (
+                    {/*<h2 className="search__title">Топ жанров</h2>*/}
+                    {/*<div className="search__genres-row">*/}
+                    {/*    {genres && genres.map(genre => (*/}
+                    {/*        <Genre key={genre._id} genre={genre}/>*/}
+                    {/*    ))}*/}
+                    {/*</div>*/}
+                    <ScrollComponent className="search__genres-row" titleName="Топ жанров" data={
+                        genres && genres.map(genre => (
                             <Genre key={genre._id} genre={genre}/>
-                        ))}
-                    </div>
+                        ))}/>
                     <h2 className="search__title">Популярные плейлисты и альбомы</h2>
                     <div className="search__other">
                         {popularAlbums.map(album => {
@@ -82,7 +93,10 @@ const SearchPage = () => {
                     <h2 className="search__title">Треки</h2>
                     <div className="search__songs">
                         {searchResult.songs && searchResult.songs.map((song, index) => {
-                            return <Song key={song._id} song={song} order={index + 1}/>
+                            return <Song key={song._id}
+                                         song={song}
+                                         order={index + 1}
+                                         onPlay={onPlay.bind(this, song)}/>
                         })}
                     </div>
                     <h2 className="search__title">Исполнители</h2>

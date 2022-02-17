@@ -5,30 +5,34 @@ import songDefault from "../../assets/imgs/song_default.jpg";
 import Like from "./Like";
 import {CaretRightFilled as PlayIcon, PauseOutlined as PauseIcon} from "@ant-design/icons";
 import {useActions} from "../../hooks/useActions";
-import {setPlayingSong} from "../../redux/action-creators/player";
+import {setPlayingSong} from "../../redux/action-creators/action-creators";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {RootState} from "../../redux/Reducers/rootReducer";
 import {PlayerReducerState} from "../../redux/Reducers/playerReducer";
-import {formattedTime} from "../Layout/Player/player.untils";
+import {formattedTime} from "../../utils/time-format.utils";
 
 type PropsType = {
     song: SongType,
+    onPlay?: () => void,
     order?: number,
 }
 
 export const Song = (props: PropsType) => {
-    const {song, order} = props;
-    const {pause, playback} = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
+    const {song, order, onPlay} = props;
+    const {pause, track} = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
     const [songCover, setSongCover] = useState(song.cover);
-    const {playSong, pauseSong, setPlayingSong} = useActions();
+    const {playSong, pauseSong} = useActions();
     let isSelectedSong = false;
     if (song._id) {
-        isSelectedSong = playback?._id === song._id;
+        isSelectedSong = track?._id === song._id;
     }
     const isPlayed = !pause && isSelectedSong;
 
+    console.log(song.cover)
+
     function play() {
-        setPlayingSong(song);
+        onPlay && onPlay();
+        // setPlayingSong(song);
         if (isPlayed) {
             pauseSong();
         } else {
@@ -49,7 +53,7 @@ export const Song = (props: PropsType) => {
                          onClick={play}>
                         {isPlayed
                             ? <PauseIcon/>
-                            : <PlayIcon/>
+                            : <PlayIcon onClick={onPlay}/>
                         }
                     </div>
                 </div>

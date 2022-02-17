@@ -27,6 +27,8 @@ import AdminSongs from "./components/AdminPage/AdminSongs/AdminSongs";
 import AdminSongForm from "./components/AdminPage/AdminSongForm/AdminSongForm";
 import LibraryPlaylists from "./components/Layout/MyLibraryPage/LibraryPlaylists";
 import AdminPlaylists from "./components/AdminPage/AdminPlaylists/AdminPlaylists";
+import {darkTheme, lightTheme, ThemeContext} from "./components/Layout/theme-context/constants";
+import {SharedActionsType} from "./redux/Actions/sharedActions";
 
 function App() {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
@@ -34,6 +36,16 @@ function App() {
     const userLoading = useSelector((state: RootState) => state.user.isLoading);
     const error = useSelector((state: RootState) => state.error.errorText);
     const dispatch = useDispatch();
+
+    const currentTheme = useSelector((state: RootState) => state.shared.appTheme);
+    const changeTheme = (value: boolean) => {
+        dispatch({
+            type: SharedActionsType.SET_APP_THEME,
+            payload: {
+                appTheme: value ? darkTheme : lightTheme
+            }
+        });
+    };
 
     useEffect(() => {
         dispatch(auth());
@@ -57,10 +69,12 @@ function App() {
 
                         <Route path='/' element={
                             <RequireAuth isAuth={isAuth}>
-                                <Layout/>
+                                <ThemeContext.Provider value={currentTheme}>
+                                    <Layout changeTheme={changeTheme}/>
+                                </ThemeContext.Provider>
                             </RequireAuth>}>
                             <Route index element={<MainPage/>}/>
-                            <Route path='loved' element={<h1>Loved Songs</h1>}/>
+                            <Route path='loved' element={<LibrarySong/>}/>
                             <Route path='my-library' element={<MyLibraryPage/>}>
                                 <Route index element={<Navigate to='songs'/>}/>
                                 <Route path='songs' element={<LibrarySong/>}/>
@@ -83,6 +97,7 @@ function App() {
                             </AdminRoute>}>
                             <Route path="songs" element={<AdminSongs/>}/>
                             <Route path="song/:id" element={<AdminSongForm/>}/>
+                            <Route path="song/create" element={<AdminSongForm/>}/>
                             <Route path="artists" element={<h1>All Artists</h1>}/>
                             <Route path="playlists" element={<AdminPlaylists/>}/>
                             <Route path="albums" element={<h1>All Albums</h1>}/>

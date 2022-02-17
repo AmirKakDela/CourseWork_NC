@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {Menu, Switch} from "antd";
+import {Menu, MenuTheme} from "antd";
 import "./Sidebar.scss";
 import SpotifyLogo from "../../../assets/icons/Spotify-Logo.wine.svg";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {AppTheme, PlaylistType, SidebarItemType} from "../../../config/types";
 import {SharedActionsType} from "../../../redux/Actions/sharedActions";
-import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../redux/Reducers/rootReducer";
 import {items} from "./items";
@@ -14,21 +14,25 @@ import PlaylistAPI from "../../../API/PlaylistAPI";
 import {thunkUserPlaylists} from "../../../redux/Actions/thunkUserActions";
 
 type PropsType = {
-    items: SidebarItemType[]
+    items: SidebarItemType[],
+    currentTheme?: MenuTheme,
+    // changeTheme?: (e: boolean) => void
 }
 
 const Sidebar: React.FC<PropsType> = (props) => {
     const navigate = useNavigate();
-    const location = useLocation()
+    let location = useLocation();
+    let current = props.items?.find(item => item?.path.includes(location.pathname))?.path || '/';
+    const handleClick = useCallback((e: MenuInfo) => current = e.key, []);
     const dispatch = useDispatch();
     const currentTheme = useSelector((state: RootState) => state.shared.appTheme);
-    const [current, setCurrent] = useState("0");
+    //const [current, setCurrent] = useState("0");
 
     const user = useSelector((state: RootState) => state.user.currentUser)
     const [playlists, setPlaylists] = useState<PlaylistType[]>([])
     //const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const handleClick = useCallback((e: MenuInfo) => setCurrent(e.key), []);
+    //const handleClick = useCallback((e: MenuInfo) => setCurrent(e.key), []);
 
     const menuItemHandler = (itemPath: string) => {
         itemPath === "create-playlist" ? createPlaylist() : navigate(itemPath)
