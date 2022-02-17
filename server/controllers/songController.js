@@ -17,8 +17,8 @@ class songController {
 
             const newSong = new Song({
                 ...req.body,
-                cover: req.files.cover[0].path,
-                song: req.files.song[0].path,
+                cover: '/' + req.files.cover[0].path,
+                song: '/' + req.files.song[0].path,
             });
 
             await newSong.save();
