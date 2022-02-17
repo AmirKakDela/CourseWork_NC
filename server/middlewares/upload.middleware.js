@@ -2,7 +2,12 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination(req, file, cb) {
-        cb(null, 'uploads/')
+        if(file.fieldname === 'song') {
+            cb(null, './uploads/songs/')
+        }
+        else if(file.fieldname === 'cover') {
+            cb(null, './uploads/images/')
+        }
     },
     filename(req, file, cb) {
         const date = new Date().toLocaleTimeString().replace(/:/g, "-");
