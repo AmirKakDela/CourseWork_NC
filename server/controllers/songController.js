@@ -5,9 +5,9 @@ const {validationResult} = require("express-validator");
 class songController {
     async createSong(req, res) {
         try {
-            const errors = validationResult(req);
-            if (!errors.isEmpty())
-                return res.status(412).json({message: 'Ошибка при создании трека', errors})
+            // const errors = validationResult(req);
+            // if (!errors.isEmpty())
+            //     return res.status(412).json({message: 'Ошибка при создании трека', errors})
 
             const {name, artistId} = req.body;
 
@@ -16,8 +16,11 @@ class songController {
                 return res.status(412).json({message: 'Такой трек уже существует', candidateSong});
 
             const newSong = new Song({
-                ...req.body
+                ...req.body,
+                cover: req.files.cover[0].path,
+                song: req.files.song[0].path,
             });
+
             await newSong.save();
             return res.status(200).json(newSong);
         } catch (e) {
