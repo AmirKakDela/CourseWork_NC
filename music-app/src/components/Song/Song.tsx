@@ -28,6 +28,8 @@ export const Song = (props: PropsType) => {
     }
     const isPlayed = !pause && isSelectedSong;
 
+    console.log(song.cover)
+
     function play() {
         onPlay && onPlay();
         // setPlayingSong(song);
