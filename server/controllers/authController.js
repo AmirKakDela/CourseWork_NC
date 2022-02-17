@@ -1,5 +1,6 @@
 const {validationResult} = require("express-validator");
 const User = require("../models/User");
+const Playlist = require("../models/Playlist")
 
 class authController {
     async register(req, res) {
@@ -31,7 +32,16 @@ class authController {
             if (user.password !== password) return res.status(403).json({message: 'Неверный пароль'});
 
             const token = user._id + '_' + user.admin;
-            return res.json({token, userId: user._id, userName: user.name, isAdmin: user.admin});
+
+            let playlists = []
+            let likedPlaylists = []
+
+            await Playlist.find().then(data => {
+                playlists.push(...data.filter(p => user.playlists.indexOf(p._id) > -1))
+                likedPlaylists.push(...data.filter(p => user.likedPlaylists.indexOf(p._id) > -1))
+            })
+
+            return res.json({token, userId: user._id, userName: user.name, isAdmin: user.admin, playlists, likedPlaylists});
         } catch (e) {
             console.log(e);
             res.send({message: 'Ошибка сервера при логине'});
@@ -42,7 +52,16 @@ class authController {
         try {
             const user = await User.findOne({_id: req.user});
             const token = user._id + '_' + user.admin;
-            return res.json({token, userId: user._id, userName: user.name, isAdmin: user.admin});
+
+            let playlists = []
+            let likedPlaylists = []
+
+            await Playlist.find().then(data => {
+                playlists.push(...data.filter(p => user.playlists.indexOf(p._id) > -1))
+                likedPlaylists.push(...data.filter(p => user.likedPlaylists.indexOf(p._id) > -1))
+            })
+
+            return res.json({token, userId: user._id, userName: user.name, isAdmin: user.admin, playlists, likedPlaylists});
         } catch (e) {
             console.log(e);
             res.send({message: 'Ошибка сервера при авторизации'});

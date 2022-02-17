@@ -14,6 +14,7 @@ import {getAlbumsByRequest} from "../../../redux/Actions/thunkAlbumActions";
 import {Song} from "../../Song/Song";
 import GenreAPI from "../../../API/GenreAPI";
 import {GenreType} from "../../../config/types";
+import PlaylistCard from "../../PlaylistCard/PlaylistCard";
 
 const SearchPage = () => {
     const dispatch = useDispatch();
@@ -91,6 +92,11 @@ const SearchPage = () => {
                         })}
                     </div> : null}
                     <h2 className="search__title">Плейлисты</h2>
+                    {searchResult.playlists.length ? <div className="search__genres-row">
+                        {searchResult.playlists.map(playlist => {
+                            return (<PlaylistCard key={playlist._id} playlist={playlist}/>)
+                        })}
+                    </div> : <p>Плейлистов нет</p>}
                     <div className="search__other">
                     </div>
                 </div>

@@ -37,4 +37,5 @@ export const items: SidebarItemType[] = [
         itemId: "favourite-tracks",
         icon: HeartOutlined,
         text: 'Любимые треки',
-    }]
+    }
+    ]

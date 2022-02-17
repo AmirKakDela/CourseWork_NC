@@ -3,7 +3,8 @@
 .header {
   padding: 16px 32px;
   width: 100%;
-  height: 100px;
+  height: 80px;
+  max-height: 100px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -18,6 +19,7 @@
   }
 
   &__navigation {
+    margin-right: auto;
     width: max-content;
 
     .navigation__button {
@@ -29,6 +31,10 @@
       border-radius: 50%;
       font-size: 20px;
     }
+  }
+
+  &__switch {
+    margin-right: 10px;
   }
 
   &__search {
@@ -119,9 +125,13 @@
   &__item {
     margin: 0;
     padding: 0;
-
+    color: $white !important;
     &:hover {
       background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    &-switch {
+      margin-left: 5px;
     }
   }
 }

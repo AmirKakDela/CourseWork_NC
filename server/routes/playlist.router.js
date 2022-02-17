@@ -3,27 +3,66 @@ const router = new Router();
 const controller = require("../controllers/playlistController");
 const authMiddleware = require("../middlewares/auth.middleware");
 const adminMiddleware = require("../middlewares/admin.middleware");
-const { check } = require("express-validator");
+const {check} = require("express-validator");
 
 router.post(
-  "/create",
-  controller.createPlaylist
+    "/create", authMiddleware,
+    controller.createPlaylist
 );
 
-router.get("/all", controller.getAllPlaylists);
+router.get(
+    "/all",
+    controller.getAllPlaylists
+);
 
-router.get("/user/playlists", controller.getUserPlaylists);
+router.get(
+    "/user/:id",
+    controller.getUserPlaylists
+);
 
-router.get("/:id", controller.getPlaylistById)
+router.get(
+    "/:id",
+    controller.getPlaylistById
+);
 
-router.put("/addTracks/:id",  controller.addTracksToPlaylist)
+router.put(
+    "/addSong/:id",
+    authMiddleware,
+    controller.addSongToPlaylist
+);
 
-router.put("/update/:id", controller.updatePlaylist)
+router.put(
+    "/deleteSong/:id",
+    authMiddleware,
+    controller.deleteSongFromPlaylist
+);
 
-router.delete("/delete/:id",  controller.deletePlaylist)
+router.put(
+    "/edit/:id",
+    authMiddleware,
+    controller.editPlaylist
+);
 
-router.delete("/user/delete/:id", controller.deletePlaylistFromUser)
+router.delete(
+    "/delete/:id",
+    authMiddleware,
+    controller.deletePlaylist
+);
 
+router.get(
+    '/user/:id/liked-playlists',
+    authMiddleware,
+    controller.userLikedPlaylists);
+
+router.put(
+    '/user/like/:id',
+    authMiddleware,
+    controller.toggleLikePlaylist);
+
+/*router.delete(
+    "/user/delete/:id",
+    controller.deletePlaylistFromUser
+);*/
 
 
 module.exports = router;

@@ -5,12 +5,12 @@ import {PlayerReducerState} from "../../../../redux/Reducers/playerReducer";
 import {useTypedSelector} from "../../../../hooks/useTypedSelector";
 import {RootState} from "../../../../redux/Reducers/rootReducer";
 import {useActions} from "../../../../hooks/useActions";
-import {Track} from "../../../../config/types";
+import {SongType} from "../../../../config/types";
 import Like from "../../../Song/Like";
 import songDefault from "../../../../assets/imgs/song_default.jpg";
 
 type PropsType = {
-    song: Track,
+    song: SongType,
     onAdd: () => void
 }
 

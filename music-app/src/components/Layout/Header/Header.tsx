@@ -1,23 +1,40 @@
-import React from "react";
+import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../redux/Reducers/rootReducer";
 import {logoutCurrentUser} from "../../../redux/Actions/userActions";
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import {Dropdown, Menu} from "antd";
+import {Dropdown, Menu, Switch} from "antd";
 
 import "./Header.scss";
 import {CaretDownFilled, LeftOutlined, RightOutlined, UserOutlined} from "@ant-design/icons";
+import {SharedActionsType} from "../../../redux/Actions/sharedActions";
+import {AppTheme} from "../../../config/types";
+import {boolean} from "yup";
 
 const Header = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [dropdownVisible, setDropdownVisible] = useState<boolean>(false)
 
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
     const user = useSelector((state: RootState) => state.user.currentUser);
+    const currentTheme = useSelector((state: RootState) => state.shared.appTheme);
+
+
 
     const logout = () => {
+        setDropdownVisible(false)
         dispatch(logoutCurrentUser());
+    };
+
+    const changeTheme = (value: boolean) => {
+        dispatch({
+            type: SharedActionsType.SET_APP_THEME,
+            payload: {
+                appTheme: value ? AppTheme.DARK : AppTheme.LIGHT,
+            },
+        });
     };
 
 
@@ -38,7 +55,23 @@ const Header = () => {
                 <Menu.Item
                     className="dropdown__item"
                     key="0"
+                    style={{background: "inherit"}}>
+                    Тема
+                    <Switch
+                        className="dropdown__item-switch"
+                        onClick={() => setDropdownVisible(true)}
+                        checked={currentTheme === "dark"}
+                        onChange={changeTheme}
+                        checkedChildren="Dark"
+                        unCheckedChildren="Light"
+                        size="small"
+                    />
+                </Menu.Item>
+                <Menu.Item
+                    className="dropdown__item"
+                    key="1"
                     style={{background: "inherit"}}
+                    onClick={() => setDropdownVisible(false)}
                 >
                     <Link to="/" style={{color: "#fff"}}>
                         Профиль
@@ -46,7 +79,7 @@ const Header = () => {
                 </Menu.Item>
                 <Menu.Item
                     className="dropdown__item"
-                    key="1"
+                    key="2"
                     style={{background: "inherit", color: "#fff"}}
                     onClick={logout}
                 >
@@ -56,8 +89,9 @@ const Header = () => {
                 (!location.pathname.includes("/admin") ?
                     <Menu.Item
                         className="dropdown__item"
-                        key="2"
+                        key="3"
                         style={{background: "inherit", color: "#fff"}}
+                        onClick={() => setDropdownVisible(false)}
                     >
                         <Link to="/admin" style={{color: "#fff", fontWeight: 700}}>
                             ADMIN PAGE
@@ -65,8 +99,9 @@ const Header = () => {
                     </Menu.Item> :
                     <Menu.Item
                         className="dropdown__item"
-                        key="3"
+                        key="4"
                         style={{background: "inherit", color: "#fff"}}
+                        onClick={() => setDropdownVisible(false)}
                     >
                         <Link to="/" style={{color: "#fff", fontWeight: 700}}>
                             DEFAULT PAGE
@@ -85,9 +120,10 @@ const Header = () => {
                 nav
             )}
 
+
             {isAuth ? (
                 <div>
-                    <Dropdown overlay={dropdown} trigger={["click"]}>
+                    <Dropdown overlay={dropdown} trigger={["click"]} visible={dropdownVisible} onVisibleChange={() => setDropdownVisible(!dropdownVisible)}>
                         <button className="header__user">
                             <UserOutlined className="header__user_icon"/>
                             {user.userName || "user"}

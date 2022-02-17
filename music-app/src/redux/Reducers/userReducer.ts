@@ -15,8 +15,15 @@ const initialState: InitialStateType = {
         userName: '',
         isAdmin: false,
         likedSongs: [],
+
         likeLoading: {
             songId: '',
+            status: false
+        },
+        playlists: [],
+        likedPlaylists: [],
+        likePlaylistLoading : {
+            playlistId: '',
             status: false
         }
     },
@@ -37,6 +44,10 @@ const userReducer = (state = initialState, action: UserActionTypes): InitialStat
                 ...state, isAuth: false, currentUser: {
                     userId: '', userName: '', isAdmin: false, likedSongs: [], likeLoading: {
                         songId: '',
+                        status: false
+                    },
+                    playlists: [], likedPlaylists: [], likePlaylistLoading : {
+                        playlistId: '',
                         status: false
                     }
                 }
@@ -65,6 +76,27 @@ const userReducer = (state = initialState, action: UserActionTypes): InitialStat
         case UserActionTypeTypes.LIKE_LOADING:
             return {
                 ...state, currentUser: {...state.currentUser, likeLoading: action.payload}
+            }
+        case UserActionTypeTypes.SET_USER_PLAYLISTS:
+            return {
+                ...state, currentUser: {...state.currentUser, playlists: action.payload}
+            }
+        case UserActionTypeTypes.SET_USER_LIKED_PLAYLISTS:
+            return {
+                ...state, libraryLoading: false, currentUser: {...state.currentUser, likedPlaylists: action.payload}
+            }
+        case UserActionTypeTypes.TOGGLE_LIKE_PLAYLIST:
+            return {
+                ...state, currentUser: {
+                    ...state.currentUser,
+                    likedPlaylists: state.currentUser.likedPlaylists.findIndex(playlist => playlist._id === action.payload._id) === -1 ?
+                        [...state.currentUser.likedPlaylists, action.payload] :
+                        state.currentUser.likedPlaylists.filter(playlist => playlist._id !== action.payload._id)
+                }
+            }
+        case UserActionTypeTypes.LIKE_PLAYLIST_LOADING:
+            return {
+                ...state, currentUser: {...state.currentUser, likePlaylistLoading: action.payload}
             }
         default:
             return state

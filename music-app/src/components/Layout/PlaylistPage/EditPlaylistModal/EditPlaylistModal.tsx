@@ -4,7 +4,6 @@ import {Button, Form, Input, Modal, Upload} from "antd";
 import {UploadOutlined} from "@ant-design/icons";
 import {Formik} from "formik";
 import {useDispatch} from "react-redux";
-import {updatePlaylistByRequest} from "../../../../redux/Actions/thunkPlaylistActions";
 import {PlaylistType} from "../../../../config/types";
 
 
@@ -57,7 +56,7 @@ const EditPlaylistModal: React.FC<EditPlaylistModalProps> = ({
     }, [form, initialValues])
     return (
         <Modal
-            className="edit"
+            className="edit_playlist__modal"
             visible={visible}
             title="Изменить сведения"
             cancelText="Cancel"
@@ -68,11 +67,11 @@ const EditPlaylistModal: React.FC<EditPlaylistModalProps> = ({
             }
             onOk={onSubmit}
             footer={[
-                <Button className="edit__save" onClick={onSubmit}>{"Сохранить".toUpperCase()}</Button>
+                <Button className="edit_playlist__save" onClick={onSubmit}>{"Сохранить".toUpperCase()}</Button>
             ]}
         >
             <Form
-                className="form"
+                className="edit_playlist__form"
                 form={form}
                 layout="vertical"
                 name="form_in_modal"

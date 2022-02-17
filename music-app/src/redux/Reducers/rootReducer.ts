@@ -6,7 +6,6 @@ import albumReducer from "./albumReducer";
 import songReducer from "./songReducer";
 import {playerReducer} from "./playerReducer";
 import errorReducer from "./errorReducer";
-import playlistReducer from "./playlistReducer"
 
 
 export const rootReducer = combineReducers({
@@ -16,7 +15,6 @@ export const rootReducer = combineReducers({
     album: albumReducer,
     player: playerReducer,
     song: songReducer,
-    playlist: playlistReducer,
     error: errorReducer
 })
 

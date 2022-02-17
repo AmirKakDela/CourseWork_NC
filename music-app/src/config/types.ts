@@ -1,9 +1,14 @@
+import React from "react";
+
 export type CurrentUserType = {
     userId: string,
     userName: string,
     isAdmin: boolean,
     likedSongs: Array<SongType>,
-    likeLoading: LikeLoadingType
+    likeLoading: LikeLoadingType,
+    playlists: Array<PlaylistType>,
+    likedPlaylists: Array<PlaylistType>,
+    likePlaylistLoading: LikePlaylistLoadingType
 }
 
 export type ErrorType = {
@@ -47,7 +52,7 @@ export type ArtistType = {
 export type SearchResultType = {
     songs: Array<SongType> | [],
     artists: Array<ArtistType> | [],
-    // playlists>: todo: потом добавить плейлисты
+    playlists: Array<PlaylistType> | []
 }
 
 export enum AppTheme {
@@ -67,10 +72,18 @@ export type LikeLoadingType = {
     status: boolean
 }
 
+export type LikePlaylistLoadingType = {
+    playlistId: string | undefined,
+    status: boolean
+}
+
 export type PlaylistType = {
     _id?: string,
     name: string,
-    user: string,
-    songs: Array<SongType>,
+    user: {
+        id: string,
+        name: string
+    },
+    songs: Array<String>,
     cover?: string
 }

@@ -25,6 +25,8 @@ import {AlbumPage} from "./components/Layout/AlbumPage/AlbumPage";
 import ErrorAlert from "./components/Alert/ErrorAlert/ErrorAlert";
 import AdminSongs from "./components/AdminPage/AdminSongs/AdminSongs";
 import AdminSongForm from "./components/AdminPage/AdminSongForm/AdminSongForm";
+import LibraryPlaylists from "./components/Layout/MyLibraryPage/LibraryPlaylists";
+import AdminPlaylists from "./components/AdminPage/AdminPlaylists/AdminPlaylists";
 
 function App() {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
@@ -63,7 +65,7 @@ function App() {
                                 <Route index element={<Navigate to='songs'/>}/>
                                 <Route path='songs' element={<LibrarySong/>}/>
                                 <Route path='albums' element={<h1>playlists</h1>}/>
-                                <Route path='playlists' element={<h1>albums</h1>}/>
+                                <Route path='playlists' element={<LibraryPlaylists/>}/>
                             </Route>
                             <Route path='create-playlist' element={<PlaylistPage/>}/>
                             <Route path='my-playlists' element={<h1>My playlists</h1>}/>
@@ -82,7 +84,7 @@ function App() {
                             <Route path="songs" element={<AdminSongs/>}/>
                             <Route path="song/:id" element={<AdminSongForm/>}/>
                             <Route path="artists" element={<h1>All Artists</h1>}/>
-                            <Route path="playlists" element={<h1>All Playlists</h1>}/>
+                            <Route path="playlists" element={<AdminPlaylists/>}/>
                             <Route path="albums" element={<h1>All Albums</h1>}/>
                         </Route>
                     </Routes>
