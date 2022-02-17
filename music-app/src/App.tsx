@@ -26,6 +26,7 @@ import AdminSongs from "./components/AdminPage/AdminSongs/AdminSongs";
 import AdminSongForm from "./components/AdminPage/AdminSongForm/AdminSongForm";
 import {darkTheme, lightTheme, ThemeContext} from "./components/Layout/theme-context/constants";
 import {SharedActionsType} from "./redux/Actions/sharedActions";
+import {CreateSong} from "./components/AdminPage/AdminLayout/createSong/CreateSong";
 
 function App() {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
