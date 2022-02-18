@@ -6,7 +6,6 @@ import * as yup from "yup";
 import {validationRulesAlbum} from "../../../config/ValidationRules";
 import {useParams} from "react-router-dom";
 import ArtistAPI from "../../../API/ArtistAPI";
-import SongsAPI from "../../../API/SongsAPI";
 import {useDispatch} from "react-redux";
 import {setError} from "../../../redux/Actions/errorAction";
 import AlbumAPI from "../../../API/AlbumAPI";
@@ -32,32 +31,44 @@ export const AdminAlbumForm: React.FC = () => {
     const [artists, setArtists] = useState<ArtistType[]>([]);
     const [songs, setSongs] = useState<SongType[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSubmit, setIsSubmit] = useState(false);
     const params = useParams();
     const dispatch = useDispatch();
 
     const onSubmit = (data: AlbumTypeWithoutId) => {
+        setIsSubmit(true);
         console.log("onSubmit", data);
         data.artist = artists.find(artist => artist.name === data.artist)?.name || "";
-        AlbumAPI.createAlbum(data).then(res => {
+        const formData = new FormData();
+        for (let key in data) {
+            // @ts-ignore
+            formData.append(key, data[key]);
+        }
+        AlbumAPI.createAlbum(formData).then(res => {
             res.data.message && dispatch(setError(res.data.message));
+        })
+            .finally(() => {
+            setIsSubmit(false);
         });
     };
 
     useEffect(() => {
         ArtistAPI.getAllArtists().then(data => {
             setArtists(data);
+            setIsLoading(false);
         });
+    }, []);
+
+    useEffect(() => {
         if (params.id) {
             AlbumAPI.getAlbumById(params.id).then((data: AlbumType<string>) => {
                 initialValues.name = data.name;
                 initialValues.artist = data.artist;
                 initialValues.songs = data.songs;
-                console.log(initialValues.songs);
                 setIsLoading(false);
             });
         }
-        setIsLoading(false);
-    }, []);
+    })
 
     function getSongs(artistValue: string) {
         const artisId = artists.find(artist => artist.name === artistValue)?._id || "";
@@ -115,6 +126,7 @@ export const AdminAlbumForm: React.FC = () => {
                                         name="artist"
                                         id="artist"
                                         value={values.artist}
+                                        // defaultValue={initialValues.artist}
                                         onChange={(e) => {
                                             handleChange(e);
                                             setFieldValue(
@@ -170,10 +182,9 @@ export const AdminAlbumForm: React.FC = () => {
                                 </select>
                                 {errors.songs && touched.songs && <p className="form__error_text">{errors.songs}</p>}
 
-                                <button type="submit"
+                                <button type="submit" disabled={isSubmit}
                                         className="form__button"
-                                >
-                                    Создать
+                                >{isSubmit ? 'Загрузка' : 'Создать'}
                                 </button>
                             </form>;
                         }}

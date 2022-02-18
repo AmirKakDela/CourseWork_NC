@@ -4,13 +4,18 @@ import {AlbumTypeWithoutId} from "../components/AdminPage/AdminAlbumForm/AdminAl
 
 class AlbumAPI {
 
-    async createAlbum(album: AlbumTypeWithoutId) {
-        return await axios.post(`${url}/api/album/create`, album, AuthorizationHeaderConfig).then(res => {
+    async createAlbum(album: AlbumTypeWithoutId | FormData) {
+        return await axios.post(`${url}/api/album/create`, album, {
+            headers: {
+                Authorization: "" + localStorage.getItem("token"),
+                "content-type": "multipart/form-data"
+            }
+        }).then(res => {
             return res;
         }).catch(res => {
-            console.log(res)
+            console.log(res);
             return res;
-        })
+        });
     }
 
     async getAlbumById(albumId: string) {
@@ -18,7 +23,7 @@ class AlbumAPI {
             return res.data;
         }).catch(err => {
             console.log(err);
-        })
+        });
     }
 
     async getAllAlbums() {
@@ -26,21 +31,23 @@ class AlbumAPI {
             return response.data;
         }).catch(err => {
             console.log(err);
-        })
+        });
     }
+
     async getAllAlbumsWithSongs() {
         return await axios.get(`${url}/api/album/albumsWithSongs`, AuthorizationHeaderConfig).then(response => {
             return response.data;
         }).catch(err => {
             console.log(err);
-        })
+        });
     }
-    async getArtistAlbums(artistId: string){
+
+    async getArtistAlbums(artistId: string) {
         return await axios.get(`${url}/api/album/artist/${artistId}`, AuthorizationHeaderConfig).then(res => {
             return res.data;
         }).catch(err => {
             console.log(err);
-        })
+        });
     }
 
     async deleteAlbum(id: string) {
@@ -48,7 +55,7 @@ class AlbumAPI {
             console.log(res.data);
         }).catch(err => {
             console.log(err);
-        })
+        });
     }
 }
 

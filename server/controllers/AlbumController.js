@@ -1,7 +1,5 @@
 const { validationResult } = require("express-validator");
 const Album = require("../models/Album");
-const Artist = require("../models/Artist");
-const Song = require("../models/Song");
 
 class AlbumController {
     async getAlbum(req, res) {
@@ -68,12 +66,10 @@ class AlbumController {
                         candidateAlbum
                     });
             }
-
-            // const albumsSongs = await Album.findOne().populate({
-            //     path: "songs",
-            //     match: {_id: songs}
-            // });
-                const newAlbum = new Album(req.body);
+                const newAlbum = new Album({
+                    ...req.body,
+                    cover: "/" + req.files.cover[0].path
+                });
                 await newAlbum.save();
                 return res.status(200)
                     .json({
