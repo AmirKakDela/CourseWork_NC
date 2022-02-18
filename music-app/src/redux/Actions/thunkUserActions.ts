@@ -1,6 +1,5 @@
 import axios from "axios";
 import {
-    libraryLoading,
     likeLoading,
     likePlaylistLoading,
     setAuthError,
@@ -120,12 +119,10 @@ export const thunkUserPlaylists = (userId: string) => {
 
 export const thunkUserLikedPlaylists = (userId: string) => {
     return async (dispatch: Dispatch<UserActionTypes>) => {
-        dispatch(libraryLoading(true))
         try {
             const response = await axios.get(`${url}/api/playlist/user/${userId}/liked-playlists`, AuthorizationHeaderConfig)
             dispatch(setUserLikedPlaylists(response.data))
         } catch (e) {
-            dispatch(libraryLoading(false))
             const u = e as ErrorType
             dispatch(setAuthError(u.response.data.message))
         }

@@ -219,6 +219,7 @@ class playlistController {
 
             if (!user) return res.status(403).json({message: 'Пользователь не найден'});
             const playlists = await Playlist.findById(user.likedPlaylists);
+            console.log(playlists)
             return res.json(playlists);
         } catch (e) {
             console.log('Ошибка сервера при userLikedSongs', e);

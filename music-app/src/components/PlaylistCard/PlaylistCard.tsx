@@ -7,7 +7,7 @@ import "./PlaylistCard.scss";
 import {formWordTrack} from "../../utils/declension.utils";
 
 
-const defaultImageUrl = "https://the-flow.ru/uploads/images/catalog/element/5de03395535b5.jpg";
+// const defaultImageUrl = "https://the-flow.ru/uploads/images/catalog/element/5de03395535b5.jpg";
 
 
 function PlaylistCard(props: any) {
@@ -18,7 +18,7 @@ function PlaylistCard(props: any) {
         return (
             <Link to={`/admin/playlist/${props.playlist._id}`}>
                 <div className="playlist__card">
-                    <img src={props.playlist.cover || defaultImageUrl} alt="cover"
+                    <img src={props.playlist.cover} alt="cover"
                          className="card__img"/>
                     <h2 className="card__name">
                         {props.playlist.name}
@@ -35,7 +35,7 @@ function PlaylistCard(props: any) {
     return (
         <Link to={`/playlist/${props.playlist._id}`}>
             <div className="playlist__card">
-                <img src={props.playlist.cover || defaultImageUrl} alt="cover"
+                <img src={props.playlist.cover} alt="cover"
                      className="card__img"/>
                 <h2 className="card__name">
                     {props.playlist.name}
