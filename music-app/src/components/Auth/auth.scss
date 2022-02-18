@@ -97,6 +97,11 @@
       color: $white;
       background-color: $btn-green_hover;
     }
+
+    &:disabled {
+      background-color: $link-green;
+      cursor: not-allowed;
+    }
   }
 
   &__button_login {
@@ -157,8 +162,6 @@
     }
   }
 }
-
-
 
 
 @media (max-width: 450px) {
