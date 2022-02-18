@@ -13,7 +13,6 @@ const Header = (props: any) => {
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [dropdownVisible, setDropdownVisible] = useState<boolean>(false)
 
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
     const user = useSelector((state: RootState) => state.user.currentUser);
@@ -22,7 +21,6 @@ const Header = (props: any) => {
     };
 
     const logout = () => {
-        setDropdownVisible(false)
         dispatch(logoutCurrentUser());
     };
 

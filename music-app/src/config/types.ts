@@ -79,7 +79,7 @@ export type LikePlaylistLoadingType = {
 }
 
 export type PlaylistType = {
-    _id?: string,
+    _id: string,
     name: string,
     user: {
         id: string,

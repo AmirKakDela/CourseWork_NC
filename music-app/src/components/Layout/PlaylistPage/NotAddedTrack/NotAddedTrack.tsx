@@ -1,29 +1,36 @@
 import React, {useState} from "react";
-import "./NotAddedTrack.scss";
 import {CaretRightFilled as PlayIcon, PauseOutlined as PauseIcon} from "@ant-design/icons";
+
 import {PlayerReducerState} from "../../../../redux/Reducers/playerReducer";
 import {useTypedSelector} from "../../../../hooks/useTypedSelector";
 import {RootState} from "../../../../redux/Reducers/rootReducer";
 import {useActions} from "../../../../hooks/useActions";
 import {SongType} from "../../../../config/types";
-import Like from "../../../Song/Like";
 import songDefault from "../../../../assets/imgs/song_default.jpg";
+import "./NotAddedTrack.scss";
 
 type PropsType = {
     song: SongType,
-    onAdd: () => void
+    onAdd: () => void,
+    onPlay?: () => void,
 }
 
 export const NotAddedTrack = (props: PropsType) => {
-    const { song, onAdd} = props;
-    const { pause, playback } = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
+    const {song, onAdd, onPlay} = props;
+    const {pause, track} = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
     const [songCover, setSongCover] = useState(song.cover);
-    const { playSong, pauseSong, setPlayingSong } = useActions();
-    const isSelectedSong = playback?._id === song._id;
+    const {playSong, pauseSong} = useActions();
+    let isSelectedSong = false;
+    if (song._id) {
+        isSelectedSong = track?._id === song._id;
+    }
     const isPlayed = !pause && isSelectedSong;
 
+    console.log(song.cover)
+
     function play() {
-        setPlayingSong(song);
+        onPlay && onPlay();
+        // setPlayingSong(song);
         if (isPlayed) {
             pauseSong();
         } else {

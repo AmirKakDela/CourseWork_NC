@@ -7,106 +7,97 @@
 .sidebar {
 
   height: 100%;
+  background: var(--sidebar-bg-color, #000000FF);
 
-}
+  .home-logo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 80px;
+    max-height: 100px;
+    width: 241px;
 
-.menu {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 5px;
-  height: 100%;
-  border: none;
-  font-weight: bold;
-
-  .ant-menu-item-group-title {
-    display: none;
+    img {
+      width: 180px;
+      height: 70px;
+      text-align: start;
+    }
   }
 
-  &__items {
-    width: 100%;
-    height: max-content;
-    border-bottom: 1px solid $white;
-  }
+  .menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 5px;
+    height: 100%;
+    border: none;
+    font-weight: bold;
 
-  &__playlists {
-    height: fit-content;
-    margin-top: 10px;
-    max-height: 28vh;
-
-    width: 100%;
-    overflow-y: scroll;
-
-    &::-webkit-scrollbar {
-      //background-color: $black26;
-      width: 15px;
-      border-radius: 2px;
+    #create-playlist, #favourite-tracks {
+      display: flex;
+      justify-items: start;
+      align-items: center;
     }
 
-    &::-webkit-scrollbar-thumb {
-      background-color: rgba(255, 255, 255, .3);
-      transition: .3s all ease-in-out;
+    #create-playlist {
+      margin-top: 25px;
+    }
 
-      &:hover {
-        background-color: rgba(255, 255, 255, .4);
+    .ant-menu-item {
+      display: flex;
+      justify-items: start;
+      align-items: center;
+      border-radius: 4px;
+
+      &-icon {
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
+    .ant-menu-item-group-title {
+      display: none;
+    }
+
+    &__items {
+      width: 100%;
+      height: max-content;
+    }
+
+    &__playlists {
+      border-top: 1px solid var(--text-color);
+      height: fit-content;
+      margin-top: 10px;
+      max-height: 28vh;
+
+      width: 100%;
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        width: 15px;
+        border-radius: 2px;
       }
 
-      &:active {
-        background-color: rgba(255, 255, 255, .5);
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--webkit-scrollbar-thumb-color);
+        transition: .3s all ease-in-out;
+
+        &:hover {
+          background-color: var(--webkit-scrollbar-thumb-hover-color);
+        }
+
+        &:active {
+          background-color: var(--webkit-scrollbar-thumb-active-color);
+        }
+
+        width: 15px;
+        border-radius: 2px;
       }
-
-      width: 15px;
-      border-radius: 2px;
     }
   }
+
+
 }
-
-.home-logo {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 80px;
-  max-height: 100px;
-  width: 241px;
-
-  img {
-    width: 180px;
-    height: 70px;
-    text-align: start;
-  }
-}
-
-#create-playlist, #favourite-tracks {
-  display: flex;
-  justify-items: start;
-  align-items: center;
-}
-
-#create-playlist {
-  margin-top: 25px;
-}
-
-.ant-menu-item {
-  display: flex;
-  justify-items: start;
-  align-items: center;
-  border-radius: 4px;
-
-  &-icon {
-    svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
-}
-
-//.ant-menu.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-//  background-color: $hover-color-for-light-items;
-//  color: $black0;
-//}
-//
-//.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
-//  background-color: $black40;
-//  color: $white;
-//}

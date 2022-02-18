@@ -1,14 +1,13 @@
 @import "./src/config/colors";
 
-
 .playlist {
   width: inherit;
   height: inherit;
+  color: var(--text-color);
+
   &__info {
     .info {
-
       &__header {
-        background: rgb(0, 0, 0);
         background: linear-gradient(284deg, rgba(0, 0, 0, 0.7749474789915967) 0%, rgba(34, 96, 15, 0.5816701680672269) 100%);
         width: 100%;
         padding: 20px;
@@ -23,7 +22,6 @@
         justify-content: flex-start;
         padding: 10px 30px;
 
-
         .actions {
           &__play {
             margin-right: 20px;
@@ -35,7 +33,6 @@
             align-items: center;
             justify-content: center;
             font-size: 32px;
-            color: $black;
 
             &:hover {
               transform: scale(1.06);
@@ -55,8 +52,6 @@
               background: none;
               color: $white;
             }
-
-
           }
         }
       }
@@ -67,7 +62,6 @@
 
         .main {
           &__title {
-            color: $white;
             font-size: 40px;
             font-weight: 700;
             margin: 20px 0;
@@ -172,7 +166,6 @@
         font-size: 18px;
 
         &:hover {
-          //background: none;
           color: $white;
         }
       }

@@ -28,6 +28,7 @@ const EditPlaylistModal: React.FC<EditPlaylistModalProps> = ({
                                                              }) => {
     const initialValues: PlaylistType = useMemo(() => {
         return {
+            _id: playlist._id,
             name: playlist.name,
             user: playlist.user,
             cover: playlist.cover,

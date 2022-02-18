@@ -101,6 +101,7 @@ function App() {
                             <Route path="artists" element={<h1>All Artists</h1>}/>
                             <Route path="playlists" element={<AdminPlaylists/>}/>
                             <Route path="albums" element={<h1>All Albums</h1>}/>
+                            <Route path='playlist/:id' element={<PlaylistPage/>}/>
                         </Route>
                     </Routes>
                 </BrowserRouter>

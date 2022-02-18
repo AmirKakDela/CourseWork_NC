@@ -1,21 +1,25 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {PlaylistType} from "../../../config/types";
 import PlaylistApi from "../../../API/PlaylistAPI";
-import {Popconfirm, Skeleton} from "antd";
-import {Song} from "../../Song/Song";
+import {Button, Popconfirm, Skeleton} from "antd";
 import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
-import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import PlaylistCard from "../../PlaylistCard/PlaylistCard";
+import "./AdminPlaylists.scss"
 
 const AdminPlaylists: React.FC = () => {
+    //const dispatch = useDispatch()
     const [playlists, setPlaylists] = useState<PlaylistType[]>([])
     const [isLoading, setIsLoading] = useState(true);
 
-    const deletePlaylist = (id: string) => {
+
+    const deletePlaylist = useCallback((id: string) => {
         PlaylistApi.deletePlaylist(id)
             .then(() => {
                 setPlaylists(playlists.filter(playlist => playlist._id !== id));
             })
-    }
+        //dispatch(thunkUserPlaylists())
+    }, [playlists])
 
     useEffect(() => {
         PlaylistApi.getAllPlaylists().then(data => {
@@ -24,31 +28,24 @@ const AdminPlaylists: React.FC = () => {
         })
     }, [])
     return (
-        <>
+        <div className="admin_playlists">
             {isLoading ? <Skeleton active/> :
                 playlists && playlists.map((playlist, index) => {
-                    return <div className="admin-song__wrap">
-                        {playlist.name}
-                        {/*<Song key={song._id} song={song} order={index + 1}/>
-                        <Popconfirm
-                            title="Вы действительно хотите удалить данную песню?"
-                            onConfirm={() => deletePlaylist(playlist._id)}
-                            okText="Да"
-                            cancelText="Нет"
-                        >
-                        <span className="admin-song__action">
-                        <DeleteOutlined style={{fontSize: 25, color: 'white', cursor: "pointer"}}/>
-                        </span>
-                                    </Popconfirm>
-
-                                    <span className="admin-song__action">
-                        <Link to={`/admin/song/${playlist._id}`}>
-                        <EditOutlined style={{fontSize: 25, color: 'white', cursor: "pointer"}}/>
-                        </Link>
-                        </span>*/}
+                    return <div className="admin_playlist__wrap">
+                        <PlaylistCard playlist={playlist}/>
+                        <div className="admin_playlist__delete">
+                            <Popconfirm
+                                title="Вы действительно хотите удалить данный плейлист?"
+                                onConfirm={() => deletePlaylist(playlist._id)}
+                                okText="Да"
+                                cancelText="Нет"
+                            >
+                                <Button className="admin_playlist__button" icon={<DeleteOutlined/>}/>
+                            </Popconfirm>
+                        </div>
                     </div>
                 })}
-        </>
+        </div>
     )
 }
 

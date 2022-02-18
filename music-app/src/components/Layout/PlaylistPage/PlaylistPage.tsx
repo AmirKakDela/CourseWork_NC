@@ -1,28 +1,31 @@
 import React, {useCallback, useEffect, useState} from "react";
-import "./playlistPage.scss";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../../redux/Reducers/rootReducer";
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {Button, Menu, Popconfirm, Popover, Tooltip} from "antd";
 import {CaretRightFilled as PlayIcon, DeleteOutlined, PauseOutlined as PauseIcon} from "@ant-design/icons";
+import MoonLoader from "react-spinners/MoonLoader";
+
+import {PlaylistType, SongType} from "../../../config/types";
 import {useActions} from "../../../hooks/useActions";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import {PlayerReducerState} from "../../../redux/Reducers/playerReducer";
-import MoonLoader from "react-spinners/MoonLoader";
-
-import {Song} from "../../Song/Song";
-import EditPlaylistModal from "./EditPlaylistModal/EditPlaylistModal";
-import {PlaylistType, SongType} from "../../../config/types";
-import {NotAddedTrack} from "./NotAddedTrack/NotAddedTrack";
+import {RootState} from "../../../redux/Reducers/rootReducer";
+import {thunkUserPlaylists} from "../../../redux/Actions/thunkUserActions";
 import PlaylistAPI from "../../../API/PlaylistAPI";
 import SongsAPI from "../../../API/SongsAPI";
+import {Song} from "../../Song/Song";
+import EditPlaylistModal from "./EditPlaylistModal/EditPlaylistModal";
+import {NotAddedTrack} from "./NotAddedTrack/NotAddedTrack";
 import PlaylistLike from "./PlaylistLike/PlaylistLike";
-import {thunkUserPlaylists} from "../../../redux/Actions/thunkUserActions";
+import "./playlistPage.scss";
+import {formWordTrack} from "../../../utils/declension.utils";
+import {getTimesOfPlaylistTracks} from "../../../utils/time-format.utils";
 
 const PlaylistPage = () => {
     const urlParams = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation()
     const user = useSelector((state: RootState) => state.user.currentUser)
     const [playlist, setPlaylist] = useState<PlaylistType>({
         _id: "",
@@ -41,9 +44,9 @@ const PlaylistPage = () => {
 
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
-    const {playSong, pauseSong, setPlayingSong} = useActions();
+    const {playSong, pauseSong, setPlayingSong, setPlayingSongList} = useActions();
 
-    const {pause, playback} = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
+    const {pause} = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
     const isPlayed = !pause;
 
     const [isPlaylistByUser, setIsPlaylistByUser] = useState<boolean>(false)
@@ -76,13 +79,9 @@ const PlaylistPage = () => {
         }
     }, [user.playlists])
 
-    function play() {
-        setPlayingSong(songs[0]);
-        if (isPlayed) {
-            pauseSong();
-        } else {
-            playSong();
-        }
+    function onPlay(song: SongType) {
+        setPlayingSongList(songs);
+        setPlayingSong(song);
     }
 
     const openAddBlock = useCallback(() => {
@@ -105,7 +104,6 @@ const PlaylistPage = () => {
                 .then((data) => {
                         setPlaylist(data.updatedPlaylist)
                         setSongs(data.songs)
-
                     }
                 )
             allSongs.splice(index, 1)
@@ -177,12 +175,12 @@ const PlaylistPage = () => {
 
     const PlaylistActions = () => {
 
-        if (user.isAdmin) return (
+        if (location.pathname.includes("/admin")) return (
             <div className="info__actions">
                 {playlist.songs.length > 0
                     &&
                     <div className="actions__play"
-                         onClick={play}>
+                         onClick={() => onPlay(songs[0])}>
                         {isPlayed
                             ? <PauseIcon/>
                             : <PlayIcon/>
@@ -203,7 +201,7 @@ const PlaylistPage = () => {
                 {playlist.songs.length > 0
                     &&
                     <div className="actions__play"
-                         onClick={play}>
+                         onClick={() => onPlay(songs[0])}>
                         {isPlayed
                             ? <PauseIcon/>
                             : <PlayIcon/>
@@ -240,7 +238,9 @@ const PlaylistPage = () => {
                                 <h1 className="desc__name" onClick={showModal}>
                                     {playlist.name}
                                 </h1>
-                                <p className="desc__text">{playlist.songs.length} трека</p>
+                                <span className="desc__text">
+                            {playlist.user.name} &bull; {playlist.songs.length} {formWordTrack(playlist.songs.length)}, {getTimesOfPlaylistTracks(songs)}
+                        </span>
                             </div>
                         </div>
                         {isPlaylistByUser && <EditPlaylistModal
@@ -257,20 +257,22 @@ const PlaylistPage = () => {
                                 <div className="main__songs">
                                     {songs.map((s, index) => (
                                         <div className="songs__song">
-                                            <Song song={s} order={index + 1} key={s._id}/>
-                                            <Tooltip placement="topLeft" title={"Удалить из плейлиста"}>
-                                                <Popconfirm
-                                                    title="Вы действительно хотите удалить данную песню?"
-                                                    onConfirm={() => deleteSong(s, index)}
-                                                    okText="Да"
-                                                    cancelText="Нет"
-                                                >
+                                            <Song song={s} order={index + 1} key={s._id} onPlay={() => onPlay(s)}/>
+                                            {(isPlaylistByUser || user.isAdmin) &&
+                                                <Tooltip placement="topLeft" title={"Удалить из плейлиста"}>
+                                                    <Popconfirm
+                                                        title="Вы действительно хотите удалить данную песню?"
+                                                        onConfirm={() => deleteSong(s, index)}
+                                                        okText="Да"
+                                                        cancelText="Нет"
+                                                    >
                                                 <span className="admin-song__action">
                                                     <DeleteOutlined className="song__delete"/>
                                                 </span>
-                                                </Popconfirm>
-                                                {/*<Button className="song__delete" onClick={() => deleteSong(s, index)}>&times;</Button>*/}
-                                            </Tooltip>
+                                                    </Popconfirm>
+                                                    {/*<Button className="song__delete" onClick={() => deleteSong(s, index)}>&times;</Button>*/}
+                                                </Tooltip>
+                                            }
                                         </div>
                                     ))}
                                 </div>
@@ -278,7 +280,9 @@ const PlaylistPage = () => {
                                 <h3>Треков пока нет</h3>}
                         </div>
                     </div>
-                    {!user.isAdmin
+                    {!location.pathname.includes("/admin")
+                        &&
+                        isPlaylistByUser
                         &&
                         <div className="playlist__addblock">
                             {!isAddBlockVisible ? (
@@ -294,7 +298,7 @@ const PlaylistPage = () => {
                                     <div className="addblock__list">
                                         {allSongs.map((song, index) => (
                                             <NotAddedTrack song={song} key={song._id}
-                                                           onAdd={() => addHandler(song, index)}/>))
+                                                           onAdd={() => addHandler(song, index)} onPlay={() => onPlay(song)}/>))
                                         }
                                     </div>
                                 </div>)}

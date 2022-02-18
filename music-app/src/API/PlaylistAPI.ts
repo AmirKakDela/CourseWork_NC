@@ -3,7 +3,7 @@ import {AuthorizationHeaderConfig, url} from "../config/config";
 import {PlaylistType} from "../config/types";
 
 class PlaylistAPI {
-    async createPlaylist(newPlaylist: PlaylistType) {
+    async createPlaylist(newPlaylist: any) {
         return await axios.post(`${url}/api/playlist/create`, newPlaylist, AuthorizationHeaderConfig)
             .then(res => {
                 return res.data

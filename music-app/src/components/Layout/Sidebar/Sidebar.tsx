@@ -1,22 +1,19 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {Menu, MenuTheme} from "antd";
-import "./Sidebar.scss";
-import SpotifyLogo from "../../../assets/icons/Spotify-Logo.wine.svg";
-import {Link, useLocation, useNavigate} from "react-router-dom";
-import {AppTheme, PlaylistType, SidebarItemType} from "../../../config/types";
-import {SharedActionsType} from "../../../redux/Actions/sharedActions";
 import {useDispatch, useSelector} from "react-redux";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Menu, MenuTheme} from "antd";
+
+import { PlaylistType, SidebarItemType} from "../../../config/types";
 import {RootState} from "../../../redux/Reducers/rootReducer";
-import {items} from "./items";
-import {MenuInfo} from "rc-menu/lib/interface";
-import {HeartOutlined, PlusSquareFilled} from "@ant-design/icons";
-import PlaylistAPI from "../../../API/PlaylistAPI";
 import {thunkUserPlaylists} from "../../../redux/Actions/thunkUserActions";
+import {MenuInfo} from "rc-menu/lib/interface";
+import PlaylistAPI from "../../../API/PlaylistAPI";
+import SpotifyLogo from "../../../assets/icons/Spotify-Logo.wine.svg";
+import "./Sidebar.scss";
 
 type PropsType = {
     items: SidebarItemType[],
     currentTheme?: MenuTheme,
-    // changeTheme?: (e: boolean) => void
 }
 
 const Sidebar: React.FC<PropsType> = (props) => {
@@ -26,16 +23,12 @@ const Sidebar: React.FC<PropsType> = (props) => {
     const handleClick = useCallback((e: MenuInfo) => current = e.key, []);
     const dispatch = useDispatch();
     const currentTheme = useSelector((state: RootState) => state.shared.appTheme);
-    //const [current, setCurrent] = useState("0");
 
     const user = useSelector((state: RootState) => state.user.currentUser)
     const [playlists, setPlaylists] = useState<PlaylistType[]>([])
-    //const [isLoading, setIsLoading] = useState<boolean>(true);
-
-    //const handleClick = useCallback((e: MenuInfo) => setCurrent(e.key), []);
 
     const menuItemHandler = (itemPath: string) => {
-        itemPath === "create-playlist" ? createPlaylist() : navigate(itemPath)
+        itemPath === "/create-playlist" ? createPlaylist() : navigate(itemPath)
     }
 
     const createPlaylist = useCallback(() => {
@@ -45,7 +38,7 @@ const Sidebar: React.FC<PropsType> = (props) => {
         while (playlistsByCurrentUser.find( p => p.name === `Мой плейлист №${newPlaylistNumber}`)) newPlaylistNumber++
 
         console.log(playlistsByCurrentUser)
-        const newPlaylist: PlaylistType = {
+        const newPlaylist = {
             name: `Мой плейлист №${newPlaylistNumber}`,
             user: {
                 id: user.userId,
@@ -54,7 +47,6 @@ const Sidebar: React.FC<PropsType> = (props) => {
             songs: []
         }
 
-        //setCurrentPlaylist(newPlaylist)
         PlaylistAPI.createPlaylist(newPlaylist)
             .then(data => {
                 console.log(data)
@@ -70,18 +62,7 @@ const Sidebar: React.FC<PropsType> = (props) => {
         console.log(user.likedPlaylists)
         setPlaylists([...user.playlists, ...user.likedPlaylists])
         console.log(user.playlists)
-        /*PlaylistAPI.getUserPlaylists(user.userId).then(data => {
-            setPlaylists(data.playlists)
-            setIsLoading(false);
-        })*/
     }, [dispatch, user.playlists, user.likedPlaylists]);
-
-    //useEffect(())
-
-    // useEffect(() => {
-    //     setPlaylists([...user.playlists, ...user.likedPlaylists])
-    //
-    // })
 
     return (
         <div className="sidebar">

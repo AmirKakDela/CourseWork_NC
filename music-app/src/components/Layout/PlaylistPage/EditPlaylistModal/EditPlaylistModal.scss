@@ -1,21 +1,23 @@
 @import "./src/config/colors";
 
 .edit_playlist {
-  &__modal {
-    &__save {
+  &__save {
 
-      border-radius: 500px;
+    border-radius: 500px;
 
-      &:hover {
-        color: $black32;
-        border: none;
-        transform: scale(1.06);
-      }
-
-      span {
-        color: $black32 !important;
-      }
+    &:hover {
+      color: $black32 !important;
+      border: none;
+      transform: scale(1.06);
     }
+
+    span {
+      color: $black32 !important;
+    }
+  }
+
+  &__modal {
+
 
     .ant {
       &-modal {
