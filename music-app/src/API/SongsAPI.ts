@@ -31,6 +31,12 @@ class SongAPI {
             return res
         })
     }
+
+    async getFullLikedSongsOfUser() {
+        return await axios.get(`${url}/api/song/user/liked-songs`, AuthorizationHeaderConfig).then(res => {
+            return res.data
+        })
+    }
 }
 
 export default new SongAPI();

@@ -4,11 +4,10 @@ import {RootState} from "../../redux/Reducers/rootReducer";
 import {HeartFilled, HeartOutlined} from "@ant-design/icons";
 import {thunkToggleLikeSong} from "../../redux/Actions/thunkUserActions";
 import {SongType} from "../../config/types";
-import {ClipLoader} from "react-spinners";
-import { Spin } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import {Spin} from 'antd';
+import {LoadingOutlined} from '@ant-design/icons';
 
-const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+const antIcon = <LoadingOutlined style={{fontSize: 24}} spin/>;
 
 type PropsType = {
     song: SongType;
@@ -22,15 +21,18 @@ const Like: React.FC<PropsType> = (props) => {
     const toggleLike = () => {
         dispatch(thunkToggleLikeSong(props.song));
     };
-    const likeStatus = user.likedSongs.find(song => song._id === props.song._id);
+
+
+    const likeStatus = user.likedSongs.length && user.likedSongs.includes(props.song._id)
 
     return (
         <div>
-            {likeLoading.status && likeLoading.songId === props.song._id
-                ? <Spin indicator={antIcon} className='clip-loader'/>
-                : user && likeStatus
-                    ? <HeartFilled className='heart-filled' onClick={toggleLike}/>
-                    : <HeartOutlined onClick={toggleLike} className='heart-outlined'/>
+            {
+                likeLoading.status && likeLoading.songId === props.song._id
+                    ? <Spin indicator={antIcon} className='clip-loader'/>
+                    : user && likeStatus
+                        ? <HeartFilled className='heart-filled' onClick={toggleLike}/>
+                        : <HeartOutlined onClick={toggleLike} className='heart-outlined'/>
             }
         </div>
     );
