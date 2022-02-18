@@ -8,7 +8,7 @@ type StateType = {
 
 const initialState: StateType = {
     isLoading: false,
-    searchResult: {songs: [], artists: []}
+    searchResult: {songs: [], artists: [], playlists: []}
 }
 
 const searchReducer = (state = initialState, action: SearchActionType): StateType => {

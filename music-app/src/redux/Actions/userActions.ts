@@ -1,4 +1,4 @@
-import {CurrentUserType, LikeLoadingType, SongType} from "../../config/types";
+import {CurrentUserType, LikeLoadingType, PlaylistType, SongType, LikePlaylistLoadingType} from "../../config/types";
 
 export enum UserActionTypeTypes {
     SET_CURRENT_USER = 'SET_CURRENT_USER',
@@ -8,6 +8,10 @@ export enum UserActionTypeTypes {
     TOGGLE_LIKE_SONG = 'TOGGLE_LIKE_SONG',
     USER_LOADING = 'USER_LOADING',
     LIKE_LOADING = 'LIKE_LOADING',
+    SET_USER_PLAYLISTS = 'SET_USER_PLAYLISTS',
+    SET_USER_LIKED_PLAYLISTS = 'SET_USER_LIKED_PLAYLISTS',
+    TOGGLE_LIKE_PLAYLIST = 'TOGGLE_LIKE_PLAYLIST',
+    LIKE_PLAYLIST_LOADING = 'LIKE_PLAYLIST_LOADING'
 }
 
 export type UserActionTypes = SetCurrentUserType
@@ -17,6 +21,10 @@ export type UserActionTypes = SetCurrentUserType
     | UserLoadingType
     | ToggleLikeSongType
     | LikeLoadingTypeAction
+    | SetUserPlaylistsType
+    | LikePlaylistLoadingTypeAction
+    | SetUserLikedPlaylistsType
+    | ToggleLikePlaylistType
 
 
 type LogoutCurrentUserType = {
@@ -101,3 +109,50 @@ export const likeLoading = (likeSong: LikeLoadingType): LikeLoadingTypeAction =>
     }
 }
 
+export type SetUserPlaylistsType = {
+    type: UserActionTypeTypes.SET_USER_PLAYLISTS,
+    payload: Array<PlaylistType>
+}
+
+export const setUserPlaylists = (userPlaylists: Array<PlaylistType>): SetUserPlaylistsType => {
+    return {
+        type: UserActionTypeTypes.SET_USER_PLAYLISTS,
+        payload: userPlaylists
+    }
+}
+
+export type SetUserLikedPlaylistsType = {
+    type: UserActionTypeTypes.SET_USER_LIKED_PLAYLISTS,
+    payload: Array<PlaylistType>
+}
+
+export const setUserLikedPlaylists = (likedPlaylists: Array<PlaylistType>): SetUserLikedPlaylistsType => {
+    return {
+        type: UserActionTypeTypes.SET_USER_LIKED_PLAYLISTS,
+        payload: likedPlaylists
+    }
+}
+
+export type ToggleLikePlaylistType = {
+    type: UserActionTypeTypes.TOGGLE_LIKE_PLAYLIST,
+    payload: PlaylistType
+}
+
+export const toggleLikePlaylist = (playlist: PlaylistType): ToggleLikePlaylistType => {
+    return {
+        type: UserActionTypeTypes.TOGGLE_LIKE_PLAYLIST,
+        payload: playlist
+    }
+}
+
+export type LikePlaylistLoadingTypeAction = {
+    type: UserActionTypeTypes.LIKE_PLAYLIST_LOADING,
+    payload: LikePlaylistLoadingType
+}
+
+export const likePlaylistLoading = (likePlaylist: LikePlaylistLoadingType): LikePlaylistLoadingTypeAction => {
+    return {
+        type: UserActionTypeTypes.LIKE_PLAYLIST_LOADING,
+        payload: likePlaylist
+    }
+}

@@ -3,7 +3,8 @@
 .header {
   padding: 16px 32px;
   width: 100%;
-  height: 100px;
+  height: 80px;
+  max-height: 100px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -16,6 +17,7 @@
   }
 
   &__navigation {
+    margin-right: auto;
     width: max-content;
 
     .navigation__button {
@@ -25,6 +27,10 @@
       border-radius: 50%;
       font-size: 20px;
     }
+  }
+
+  &__switch {
+    margin-right: 10px;
   }
 
   //&__search {
@@ -97,7 +103,10 @@
   width: 100%;
   margin: 0;
   padding: 0;
+  background-color: #282828;
   border-radius: 4px;
+  color: var(--text-color);
+
 
   &__menu {
     width: 100%;
@@ -112,9 +121,14 @@
   &__item {
     margin: 0;
     padding: 0;
+    color: var(--text-color);
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    &-switch {
+      margin-left: 5px;
     }
   }
 }

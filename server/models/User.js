@@ -6,6 +6,7 @@ const User = new Schema({
     password: {type: String, required: true},
     likedSongs: {type: [String], default: []},
     playlists: {type: [String], default: []},
+    likedPlaylists: {type: [String], default: []},
     admin: {type: Boolean, default: false}
 })
 

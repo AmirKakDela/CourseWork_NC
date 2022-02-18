@@ -16,6 +16,7 @@ import GenreAPI from "../../../API/GenreAPI";
 import {GenreType, SongType} from "../../../config/types";
 import {ScrollComponent} from "../../ScrollComponent/ScrollComponent";
 import {useActions} from "../../../hooks/useActions";
+import PlaylistCard from "../../PlaylistCard/PlaylistCard";
 
 const SearchPage = () => {
     const dispatch = useDispatch();
@@ -105,6 +106,11 @@ const SearchPage = () => {
                         })}
                     </div> : null}
                     <h2 className="search__title">Плейлисты</h2>
+                    {searchResult.playlists.length ? <div className="search__genres-row">
+                        {searchResult.playlists.map(playlist => {
+                            return (<PlaylistCard key={playlist._id} playlist={playlist}/>)
+                        })}
+                    </div> : <p>Плейлистов нет</p>}
                     <div className="search__other">
                     </div>
                 </div>

@@ -14,7 +14,7 @@ export const getSearchResult = (queryValue: string) => {
                 }
             });
             if (!Object.keys(response.data).length) {
-                return dispatch(setSearchResult({songs: [], artists: []}));
+                return dispatch(setSearchResult({songs: [], artists: [], playlists: []}));
             }
             dispatch(setSearchResult(response.data));
         } catch (e) {

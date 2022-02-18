@@ -19,11 +19,14 @@ import AdminLayout from "./components/AdminPage/AdminLayout/AdminLayout";
 import AdminRoute from "./components/HOC/AdminRoute";
 import MyLibraryPage from "./components/Layout/MyLibraryPage/MyLibraryPage";
 import LibrarySong from "./components/Layout/MyLibraryPage/LibrarySong";
+import PlaylistPage from './components/Layout/PlaylistPage/PlaylistPage';
 import GenrePage from "./components/Layout/GenrePage/GenrePage";
 import {AlbumPage} from "./components/Layout/AlbumPage/AlbumPage";
 import ErrorAlert from "./components/Alert/ErrorAlert/ErrorAlert";
 import AdminSongs from "./components/AdminPage/AdminSongs/AdminSongs";
 import AdminSongForm from "./components/AdminPage/AdminSongForm/AdminSongForm";
+import LibraryPlaylists from "./components/Layout/MyLibraryPage/LibraryPlaylists";
+import AdminPlaylists from "./components/AdminPage/AdminPlaylists/AdminPlaylists";
 import {darkTheme, lightTheme, ThemeContext} from "./components/Layout/theme-context/constants";
 import {SharedActionsType} from "./redux/Actions/sharedActions";
 import AdminAlbums from "./components/AdminPage/AdminAlbums/AdminAlbums";
@@ -78,12 +81,13 @@ function App() {
                                 <Route index element={<Navigate to='songs'/>}/>
                                 <Route path='songs' element={<LibrarySong/>}/>
                                 <Route path='albums' element={<h1>playlists</h1>}/>
-                                <Route path='playlists' element={<h1>albums</h1>}/>
+                                <Route path='playlists' element={<LibraryPlaylists/>}/>
                             </Route>
-                            <Route path='create-playlist' element={<h1>Create playlist</h1>}/>
+                            <Route path='create-playlist' element={<PlaylistPage/>}/>
                             <Route path='my-playlists' element={<h1>My playlists</h1>}/>
                             <Route path='search' element={<SearchPage/>}/>
                             <Route path='artist/:id' element={<ArtistPage/>}/>
+                            <Route path='playlist/:id' element={<PlaylistPage/>}/>
                             <Route path='album/:id' element={<AlbumPage/>}/>
                             <Route path='genre/:id' element={<GenrePage/>}/>
                             <Route path='*' element={<NotFound/>}/>
@@ -97,7 +101,8 @@ function App() {
                             <Route path="song/:id" element={<AdminSongForm/>}/>
                             <Route path="song/create" element={<AdminSongForm/>}/>
                             <Route path="artists" element={<h1>All Artists</h1>}/>
-                            <Route path="playlists" element={<h1>All Playlists</h1>}/>
+                            <Route path="playlists" element={<AdminPlaylists/>}/>
+                            <Route path='playlist/:id' element={<PlaylistPage/>}/>
                             <Route path="albums" element={<AdminAlbums/>}/>
                             <Route path="album/:id" element={<AdminAlbumForm/>}/>
                             <Route path="album/create" element={<AdminAlbumForm/>}/>

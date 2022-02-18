@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../redux/Reducers/rootReducer";
 import {logoutCurrentUser} from "../../../redux/Actions/userActions";
@@ -23,6 +23,7 @@ const Header = (props: any) => {
     const logout = () => {
         dispatch(logoutCurrentUser());
     };
+
 
     const nav = (
         <nav className="header__navigation">

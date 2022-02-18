@@ -5,7 +5,11 @@ export type CurrentUserType = {
     userName: string,
     isAdmin: boolean,
     likedSongs: Array<string>,
-    likeLoading: LikeLoadingType
+    likeLoading: LikeLoadingType,
+    playlists: Array<PlaylistType>,
+    likedPlaylists: Array<PlaylistType>,
+    likePlaylistLoading: LikePlaylistLoadingType
+
 }
 
 export type ErrorType = {
@@ -48,9 +52,9 @@ export type ArtistType = {
 }
 
 export type SearchResultType = {
-    songs: Array<SongType>,
-    artists: Array<ArtistType>,
-    // playlists>: todo: потом добавить плейлисты
+    songs: Array<SongType> | [],
+    artists: Array<ArtistType> | [],
+    playlists: Array<PlaylistType> | []
 }
 
 export enum AppTheme {
@@ -68,4 +72,20 @@ export type SidebarItemType = {
 export type LikeLoadingType = {
     songId: string,
     status: boolean
+}
+
+export type LikePlaylistLoadingType = {
+    playlistId: string | undefined,
+    status: boolean
+}
+
+export type PlaylistType = {
+    _id: string,
+    name: string,
+    user: {
+        id: string,
+        name: string
+    },
+    songs: Array<String>,
+    cover?: string
 }
