@@ -1,12 +1,15 @@
 import axios from "axios";
 import {
     libraryLoading,
-    likeLoading, likePlaylistLoading,
+    likeLoading,
+    likePlaylistLoading,
     setAuthError,
-    setCurrentUser, setUserLikedPlaylists,
-    setUserLikedSongs, setUserPlaylists, toggleLikePlaylist,
+    setCurrentUser,
+    setUserLikedPlaylists,
+    setUserPlaylists,
+    toggleLikePlaylist,
     toggleLikeSong,
-    UserActionTypes, UserActionTypeTypes,
+    UserActionTypes,
     userLoading
 } from "./userActions";
 import {Dispatch} from "redux";
@@ -31,12 +34,12 @@ export const login = (email: string, password: string) => {
     return async (dispatch: Dispatch<UserActionTypes>) => {
         try {
             const response = await axios.post(`${url}/api/auth/login`, {email, password})
-            const {userId, userName, isAdmin, playlists, likedPlaylists} = response.data
+            const {userId, userName, isAdmin, playlists, likedPlaylists, likedSongs} = response.data
             dispatch(setCurrentUser({
                 userId,
                 userName,
                 isAdmin,
-                likedSongs: [],
+                likedSongs,
                 likeLoading: {status: false, songId: ''},
                 playlists,
                 likedPlaylists,
@@ -58,12 +61,12 @@ export const auth = () => {
             console.log(localStorage.getItem('token'))
             if (localStorage.getItem('token') === null) return dispatch(userLoading(false))
             const response = await axios.get(`${url}/api/auth/auth`, AuthorizationHeaderConfig)
-            const {userId, userName, isAdmin, playlists, likedPlaylists} = response.data
+            const {userId, userName, isAdmin, playlists, likedPlaylists, likedSongs} = response.data
             dispatch(setCurrentUser({
                 userId,
                 userName,
                 isAdmin,
-                likedSongs: [],
+                likedSongs,
                 likeLoading: {status: false, songId: ''},
                 playlists,
                 likedPlaylists,
@@ -79,19 +82,19 @@ export const auth = () => {
     }
 }
 
-export const thunkUserLikedSongs = () => {
-    return async (dispatch: Dispatch<UserActionTypes>) => {
-        dispatch(libraryLoading(true))
-        try {
-            const response = await axios.get(`${url}/api/song/user/liked-songs`, AuthorizationHeaderConfig)
-            dispatch(setUserLikedSongs(response.data))
-        } catch (e) {
-            dispatch(libraryLoading(false))
-            const u = e as ErrorType
-            dispatch(setAuthError(u.response.data.message))
-        }
-    }
-}
+// export const thunkUserLikedSongs = () => {
+//     return async (dispatch: Dispatch<UserActionTypes>) => {
+//         dispatch(libraryLoading(true))
+//         try {
+//             const response = await axios.get(`${url}/api/song/user/liked-songs`, AuthorizationHeaderConfig)
+//             dispatch(setUserLikedSongs(response.data))
+//         } catch (e) {
+//             dispatch(libraryLoading(false))
+//             const u = e as ErrorType
+//             dispatch(setAuthError(u.response.data.message))
+//         }
+//     }
+// }
 
 export const thunkToggleLikeSong = (song: SongType) => {
     return async (dispatch: Dispatch<UserActionTypes>) => {

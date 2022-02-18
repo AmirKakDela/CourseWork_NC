@@ -1,14 +1,15 @@
-import React from "react";
+import * as React from "react";
 
 export type CurrentUserType = {
     userId: string,
     userName: string,
     isAdmin: boolean,
-    likedSongs: Array<SongType>,
+    likedSongs: Array<string>,
     likeLoading: LikeLoadingType,
     playlists: Array<PlaylistType>,
     likedPlaylists: Array<PlaylistType>,
     likePlaylistLoading: LikePlaylistLoadingType
+
 }
 
 export type ErrorType = {

@@ -61,7 +61,7 @@ class authController {
                 likedPlaylists.push(...data.filter(p => user.likedPlaylists.indexOf(p._id) > -1))
             })
 
-            return res.json({token, userId: user._id, userName: user.name, isAdmin: user.admin, playlists, likedPlaylists});
+            return res.json({token, userId: user._id, userName: user.name, isAdmin: user.admin, playlists, likedPlaylists, likedSongs: user.likedSongs});
         } catch (e) {
             console.log(e);
             res.send({message: 'Ошибка сервера при авторизации'});

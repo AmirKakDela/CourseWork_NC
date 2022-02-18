@@ -40,13 +40,23 @@ const AdminSongForm: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const params = useParams();
     const dispatch = useDispatch();
-
+    const [isSubmit, setIsSubmit] = useState(false);
 
     const onSubmit = (data: SongTypeWithoutId) => {
+        setIsSubmit(true)
         console.log('onSubmit', data);
         data.artist = artists.find(artist => artist._id === data.artistId)?.name || ''
-        SongsAPI.createSong(data).then(res => {
+        const formData = new FormData();
+        for (let key in data) {
+            // @ts-ignore
+            formData.append(key, data[key])
+        }
+        // formData.append()
+        SongsAPI.createSong(formData).then(res => {
             res.data.message && dispatch(setError(res.data.message));
+            console.log(res)
+        }).finally(() => {
+            setIsSubmit(false)
         })
     }
 
@@ -157,9 +167,9 @@ const AdminSongForm: React.FC = () => {
                                 </select>
                                 {errors.genre && touched.genre && <p className="form__error_text">{errors.genre}</p>}
 
-                                <button type="submit"
+                                <button type="submit" disabled={isSubmit}
                                         className="form__button"
-                                >Создать
+                                >{isSubmit ? 'Загрузка' : 'Создать'}
                                 </button>
                             </form>
                         }}

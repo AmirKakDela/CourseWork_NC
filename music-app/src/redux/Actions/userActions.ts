@@ -24,9 +24,9 @@ export type UserActionTypes = SetCurrentUserType
     | LikeLoadingTypeAction
     | LibraryLoadingType
     | SetUserPlaylistsType
-| LikePlaylistLoadingTypeAction
-| SetUserLikedPlaylistsType
-| ToggleLikePlaylistType
+    | LikePlaylistLoadingTypeAction
+    | SetUserLikedPlaylistsType
+    | ToggleLikePlaylistType
 
 
 type LogoutCurrentUserType = {
