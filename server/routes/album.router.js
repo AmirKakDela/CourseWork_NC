@@ -6,6 +6,7 @@ const { check } = require("express-validator");
 const adminMiddleware = require("../middlewares/admin.middleware");
 
 router.get("/allAlbums", controller.getAllAlbums);
+router.get("/albumsWithSongs", controller.getAllAlbumsWithSongs);
 router.get("/artist/:artistId", controller.getAllArtistAlbum);
 router.get("/:albumId", controller.getAlbum);
 router.post("/create", adminMiddleware,

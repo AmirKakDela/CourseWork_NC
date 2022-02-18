@@ -6,9 +6,9 @@ export function formattedTime(time: number) {
         .replace(/^00:/, "");
 }
 
-export function getTimesOfTracks (album: AlbumType) {
+export function getTimesOfTracks (songs: SongType[]) {
     let time: number;
-    let allSec = album.songs.map(song => time += song.duration, time = 0).reverse()[0];
+    let allSec = songs.map(song => time += song.duration, time = 0).reverse()[0];
     let hour = Math.floor(allSec / 3600);
     let min = Math.floor(allSec % 3600 / 60);
     let sec = Math.floor(allSec % 3600 % 60);

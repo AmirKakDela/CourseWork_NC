@@ -1,29 +1,39 @@
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../redux/Reducers/rootReducer";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {getAlbumByIdRequest} from "../../../redux/Actions/thunkAlbumActions";
 import {Song} from "../../Song/Song";
 import "./AlbumPage.scss";
 import {formWordTrack} from "../../../utils/declension.utils";
 import {getTimesOfTracks} from "../../../utils/time-format.utils";
-import {SongType} from "../../../config/types";
+import {AlbumType, SongType} from "../../../config/types";
 import {useActions} from "../../../hooks/useActions";
+import ArtistAPI from "../../../API/ArtistAPI";
+import AlbumAPI from "../../../API/AlbumAPI";
 
 export function AlbumPage() {
     const urlParams = useParams();
     const dispatch = useDispatch();
-    const album = useSelector((state: RootState) => state.album.albums.find(it => urlParams.id === it._id));
+    // const album = useSelector((state: RootState) => state.album.albums.find(it => urlParams.id === it._id));
     const { setPlayingSong, setPlayingSongList } = useActions();
-    const numOfSongsInAlbum = album!.songs.length;
+    // const [songs, setSongs] = useState<SongType[]>([]);
+    const [album, setAlbum] = useState<AlbumType<SongType>>({artist: '', _id: '', name: '',  songs: [], cover: ''});
+
     useEffect(() => {
         if (urlParams.id) {
-            dispatch(getAlbumByIdRequest(urlParams.id));
+            AlbumAPI.getAlbumById(urlParams.id).then(data => {
+                setAlbum(data);
+            });
+            // dispatch(getAlbumByIdRequest(urlParams.id));
         }
-    }, [urlParams.id, dispatch]);
+    }, [urlParams.id]);
+
+    const numOfSongsInAlbum = album.songs.length;
+
 
     function onPlay(song: SongType) {
-        setPlayingSongList(album!.songs);
+        setPlayingSongList(album.songs);
         setPlayingSong(song);
     }
 
@@ -40,7 +50,7 @@ export function AlbumPage() {
                         <h2 className="desc__category">Альбом</h2>
                         <h1 className="desc__name desc__name_album">{album.name}</h1>
                         <span className="desc__text">
-                            {album.artist} &bull; {numOfSongsInAlbum} {formWordTrack(numOfSongsInAlbum)}, {getTimesOfTracks(album)}
+                            {album.artist} &bull; {numOfSongsInAlbum} {formWordTrack(numOfSongsInAlbum)}, {getTimesOfTracks(album.songs)}
                         </span>
                     </div>
                 </div>

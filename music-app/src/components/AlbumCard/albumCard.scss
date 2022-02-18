@@ -43,6 +43,7 @@
   &__name {
     position: relative;
     margin-top: 17px;
+    color: $white;
     font-weight: 700;
     font-size: 16px;
     white-space: nowrap;
@@ -54,6 +55,7 @@
 
   &__artist {
     position: relative;
+    color: $darkwhite;
     font-weight: 500;
     font-size: 14px;
     white-space: nowrap;
@@ -63,6 +65,7 @@
     right: 0;
   }
   &:hover {
+    background-color: $black40;
     .album__btn{
       display: block;
     }

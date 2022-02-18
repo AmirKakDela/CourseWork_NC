@@ -1,12 +1,9 @@
 const { validationResult } = require("express-validator");
 const Album = require("../models/Album");
-const Artist = require("../models/Artist");
-const Song = require("../models/Song");
 
 class AlbumController {
     async getAlbum(req, res) {
         try {
-            //const artistId = req.params["artistId"];
             const albumId = req.params["albumId"];
             const album = await Album.findById(albumId).populate( "songs");
             res.json(album);
@@ -39,6 +36,17 @@ class AlbumController {
         }
     }
 
+    async getAllAlbumsWithSongs(req, res) {
+        try {
+            const albums = await Album.find().populate( "songs");
+            //const songs = albums.map(album => album.songs);
+            res.json(albums);
+        } catch (e) {
+            res.status(500)
+                .json({ message: `${e.message}.Ошибка сервера при получении всех альбомов` });
+        }
+    }
+
     async createArtistAlbum(req, res) {
         try {
             const errors = validationResult(req);
@@ -58,12 +66,10 @@ class AlbumController {
                         candidateAlbum
                     });
             }
-
-            // const albumsSongs = await Album.findOne().populate({
-            //     path: "songs",
-            //     match: {_id: songs}
-            // });
-                const newAlbum = new Album(req.body);
+                const newAlbum = new Album({
+                    ...req.body,
+                    cover: "/" + req.files.cover[0].path
+                });
                 await newAlbum.save();
                 return res.status(200)
                     .json({

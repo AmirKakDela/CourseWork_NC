@@ -31,11 +31,11 @@ export type SongType = {
     genre: string
 }
 
-export type AlbumType = {
+export type AlbumType<SongT = string | SongType> = {
     _id: string,
     name: string,
     artist: string,
-    songs: Array<SongType>,
+    songs: Array<SongT>,
     cover: string
 }
 

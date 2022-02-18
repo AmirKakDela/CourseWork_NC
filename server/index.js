@@ -9,7 +9,6 @@ const searchRouter = require('./routes/search.router');
 const albumRouter = require('./routes/album.router');
 const genreRouter = require('./routes/genre.router');
 const playlistRouter = require('./routes/playlist.router');
-const fileRouter = require('./routes/file.router');
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -25,7 +24,7 @@ app.use('/api/search', searchRouter);
 app.use('/api/album', albumRouter);
 app.use('/api/genre', genreRouter);
 app.use('/api/playlist', playlistRouter);
-app.use('/api/files', fileRouter);
+// app.use('/api/files', audioRouter);
 
 const start = async () => {
     try {
