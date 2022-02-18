@@ -17,24 +17,23 @@ export function AlbumPage() {
     const dispatch = useDispatch();
     // const album = useSelector((state: RootState) => state.album.albums.find(it => urlParams.id === it._id));
     const { setPlayingSong, setPlayingSongList } = useActions();
-    const [songs, setSongs] = useState<SongType[]>([]);
-    const [album, setAlbum] = useState<AlbumType>({artist: '', _id: '', name: '',  songs: [], cover: ''});
+    // const [songs, setSongs] = useState<SongType[]>([]);
+    const [album, setAlbum] = useState<AlbumType<SongType>>({artist: '', _id: '', name: '',  songs: [], cover: ''});
 
     useEffect(() => {
         if (urlParams.id) {
             AlbumAPI.getAlbumById(urlParams.id).then(data => {
-                setAlbum(data.album);
-                setSongs(data.songs);
+                setAlbum(data);
             });
             // dispatch(getAlbumByIdRequest(urlParams.id));
         }
     }, [urlParams.id]);
 
-    const numOfSongsInAlbum = songs.length;
+    const numOfSongsInAlbum = album.songs.length;
 
 
     function onPlay(song: SongType) {
-        setPlayingSongList(songs);
+        setPlayingSongList(album.songs);
         setPlayingSong(song);
     }
 
@@ -51,14 +50,14 @@ export function AlbumPage() {
                         <h2 className="desc__category">Альбом</h2>
                         <h1 className="desc__name desc__name_album">{album.name}</h1>
                         <span className="desc__text">
-                            {album.artist} &bull; {numOfSongsInAlbum} {formWordTrack(numOfSongsInAlbum)}, {getTimesOfTracks(songs)}
+                            {album.artist} &bull; {numOfSongsInAlbum} {formWordTrack(numOfSongsInAlbum)}, {getTimesOfTracks(album.songs)}
                         </span>
                     </div>
                 </div>
                 <div className="info__main">
                     <h2 className="main__title">Песни</h2>
                     <div className="main__songs">
-                        {songs.map((song, index) => {
+                        {album.songs.map((song, index) => {
                             return <Song song={song} order={index + 1} key={song._id} onPlay={() => onPlay(song)}/>;
                         })
                         }

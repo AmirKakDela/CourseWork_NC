@@ -17,6 +17,14 @@ class ArtistAPI {
             console.log(err)
         })
     }
+
+    async getAllArtistsSongs(artistId: string) {
+        return await axios.get(`${url}/api/artist/all-songs/${artistId}`, AuthorizationHeaderConfig).then(response => {
+            return response.data
+        }).catch(err => {
+            console.log(err)
+        })
+    }
 }
 
 export default new ArtistAPI();

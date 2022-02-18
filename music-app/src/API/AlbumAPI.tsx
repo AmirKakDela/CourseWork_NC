@@ -4,8 +4,8 @@ import {AlbumTypeWithoutId} from "../components/AdminPage/AdminAlbumForm/AdminAl
 
 class AlbumAPI {
 
-    async createAlbum(song: AlbumTypeWithoutId) {
-        return await axios.post(`${url}/api/album/create`, song, AuthorizationHeaderConfig).then(res => {
+    async createAlbum(album: AlbumTypeWithoutId) {
+        return await axios.post(`${url}/api/album/create`, album, AuthorizationHeaderConfig).then(res => {
             return res;
         }).catch(res => {
             console.log(res)

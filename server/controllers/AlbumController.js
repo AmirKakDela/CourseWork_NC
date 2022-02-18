@@ -6,11 +6,9 @@ const Song = require("../models/Song");
 class AlbumController {
     async getAlbum(req, res) {
         try {
-            //const artistId = req.params["artistId"];
             const albumId = req.params["albumId"];
             const album = await Album.findById(albumId).populate( "songs");
-            const songs = album.songs;
-            return res.json({ album, songs });
+            res.json(album);
         } catch (e) {
             res.status(500).json({ message: `${e.message}.Ошибка сервера при получении альбома` });
         }

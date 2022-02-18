@@ -18,19 +18,17 @@ type PropsType = {
 }
 
 export const Song = (props: PropsType) => {
-    const {song, order, onPlay} = props;
-    const {pause, track} = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
+    const { song, order, onPlay } = props;
+    const { pause, track } = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
     const [songCover, setSongCover] = useState(song.cover);
-    const {playSong, pauseSong} = useActions();
+    const { playSong, pauseSong } = useActions();
     let isSelectedSong = false;
     if (song._id) {
         isSelectedSong = track?._id === song._id;
     }
     const isPlayed = !pause && isSelectedSong;
 
-    console.log(song.cover)
-
-    function play() {
+    function onSwitchPlay() {
         onPlay && onPlay();
         // setPlayingSong(song);
         if (isPlayed) {
@@ -50,10 +48,10 @@ export const Song = (props: PropsType) => {
                 <div className="song__first">
                     {!isPlayed && <h3 className="song__number">{order}</h3>}
                     <div className="song__play"
-                         onClick={play}>
+                         onClick={onSwitchPlay}>
                         {isPlayed
                             ? <PauseIcon/>
-                            : <PlayIcon onClick={onPlay}/>
+                            : <PlayIcon onClick={onSwitchPlay}/>
                         }
                     </div>
                 </div>
