@@ -1,10 +1,8 @@
 import axios from "axios";
 import {
-    libraryLoading,
     likeLoading,
     setAuthError,
     setCurrentUser,
-    setUserLikedSongs,
     toggleLikeSong,
     UserActionTypes,
     userLoading
@@ -30,12 +28,12 @@ export const login = (email: string, password: string) => {
     return async (dispatch: Dispatch<UserActionTypes>) => {
         try {
             const response = await axios.post(`${url}/api/auth/login`, {email, password})
-            const {userId, userName, isAdmin} = response.data
+            const {userId, userName, isAdmin, likedSongs} = response.data
             dispatch(setCurrentUser({
                 userId,
                 userName,
                 isAdmin,
-                likedSongs: [],
+                likedSongs,
                 likeLoading: {status: false, songId: ''}
             }))
             dispatch(setAuthError(null))
@@ -54,12 +52,12 @@ export const auth = () => {
             console.log(localStorage.getItem('token'))
             if (localStorage.getItem('token') === null) return dispatch(userLoading(false))
             const response = await axios.get(`${url}/api/auth/auth`, AuthorizationHeaderConfig)
-            const {userId, userName, isAdmin} = response.data
+            const {userId, userName, isAdmin, likedSongs} = response.data
             dispatch(setCurrentUser({
                 userId,
                 userName,
                 isAdmin,
-                likedSongs: [],
+                likedSongs,
                 likeLoading: {status: false, songId: ''}
             }));
             localStorage.setItem('token', response.data.token)
@@ -72,19 +70,19 @@ export const auth = () => {
     }
 }
 
-export const thunkUserLikedSongs = () => {
-    return async (dispatch: Dispatch<UserActionTypes>) => {
-        dispatch(libraryLoading(true))
-        try {
-            const response = await axios.get(`${url}/api/song/user/liked-songs`, AuthorizationHeaderConfig)
-            dispatch(setUserLikedSongs(response.data))
-        } catch (e) {
-            dispatch(libraryLoading(false))
-            const u = e as ErrorType
-            dispatch(setAuthError(u.response.data.message))
-        }
-    }
-}
+// export const thunkUserLikedSongs = () => {
+//     return async (dispatch: Dispatch<UserActionTypes>) => {
+//         dispatch(libraryLoading(true))
+//         try {
+//             const response = await axios.get(`${url}/api/song/user/liked-songs`, AuthorizationHeaderConfig)
+//             dispatch(setUserLikedSongs(response.data))
+//         } catch (e) {
+//             dispatch(libraryLoading(false))
+//             const u = e as ErrorType
+//             dispatch(setAuthError(u.response.data.message))
+//         }
+//     }
+// }
 
 export const thunkToggleLikeSong = (song: SongType) => {
     return async (dispatch: Dispatch<UserActionTypes>) => {

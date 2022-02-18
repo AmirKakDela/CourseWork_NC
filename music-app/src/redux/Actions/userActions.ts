@@ -8,7 +8,6 @@ export enum UserActionTypeTypes {
     TOGGLE_LIKE_SONG = 'TOGGLE_LIKE_SONG',
     USER_LOADING = 'USER_LOADING',
     LIKE_LOADING = 'LIKE_LOADING',
-    LIBRARY_LOADING = 'LIBRARY_LOADING',
 }
 
 export type UserActionTypes = SetCurrentUserType
@@ -18,7 +17,6 @@ export type UserActionTypes = SetCurrentUserType
     | UserLoadingType
     | ToggleLikeSongType
     | LikeLoadingTypeAction
-    | LibraryLoadingType
 
 
 type LogoutCurrentUserType = {
@@ -103,14 +101,3 @@ export const likeLoading = (likeSong: LikeLoadingType): LikeLoadingTypeAction =>
     }
 }
 
-export type LibraryLoadingType = {
-    type: UserActionTypeTypes.LIBRARY_LOADING,
-    payload: boolean
-}
-
-export const libraryLoading = (status: boolean): LibraryLoadingType => {
-    return {
-        type: UserActionTypeTypes.LIBRARY_LOADING,
-        payload: status
-    }
-}

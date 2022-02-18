@@ -1,6 +1,5 @@
 import axios from "axios";
 import {AuthorizationHeaderConfig, url} from "../config/config";
-import {SongTypeWithoutId} from "../components/AdminPage/AdminSongForm/AdminSongForm";
 
 class SongAPI {
     async getAllSongs() {
@@ -23,12 +22,23 @@ class SongAPI {
         })
     }
 
-    async createSong(song: SongTypeWithoutId) {
-        return await axios.post(`${url}/api/song/create`, song, AuthorizationHeaderConfig).then(res => {
+    async createSong(song: any) {
+        return await axios.post(`${url}/api/song/create`, song, {
+            headers: {
+                Authorization: '' + localStorage.getItem('token'),
+                'content-type': 'multipart/form-data'
+            }
+        }).then(res => {
             return res
         }).catch(res => {
             console.log(res)
             return res
+        })
+    }
+
+    async getFullLikedSongsOfUser() {
+        return await axios.get(`${url}/api/song/user/liked-songs`, AuthorizationHeaderConfig).then(res => {
+            return res.data
         })
     }
 }
