@@ -4,7 +4,6 @@ import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {Button, Menu, Popconfirm, Popover, Tooltip} from "antd";
 import {CaretRightFilled as PlayIcon, DeleteOutlined, PauseOutlined as PauseIcon} from "@ant-design/icons";
 import MoonLoader from "react-spinners/MoonLoader";
-
 import {PlaylistType, SongType} from "../../../config/types";
 import {useActions} from "../../../hooks/useActions";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
@@ -17,9 +16,9 @@ import {Song} from "../../Song/Song";
 import EditPlaylistModal from "./EditPlaylistModal/EditPlaylistModal";
 import {NotAddedTrack} from "./NotAddedTrack/NotAddedTrack";
 import PlaylistLike from "./PlaylistLike/PlaylistLike";
-import "./playlistPage.scss";
 import {formWordTrack} from "../../../utils/declension.utils";
 import {getTimesOfPlaylistTracks} from "../../../utils/time-format.utils";
+import "./playlistPage.scss";
 
 const PlaylistPage = () => {
     const urlParams = useParams();
@@ -126,10 +125,8 @@ const PlaylistPage = () => {
     useEffect(() => {
         if (urlParams.id && !isModalVisible) {
             PlaylistAPI.getPlaylistById(urlParams.id).then(data => {
-                console.log(data)
                 setPlaylist(data.playlist);
                 setSongs(data.songs);
-                console.log(data.songs)
                 setIsLoading(false);
             })
         }
@@ -141,7 +138,6 @@ const PlaylistPage = () => {
 
 
     const playlistOptions = () => {
-
         const optionsHandler = (option: string) => {
             switch (option) {
                 case "delete_from_user":
@@ -174,7 +170,6 @@ const PlaylistPage = () => {
     }
 
     const PlaylistActions = () => {
-
         if (location.pathname.includes("/admin")) return (
             <div className="info__actions">
                 {playlist.songs.length > 0

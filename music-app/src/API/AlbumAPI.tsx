@@ -1,10 +1,15 @@
 import axios from "axios";
 import {AuthorizationHeaderConfig, url} from "../config/config";
-import {AlbumTypeWithoutId} from "../components/AdminPage/AdminAlbumForm/AdminAlbumForm";
+
+export type AlbumTypeRequestData = {
+    name: string,
+    artist: string,
+    songs: string[],
+    cover: any
+}
 
 class AlbumAPI {
-
-    async createAlbum(album: AlbumTypeWithoutId | FormData) {
+    async createAlbum(album: AlbumTypeRequestData) {
         return await axios.post(`${url}/api/album/create`, album, {
             headers: {
                 Authorization: "" + localStorage.getItem("token"),

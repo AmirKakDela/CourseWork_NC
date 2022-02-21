@@ -10,19 +10,18 @@ import {useDispatch} from "react-redux";
 import {setError} from "../../../redux/Actions/errorAction";
 import AlbumAPI from "../../../API/AlbumAPI";
 
-export type AlbumTypeWithoutId = {
+export type AlbumFormData = {
     name: string,
     artist: string,
     songs: string[],
-    cover: string,
-    _id?: string
+    cover: File | null,
 }
 
-const initialValues: AlbumTypeWithoutId = {
+const initialValues: AlbumFormData = {
     name: "",
     artist: "",
     songs: [],
-    cover: ""
+    cover: null,
 };
 
 const validateSchema = yup.object().shape(validationRulesAlbum);
@@ -35,27 +34,17 @@ export const AdminAlbumForm: React.FC = () => {
     const params = useParams();
     const dispatch = useDispatch();
 
-    const onSubmit = (data: AlbumTypeWithoutId) => {
-        setIsSubmit(true);
-        console.log("onSubmit", data);
-        data.artist = artists.find(artist => artist.name === data.artist)?.name || "";
-        const formData = new FormData();
-        for (let key in data) {
-            // @ts-ignore
-            formData.append(key, data[key]);
-        }
-        AlbumAPI.createAlbum(formData).then(res => {
-            res.data.message && dispatch(setError(res.data.message));
-        })
-            .finally(() => {
-            setIsSubmit(false);
-        });
-    };
-
     useEffect(() => {
         ArtistAPI.getAllArtists().then(data => {
             setArtists(data);
         });
+        setIsLoading(false);
+        return () => {
+            initialValues.artist = "";
+            initialValues.name = "";
+            initialValues.cover = null;
+            initialValues.songs = [];
+        };
     }, []);
 
     useEffect(() => {
@@ -164,13 +153,10 @@ export const AdminAlbumForm: React.FC = () => {
                                         name="artist"
                                         id="artist"
                                         value={values.artist}
-                                        // defaultValue={initialValues.artist}
+                                        defaultValue={initialValues.artist}
                                         onChange={(e) => {
                                             handleChange(e);
-                                            setFieldValue(
-                                                "songs",
-                                                this || getSongs( e.target.value)
-                                            );
+                                            onArtistChange(e.target.value, setFieldValue);
                                         }}>
                                     <option value="" disabled>Выберите исполнителя</option>
                                     {artists && artists.map(artist => (
@@ -221,9 +207,11 @@ export const AdminAlbumForm: React.FC = () => {
                                 </select>
                                 {errors.songs && touched.songs && <p className="form__error_text">{errors.songs}</p>}
 
-                                <button type="submit" disabled={isSubmit}
-                                        className="form__button"
-                                >{isSubmit ? 'Загрузка' : 'Создать'}
+                                <button type="submit"
+                                        disabled={isSubmit}
+                                        onClick={() => onSubmit(values)}
+                                        className="form__button">
+                                    {isSubmit ? "Загрузка" : "Создать"}
                                 </button>
                             </form>;
                         }}

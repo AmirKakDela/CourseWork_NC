@@ -6,11 +6,19 @@ import {Popconfirm, Skeleton} from "antd";
 import AlbumCard from "../../AlbumCard/AlbumCard";
 import AlbumAPI from "../../../API/AlbumAPI";
 import "./AdminAlbums.scss";
+import {useActions} from "../../../hooks/useActions";
 
 const AdminAlbums: React.FC = () => {
     const [albums, setAlbums] = useState<AlbumType<SongType>[]>([{ _id: "", name: "", artist: "", songs: [], cover: "" }]);
     const [isLoading, setIsLoading] = useState(true);
-
+    const { setPlayingSong, setPlayingSongList } = useActions();
+    const onClickPlayIcon = (albumId: string) => {
+        if(albums?.length) {
+            const songs = albums.find(it => it._id === albumId).songs || [];
+            setPlayingSongList(songs);
+            setPlayingSong(songs[0]);
+        }
+    };
     const deleteAlbum = useCallback((id: string) => {
         AlbumAPI.deleteAlbum(id)
             .then(() => {
@@ -34,7 +42,9 @@ const AdminAlbums: React.FC = () => {
                     </Link>
                     {albums && albums.map((album) => {
                         return <div className="admin-song__wrap admin-album__wrap" key={album._id}>
-                            <AlbumCard album={album}/>
+                            <AlbumCard key={album._id}
+                                       album={album}
+                                       onClickPlayIcon={() => onClickPlayIcon(album._id)}/>
                             <div className="songs-container">
                                 <h3 className="song__name">Список песен: </h3>
                                 <div className="admin-album__wrap song-list">

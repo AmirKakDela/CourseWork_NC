@@ -18,7 +18,7 @@ export function AlbumPage() {
         if (urlParams.id) {
             AlbumAPI.getAlbumById(urlParams.id).then(data => {
                 setAlbum(data.album);
-                setSongs(data.songs)
+                setSongs(data.songs);
             });
         }
     }, [urlParams.id]);
