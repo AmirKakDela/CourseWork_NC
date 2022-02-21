@@ -61,7 +61,6 @@ export const AdminAlbumForm: React.FC = () => {
 
     function onSubmit(data: AlbumFormData) {
         setIsSubmit(true);
-        console.log("onSubmit", data);
         data.artist = artists.find(artist => artist._id === data.artist)?.name || "";
         if (data.cover) {
             const fileReader = new FileReader();
@@ -98,7 +97,6 @@ export const AdminAlbumForm: React.FC = () => {
 
 
     function onArtistChange(artist: string, setFieldValue: (field: string, value: any) => void) {
-        console.log(artist);
         setFieldValue(
             "songs",
             []
@@ -109,7 +107,6 @@ export const AdminAlbumForm: React.FC = () => {
                 console.log("getAllArtistsSongs", data);
                 setSongs(data);
             });
-
     }
 
     return (
@@ -162,7 +159,6 @@ export const AdminAlbumForm: React.FC = () => {
                                     {artists && artists.map(artist => (
                                         <option key={artist._id}
                                                 value={artist._id}
-                                            // selected={initialValues.artist === values.artist}
                                         >
                                             {artist.name}
                                         </option>
