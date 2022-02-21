@@ -8,6 +8,7 @@ import {AlbumType, ArtistType, SongType} from "../../../config/types";
 import ArtistAPI from "../../../API/ArtistAPI";
 import {formWordAlbum, formWordTrack} from "../../../utils/declension.utils";
 import {useActions} from "../../../hooks/useActions";
+import AlbumAPI from "../../../API/AlbumAPI";
 
 const ArtistPage = () => {
     const urlParams = useParams();
@@ -16,6 +17,14 @@ const ArtistPage = () => {
     const [albums, setAlbums] = useState<AlbumType[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const { setPlayingSong, setPlayingSongList } = useActions();
+
+    const onClickPlayIcon = (albumId: string) => {
+        AlbumAPI.getAlbumById(albumId)
+            .then(data => {
+                setPlayingSongList(data.songs);
+                setPlayingSong(data.songs[0]);
+            });
+    };
 
     useEffect(() => {
         if (urlParams.id) {
@@ -28,7 +37,7 @@ const ArtistPage = () => {
         }
     }, [urlParams.id]);
 
-    function onPlay(song: SongType) {
+    const onPlay = (song: SongType) => {
         setPlayingSongList(songs);
         setPlayingSong(song);
     }
@@ -55,7 +64,10 @@ const ArtistPage = () => {
                         <div className="info__main">
                             <h2 className="main__title">Альбомы</h2>
                             <div className="main__slider">
-                                {albums.map(album => <AlbumCard key={album._id} album={album}/>)}
+                                {albums.map(album => <AlbumCard
+                                    key={album._id}
+                                    onClickPlayIcon={() => onClickPlayIcon(album._id)}
+                                    album={album}/>)}
                             </div>
                             <h2 className="main__title">Песни</h2>
                             <div className="main__songs">

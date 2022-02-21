@@ -1,29 +1,30 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {AlbumType, SongType} from "../../../config/types";
 import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
 import {Link} from "react-router-dom";
 import {Popconfirm, Skeleton} from "antd";
 import AlbumCard from "../../AlbumCard/AlbumCard";
 import AlbumAPI from "../../../API/AlbumAPI";
-import './AdminAlbums.scss'
+import "./AdminAlbums.scss";
+import {useActions} from "../../../hooks/useActions";
 
 const AdminAlbums: React.FC = () => {
-    const [albums, setAlbums] = useState<AlbumType<SongType>[]>([
-        {
-            _id: "", name: "", artist: "", songs: [], cover: ""
-        }
-    ]);
-    // const [songs, setSongs] = useState<SongType[]>([]);
+    const [albums, setAlbums] = useState<AlbumType<SongType>[]>([{ _id: "", name: "", artist: "", songs: [], cover: "" }]);
     const [isLoading, setIsLoading] = useState(true);
-
-    const deleteAlbum = (id: string) => {
-        AlbumAPI.deleteAlbum(id).then(() => {
-            const resultAlbums = albums.filter(album => {
-                return album._id !== id;
-            });
-            setAlbums(resultAlbums);
-        });
+    const { setPlayingSong, setPlayingSongList } = useActions();
+    const onClickPlayIcon = (albumId: string) => {
+        if(albums?.length) {
+            const songs = albums.find(it => it._id === albumId).songs || [];
+            setPlayingSongList(songs);
+            setPlayingSong(songs[0]);
+        }
     };
+    const deleteAlbum = useCallback((id: string) => {
+        AlbumAPI.deleteAlbum(id)
+            .then(() => {
+                setAlbums(albums.filter(album => album._id !== id));
+            });
+    }, [albums]);
 
     useEffect(() => {
         AlbumAPI.getAllAlbumsWithSongs().then(data => {
@@ -41,7 +42,9 @@ const AdminAlbums: React.FC = () => {
                     </Link>
                     {albums && albums.map((album) => {
                         return <div className="admin-song__wrap admin-album__wrap" key={album._id}>
-                            <AlbumCard album={album}/>
+                            <AlbumCard key={album._id}
+                                       album={album}
+                                       onClickPlayIcon={() => onClickPlayIcon(album._id)}/>
                             <div className="songs-container">
                                 <h3 className="song__name">Список песен: </h3>
                                 <div className="admin-album__wrap song-list">
@@ -61,7 +64,7 @@ const AdminAlbums: React.FC = () => {
                                         <DeleteOutlined style={{ fontSize: 20, color: "white", cursor: "pointer" }}/>
                                     </button>
                                 </Popconfirm>
-                                <Link to={`/admin/album/${album._id}`}>
+                                <Link to={`/admin/album/update/${album._id}`}>
                                     <button className="form__button admin-song__action admin-album__action">
                                         <EditOutlined style={{ fontSize: 20, color: "white", cursor: "pointer" }}/>
                                     </button>
