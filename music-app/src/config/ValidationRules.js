@@ -25,8 +25,7 @@ export let validationRulesAlbum = {
         .required('Введите название альбома.'),
     artist: yup.string().trim()
         .required('Введите имя исполнителя.'),
-    song: yup
-        .mixed()
+    song: yup.string().trim()
         .required("Выберите песни."),
         // .test("fileFormat", "Неподдерживаемый формат файла. Загрузите файл типа audio.",
         //     value => value && SUPPORTED_FORMATS_AUDIO.includes(value.type)),

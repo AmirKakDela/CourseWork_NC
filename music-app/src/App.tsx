@@ -104,7 +104,7 @@ function App() {
                             <Route path="playlists" element={<AdminPlaylists/>}/>
                             <Route path='playlist/:id' element={<PlaylistPage/>}/>
                             <Route path="albums" element={<AdminAlbums/>}/>
-                            <Route path="album/:id" element={<AdminAlbumForm/>}/>
+                            <Route path="album/update/:id" element={<AdminAlbumForm/>}/>
                             <Route path="album/create" element={<AdminAlbumForm/>}/>
                         </Route>
                     </Routes>

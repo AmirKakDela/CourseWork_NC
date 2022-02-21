@@ -5,8 +5,10 @@ class AlbumController {
     async getAlbum(req, res) {
         try {
             const albumId = req.params["albumId"];
-            const album = await Album.findById(albumId).populate( "songs");
-            res.json(album);
+            const album = await Album.findById(albumId);
+            const albumWithSongs = await Album.findById(albumId).populate( "songs");
+            const songs = albumWithSongs.songs;
+            return res.json({ album, songs });
         } catch (e) {
             res.status(500).json({ message: `${e.message}.Ошибка сервера при получении альбома` });
         }
@@ -68,7 +70,7 @@ class AlbumController {
             }
                 const newAlbum = new Album({
                     ...req.body,
-                    cover: "/" + req.files.cover[0].path
+                     //cover: "/" + req.files.cover[0].path
                 });
                 await newAlbum.save();
                 return res.status(200)
@@ -84,7 +86,7 @@ class AlbumController {
 
     async deleteAlbum(req, res) {
         try {
-            const { id } = req.params["id"];
+            const id = req.params.id;
             const deletedAlbum = await Album.findByIdAndDelete(id);
             if (!deletedAlbum) {
                 return res.status(412)
@@ -105,11 +107,12 @@ class AlbumController {
                 return res.status(412)
                     .json({ message: "Альбома с таким id не существует" });
             }
-            const updatedAlbum = await Album.findByIdAndUpdate(id, album, { new: true });
-            res.json({
-                message: "Альбом успешно обновлен",
-                updatedAlbum
-            });
+            const updatedAlbum = await Album.findByIdAndUpdate(id, album);
+            return res.status(200)
+                .json({
+                    message: "Альбом успешно обновлен",
+                    updatedAlbum
+                });
         } catch (e) {
             res.status(500)
                 .json({ message: "Ошибка сервера при обновлении альбома" });

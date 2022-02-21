@@ -1,46 +1,58 @@
 import React, {useEffect, useState} from "react";
 import AlbumCard from "../../AlbumCard/AlbumCard";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../../redux/Reducers/rootReducer";
-import {getAlbumsByRequest} from "../../../redux/Actions/thunkAlbumActions";
 import ArtistCard from "../../ArtistCard/ArtistCard";
 import {ScrollComponent} from "../../ScrollComponent/ScrollComponent";
-import "./MainPage.scss";
-import {ArtistType} from "../../../config/types";
+import {AlbumType, ArtistType, PlaylistType} from "../../../config/types";
 import ArtistAPI from "../../../API/ArtistAPI";
+import PlaylistAPI from "../../../API/PlaylistAPI";
+import PlaylistCard from "../../PlaylistCard/PlaylistCard";
+import AlbumAPI from "../../../API/AlbumAPI";
+import {Skeleton} from "antd";
+import "./MainPage.scss";
 
-function MainPage() {
-    const dispatch = useDispatch();
+const MainPage: React.FC = () =>{
     const [artists, setArtists] = useState<ArtistType[]>([]);
+    const [playlists, setPlaylists] = useState<PlaylistType[]>([]);
+    const [albums, setAlbums] = useState<AlbumType[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        dispatch(getAlbumsByRequest());
         ArtistAPI.getAllArtists().then(data => {
             setArtists(data);
         });
-    }, [dispatch]);
-
-    const popularPlaylists = useSelector((state: RootState) => state.album.albums); // здесь надо получать плейлисты, а не альбомы
+        PlaylistAPI.getAllPlaylists().then(data => {
+            setPlaylists(data.playlists);
+        });
+        AlbumAPI.getAllAlbums().then(data => {
+            setAlbums(data);
+        });
+        setIsLoading(false);
+    }, []);
 
     return (
         <div className="main-page-content">
-            <ScrollComponent titleName="Не пропусти топовые плейлисты" data={
-                popularPlaylists.map(playlist => {
-                    return <AlbumCard key={playlist._id} album={playlist}/>;
-                })
-            }/>
-            <ScrollComponent titleName="Тема1" data={
-                popularPlaylists.map(playlist => {
-                    return <AlbumCard key={playlist._id} album={playlist}/>;
-                })}/>
-            <ScrollComponent titleName="Тема2" data={
-                popularPlaylists.map(playlist => {
-                    return <AlbumCard key={playlist._id} album={playlist}/>;
-                })}/>
-            <ScrollComponent titleName="Популярные исполнители" data={
-                artists.map(art => {
-                    return (<ArtistCard key={art._id} artist={art}/>);
-                })}/>
+            {isLoading
+                ? <Skeleton active/>
+                : <div>
+                    <ScrollComponent titleName="Не пропусти топовые плейлисты" data={
+                        playlists.map(playlist => {
+                            return <PlaylistCard key={playlist._id} playlist={playlist}/>;
+                        })
+                    }/>
+                    <ScrollComponent titleName="Популярные альбомы" data={
+                        albums.map(album => {
+                            return <AlbumCard key={album._id} album={album}/>;
+                        })}/>
+                    <ScrollComponent titleName="Тема2" data={
+                        albums.map(album => {
+                            return <AlbumCard key={album._id} album={album}/>;
+                        })}/>
+                    <ScrollComponent titleName="Популярные исполнители" data={
+                        artists.map(art => {
+                            return (<ArtistCard key={art._id} artist={art}/>);
+                        })}/>
+                </div>
+            }
         </div>
     );
 }
