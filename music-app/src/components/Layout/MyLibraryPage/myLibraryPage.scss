@@ -5,9 +5,12 @@
     display: flex;
     column-gap: 5px;
   }
+  &__main{
+    padding: 0 16px;
+  }
 
   &__info {
-    margin: 20px 0 40px 30px;
+    margin: 20px 0 40px 10px;
   }
 
   &__title {

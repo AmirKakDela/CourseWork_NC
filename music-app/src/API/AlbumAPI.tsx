@@ -77,6 +77,13 @@ class AlbumAPI {
                 return err;
             });
     }
+
+    async getLikedAlbumsOfUser() {
+        return await axios.get(`${url}/api/album/user/liked-albums`, AuthorizationHeaderConfig)
+            .then(res => {
+                return res.data;
+            });
+    }
 }
 
 export default new AlbumAPI();

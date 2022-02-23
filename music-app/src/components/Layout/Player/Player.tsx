@@ -16,6 +16,7 @@ import SongProgress from "./SongProgress";
 import {formattedTime} from "../../../utils/time-format.utils";
 import Like from "../../Song/Like";
 import songDefault from "../../../assets/imgs/song_default.jpg";
+import {Popover} from "antd";
 
 let audio: HTMLAudioElement = new Audio();
 
@@ -39,7 +40,6 @@ export function Player() {
         setSongParams();
     }, [track]);
 
-
     const onImageError = () => {
         setSongCover(songDefault);
     };
@@ -56,7 +56,7 @@ export function Player() {
             audio.oncanplay = () => {
                 if (!pause) {
                     audio.play();
-                }else {
+                } else {
                     audio.pause();
                 }
             };
@@ -112,6 +112,16 @@ export function Player() {
         setPlayerTime(value);
     };
 
+    const content = (
+        <div>
+            {track && playerList?.length
+                ? playerList.map((song, index) => {
+                    return <p key={index}>{song}</p>;
+                })
+                : <p/>}
+        </div>
+    );
+
     return (
         <div className="player">
             {track
@@ -145,9 +155,9 @@ export function Player() {
                     <div onClick={onSwitchPlay} className="player__controls__playpause">
                         {!pause
                             ? isReady
-                                ? <PauseCircleOutlined style={{ fontSize: "32px"}}/>
+                                ? <PauseCircleOutlined style={{ fontSize: "32px" }}/>
                                 : <LoadingOutlined style={{ fontSize: "32px" }} spin/>
-                            : <PlayCircleOutlined style={{ fontSize: "32px"}}/>
+                            : <PlayCircleOutlined style={{ fontSize: "32px" }}/>
                         }
                     </div>
                     <StepForwardOutlined
@@ -166,8 +176,10 @@ export function Player() {
                 </div>
             </div>
             <div className="player__control-button-bar">
-                <MenuUnfoldOutlined style={{ fontSize: "14px"}}/>
-                <SoundOutlined style={{ fontSize: "14px"}}/>
+                <Popover trigger="click" content={content}>
+                    <MenuUnfoldOutlined style={{ fontSize: "14px" }}/>
+                </Popover>
+                <SoundOutlined style={{ fontSize: "14px" }}/>
                 <div className="player__control-button-bar__volume">
                     <SongProgress
                         begin={volume}

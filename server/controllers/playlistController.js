@@ -1,5 +1,4 @@
 const {validationResult} = require("express-validator");
-
 const Playlist = require("../models/Playlist");
 const User = require("../models/User");
 const Song = require("../models/Song")
@@ -15,25 +14,16 @@ class playlistController {
 
             const {name} = req.body;
             const candidatePlaylist = await Playlist.findOne({name, user: {id: req.user}});
-
-            console.log(candidatePlaylist)
             if (candidatePlaylist)
                 return res.status(412).json({
                     message:
                         "Плейлист с таким названиием от данного пользователя уже существует.",
                     candidatePlaylist,
                 });
-
-
             const playlist = new Playlist(req.body);
             await playlist.save();
-            console.log(playlist)
-
-
             const userToAdd = await User.findById(req.user);
-            console.log(userToAdd)
             if (userToAdd) {
-                console.log(playlist._id)
                 userToAdd.playlists.push(playlist._id);
                 await userToAdd.save();
             }
@@ -51,7 +41,6 @@ class playlistController {
                 return res.status(412).json({
                     message: "Ошибка сервера при получении списка всех плейлистов.",
                 });
-
             return res.json({playlists});
         } catch (e) {
             console.log(e);
@@ -93,7 +82,6 @@ class playlistController {
                 return song.filter(s => playlist.songs.indexOf(s._id) > -1)
             })
             //const songs = allSongs.filter(s => playlist.songs.indexOf(s) > 0)
-
             return res.json({playlist, songs});
         } catch (e) {
             console.log(e);
@@ -107,7 +95,6 @@ class playlistController {
         try {
             const updatedPlaylist = await Playlist.findById(req.params.id);
             const {song} = req.body;
-            console.log(song);
             //const oldLength = updatedPlaylist.songs.length;
 
             if (updatedPlaylist.songs.indexOf(song) < 0) {
@@ -117,7 +104,6 @@ class playlistController {
             const songs = await Song.find().then(song => {
                 return song.filter(s => updatedPlaylist.songs.indexOf(s._id) > -1)
             })
-
             res.json({updatedPlaylist, songs});
         } catch (e) {
             console.log(e);
@@ -129,9 +115,7 @@ class playlistController {
         try {
             const updatedPlaylist = await Playlist.findById(req.params.id);
             const {song} = req.body;
-            console.log(song);
             //const oldLength = updatedPlaylist.songs.length;
-
             const index = updatedPlaylist.songs.indexOf(song);
             if (index !== -1) {
                 updatedPlaylist.songs.splice(index, 1);
@@ -141,7 +125,6 @@ class playlistController {
             const songs = await Song.find().then(song => {
                 return song.filter(s => updatedPlaylist.songs.indexOf(s._id) > -1)
             })
-
             res.json({
                     updatedPlaylist,
                     songs
@@ -214,12 +197,9 @@ class playlistController {
 
     async userLikedPlaylists(req, res) {
         try {
-            console.log("requser",req.user)
             const user = await User.findById(req.params.id);
-
             if (!user) return res.status(403).json({message: 'Пользователь не найден'});
             const playlists = await Playlist.findById(user.likedPlaylists);
-            console.log(playlists)
             return res.json(playlists);
         } catch (e) {
             console.log('Ошибка сервера при userLikedSongs', e);
@@ -237,7 +217,7 @@ class playlistController {
             if (playlistIndexInArray === -1) {
                 user.likedPlaylists.unshift(playlist._id);
                 await user.save();
-                return res.json({message: 'Добавлено в список любимых песен.'});
+                return res.json({message: 'Добавлено в список любимых плейлистов.'});
             } else {
                 user.likedPlaylists.splice(playlistIndexInArray, 1);
                 await user.save();
@@ -245,7 +225,7 @@ class playlistController {
             }
         } catch (e) {
             console.log('Ошибка сервера при toggleLikeSong', e);
-            return res.send({message: "Ошибка сервера добавлении песни в список любимых песен."});
+            return res.send({message: "Ошибка сервера при добавлении плейлиста в список любимых плейлистов."});
         }
     }
 
