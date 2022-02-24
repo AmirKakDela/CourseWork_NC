@@ -85,3 +85,24 @@
     }
   }
 }
+
+.ant-popover-content .ant-popover-inner {
+  .ant-popover-inner-content {
+    padding: 0;
+  }
+}
+
+.ant-popover-content .song{
+  &__main{
+    padding: 5px;
+    font-size: 13px;
+    & ._active{
+    background-color: rgba(255, 255, 255, 0.3)
+    }
+  }
+  &__name_wrap {
+    & .song__artist{
+      font-size: 10px;
+    }
+  }
+}
