@@ -118,7 +118,7 @@ export function Player() {
             {track
                 ? <div className="player__now-playing">
                     <div className="player__now-playing__cover">
-                        <img src={songCover}
+                        <img src={songCover || track?.cover}
                              alt="Song"
                              className="song__img"
                              aria-hidden="false"

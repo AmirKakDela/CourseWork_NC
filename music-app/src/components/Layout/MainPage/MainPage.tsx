@@ -59,13 +59,6 @@ const MainPage: React.FC = () => {
                                 onClickPlayIcon={() => onClickPlayIcon(album._id)}
                             />;
                         })}/>
-                    <ScrollComponent titleName="Тема2" data={
-                        albums.map(album => {
-                            return <AlbumCard
-                                key={album._id}
-                                onClickPlayIcon={() => onClickPlayIcon(album._id)}
-                                album={album}/>;
-                        })}/>
                     <ScrollComponent titleName="Популярные исполнители" data={
                         artists.map(art => {
                             return (<ArtistCard

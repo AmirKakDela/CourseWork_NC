@@ -18,7 +18,7 @@ export const PopoverPlayerList = (props: PropsType) => {
     const content = (
         <div style={{
             backgroundColor: theme === "dark" ? "#282828" : "#F1F1F1FF",
-            padding: '10px'
+            padding: "10px"
         }}>
             {props.playerList?.map((song, index) => {
                 return (
@@ -47,7 +47,7 @@ export const PopoverPlayerList = (props: PropsType) => {
         </div>
     );
 
-    const [visible, setVisible] = useState(!!(props.playerList?.length));
+    const [visible, setVisible] = useState(false);
 
     function hideOrShow() {
         if (props.playerList?.length) {
@@ -64,7 +64,10 @@ export const PopoverPlayerList = (props: PropsType) => {
                      color: textColorStyle(theme)
                  }}
         >
-            <MenuUnfoldOutlined style={{ fontSize: "16px", color: visible ? '#1db954' : textColorStyle(theme)}} onClick={hideOrShow}/>
+            <MenuUnfoldOutlined style={{
+                                    fontSize: "16px",
+                                    color: visible ? "#1db954" : textColorStyle(theme) }}
+                                onClick={hideOrShow}/>
         </Popover>
     );
 };

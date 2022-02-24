@@ -1,4 +1,3 @@
-const {validationResult} = require("express-validator");
 const Artist = require("../models/Artist");
 const Song = require("../models/Song");
 const Album = require("../models/Album");
@@ -6,8 +5,8 @@ const Album = require("../models/Album");
 class artistController {
     async createArtist(req, res) {
         try {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) return res.status(412).json({message: 'Ошибка при создании артиста', errors});
+            // const errors = validationResult(req);
+            // if (!errors.isEmpty()) return res.status(412).json({message: 'Ошибка при создании артиста', errors});
 
             const candidateArtist = await Artist.findOne({name: req.body.name});
             if (candidateArtist) return res.status(412).json({
@@ -15,7 +14,10 @@ class artistController {
                 candidateArtist
             });
 
-            const artist = new Artist(req.body);
+            const artist = new Artist({
+                ...req.body,
+                image: '/' + req.files.image[0].path
+            });
             artist.save();
             return res.json({message: 'Исполнитель успешно создан.', artist});
         } catch (e) {
@@ -74,6 +76,21 @@ class artistController {
 
             const songs = await Song.find({artistId: artist._id});
             return res.json(songs);
+        } catch (e) {
+            console.log('Ошибка сервера при getArtist', e);
+            return res.send({message: "Ошибка сервера при получении всех песен."});
+        }
+    }
+
+    async deleteArtist(req, res) {
+        try {
+            const deletedArtist = await Artist.findById(req.params.id);
+            if (!deletedArtist)
+                return res.status(412).json({message: 'Артиста с таким id не найдено.'});
+            const deletedArtistAlbum = await Album.deleteMany({artist: deletedArtist.name});
+            const deleteSongs = await Song.deleteMany({artistId: req.params.id});
+            const deleteArtist = await Artist.findByIdAndDelete(req.params.id);
+            return res.json({ message: "Артист успешно удален" });
         } catch (e) {
             console.log('Ошибка сервера при getArtist', e);
             return res.send({message: "Ошибка сервера при получении всех песен."});

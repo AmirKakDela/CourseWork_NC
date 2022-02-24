@@ -1,5 +1,5 @@
 import {Button} from "antd";
-import React, {MouseEventHandler, MouseEvent} from "react";
+import React, {MouseEventHandler, MouseEvent, useState} from "react";
 import "./albumCard.scss";
 import {Link, useLocation} from "react-router-dom";
 import {AlbumType} from "../../config/types";
@@ -8,8 +8,8 @@ import {useActions} from "../../hooks/useActions";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {PlayerReducerState} from "../../redux/Reducers/playerReducer";
 import {RootState} from "../../redux/Reducers/rootReducer";
+import songDefault from "../../assets/imgs/song_default.jpg";
 
-const defaultImageUrl = "https://the-flow.ru/uploads/images/catalog/element/5de03395535b5.jpg";
 type PropsType = {
     album: AlbumType,
     onClickPlayIcon: () => void
@@ -23,6 +23,10 @@ const AlbumCard: React.FC<PropsType> = ({ album, onClickPlayIcon }) => {
     const isPlayed = !pause && isSelectedSong;
     const icon = isPlayed ? <PauseIcon/> : <PlayIcon/>;
     let linkToAlbumPage = location.pathname.includes("/admin") ? `/admin/album/${album._id}` : `/album/${album._id}`;
+    const [songCover, setSongCover] = useState(album.cover);
+    const onImageError = () => {
+        setSongCover(songDefault);
+    };
 
     const onSwitchPlay: MouseEventHandler<HTMLElement> = (event: MouseEvent) => {
         event.preventDefault();
@@ -38,8 +42,10 @@ const AlbumCard: React.FC<PropsType> = ({ album, onClickPlayIcon }) => {
     return (
         <Link to={linkToAlbumPage}>
             <div className="album">
-                <img src={album.cover || defaultImageUrl} alt="cover"
-                     className="album__img"/>
+                <img src={songCover}
+                     alt="cover"
+                     className="album__img"
+                     onError={onImageError}/>
                 <h2 className="album__name">
                     {album.name}
                 </h2>
