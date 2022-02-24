@@ -64,7 +64,7 @@ export const PopoverPlayerList = (props: PropsType) => {
                      color: textColorStyle(theme)
                  }}
         >
-            <MenuUnfoldOutlined style={{ fontSize: "16px", color: visible ? '#1db954' : '#fff'}} onClick={hideOrShow}/>
+            <MenuUnfoldOutlined style={{ fontSize: "16px", color: visible ? '#1db954' : textColorStyle(theme)}} onClick={hideOrShow}/>
         </Popover>
     );
 };
