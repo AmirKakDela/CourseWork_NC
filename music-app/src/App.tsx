@@ -98,6 +98,7 @@ function App() {
                             <AdminRoute isAdmin={isAdmin} isAuth={isAuth}>
                                 <AdminLayout/>
                             </AdminRoute>}>
+                            <Route index element={<MainPage/>}/>
                             <Route path="songs" element={<AdminSongs/>}/>
                             <Route path="song/:id" element={<AdminSongForm/>}/>
                             <Route path="song/create" element={<AdminSongForm/>}/>

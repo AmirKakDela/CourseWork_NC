@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {AlbumType} from "../../../config/types";
 import {RootState} from "../../../redux/Reducers/rootReducer";
 import {useActions} from "../../../hooks/useActions";
@@ -35,7 +35,7 @@ const LibraryAlbums: React.FC = () => {
     }, []);
 
     return (
-        <>
+        <div className="library">
             {isLoading ? <Skeleton active/> :
                 <div className="library__info">
                     <h1 className="library__title">Альбомы</h1>
@@ -59,7 +59,7 @@ const LibraryAlbums: React.FC = () => {
                     </div>
                 </div>
             }
-        </>
+        </div>
     );
 };
 

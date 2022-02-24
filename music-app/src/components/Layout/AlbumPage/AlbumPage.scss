@@ -7,6 +7,12 @@
     width: 100%;
     padding: 20px;
   }
+  &__actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
 
   &__header_album {
     align-items: flex-end;
@@ -81,6 +87,24 @@
         font-size: 17px;
         font-weight: 500;
       }
+    }
+  }
+}
+
+.actions {
+  &__play {
+    margin-right: 20px;
+    width: 56px;
+    height: 56px;
+    background: $btn-green;
+    border-radius: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+
+    &:hover {
+      transform: scale(1.06);
     }
   }
 }

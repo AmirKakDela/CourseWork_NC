@@ -1,16 +1,14 @@
 @import "src/config/colors";
 
 .library {
+  padding: 0 16px;
   &__sections {
     display: flex;
     column-gap: 5px;
   }
-  &__main{
-    padding: 0 16px;
-  }
 
   &__info {
-    margin: 20px 0 40px 10px;
+    margin: 20px 0 40px 16px;
   }
 
   &__title {

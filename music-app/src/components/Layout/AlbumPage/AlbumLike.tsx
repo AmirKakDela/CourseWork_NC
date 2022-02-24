@@ -17,7 +17,7 @@ const AlbumLike: React.FC<PropsType> = (props) => {
     const dispatch = useDispatch();
     const toggleLikeAlbum = useCallback(() => {
         dispatch(thunkToggleLikeAlbum(props.albumId));
-    }, [props.albumId]);
+    }, [props.albumId, dispatch]);
     const isAlbumLiked = useMemo(() => {
         return likedAlbums?.length && likedAlbums.includes(props.albumId);
     }, [likedAlbums, props.albumId]);

@@ -43,7 +43,7 @@ const PlaylistPage = () => {
 
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
-    const {playSong, pauseSong, setPlayingSong, setPlayingSongList} = useActions();
+    const { setPlayingSong, setPlayingSongList} = useActions();
 
     const {pause} = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
     const isPlayed = !pause;

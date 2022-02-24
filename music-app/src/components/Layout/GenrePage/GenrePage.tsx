@@ -15,8 +15,7 @@ const GenrePage: React.FC = () => {
         name: ''
     })
     const [songs, setSongs] = useState<SongType[]>([]);
-    const [playlists, setPlaylists] = useState([]);
-    // const [albums, setAlbums] = useState([]);
+    const [playlists] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

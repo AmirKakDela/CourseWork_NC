@@ -8,14 +8,14 @@ import {
 } from "@ant-design/icons";
 import React, {useEffect, useState} from "react";
 import {RootState} from "../../../redux/Reducers/rootReducer";
-import "./Player.scss";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import {useActions} from "../../../hooks/useActions";
 import SongProgress from "./SongProgress";
 import {formattedTime} from "../../../utils/time-format.utils";
 import Like from "../../Song/Like";
-import songDefault from "../../../assets/imgs/song_default.jpg";
 import {PopoverPlayerList} from "./PopoverPlayerList";
+import songDefault from "../../../assets/imgs/song_default.jpg";
+import "./Player.scss";
 
 let audio: HTMLAudioElement = new Audio();
 
@@ -24,7 +24,6 @@ export function Player() {
     const { playSong, setDurationSong, setVolumeSong, pauseSong, setPlayingSong } = useActions();
     const [playerTime, setPlayerTime] = useState(0);
     let [songCover, setSongCover] = useState(track?.cover);
-
     const isReady = audio.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA
         || audio.readyState === HTMLMediaElement.HAVE_FUTURE_DATA;
 
@@ -34,7 +33,7 @@ export function Player() {
         } else if (isReady && !pause) {
             audio.play();
         }
-    }, [pause]);
+    }, [pause, isReady]);
 
     useEffect(() => {
         setSongParams();
@@ -61,6 +60,9 @@ export function Player() {
             };
             audio.ontimeupdate = () => {
                 setPlayerTime(audio.currentTime);
+                if(audio.ended){
+                    setPlayerTime(0);
+                }
             };
             audio.onended = () => {
                 if (playerList?.length) {
@@ -142,7 +144,7 @@ export function Player() {
                         onClick={onPrevClick}
                     />
                     <div onClick={onSwitchPlay} className="player__controls__playpause">
-                        {!pause
+                        {!pause  && !audio.ended
                             ? isReady
                                 ? <PauseCircleOutlined style={{ fontSize: "32px" }}/>
                                 : <LoadingOutlined style={{ fontSize: "32px" }} spin/>

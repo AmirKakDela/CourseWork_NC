@@ -34,7 +34,7 @@ const AdminAlbums: React.FC = () => {
     }, []);
 
     return (
-        <>
+        <div className="admin">
             {isLoading ? <Skeleton active/> :
                 <>
                     <Link to="/admin/album/create">
@@ -74,7 +74,7 @@ const AdminAlbums: React.FC = () => {
                     })}
                 </>
             }
-        </>
+        </div>
     );
 };
 

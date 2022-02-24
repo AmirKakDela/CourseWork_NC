@@ -22,7 +22,7 @@ const AlbumCard: React.FC<PropsType> = ({ album, onClickPlayIcon }) => {
     const isSelectedSong = track?._id && album?.songs?.some(it => it === track._id || (typeof it == "object" && it._id === track._id));
     const isPlayed = !pause && isSelectedSong;
     const icon = isPlayed ? <PauseIcon/> : <PlayIcon/>;
-    let linkToAlbumPage = location.pathname === "/admin/albums" ? `/admin/album/${album._id}` : `/album/${album._id}`;
+    let linkToAlbumPage = location.pathname.includes("/admin") ? `/admin/album/${album._id}` : `/album/${album._id}`;
 
     const onSwitchPlay: MouseEventHandler<HTMLElement> = (event: MouseEvent) => {
         event.preventDefault();

@@ -57,7 +57,7 @@ export const AdminAlbumForm: React.FC = () => {
             });
             setIsLoading(false);
         }
-    });
+    },[params.id]);
 
     function onSubmit(data: AlbumFormData) {
         setIsSubmit(true);

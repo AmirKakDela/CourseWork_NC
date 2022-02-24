@@ -5,7 +5,6 @@ import songDefault from "../../assets/imgs/song_default.jpg";
 import Like from "./Like";
 import {CaretRightFilled as PlayIcon, PauseOutlined as PauseIcon} from "@ant-design/icons";
 import {useActions} from "../../hooks/useActions";
-import {setPlayingSong} from "../../redux/action-creators/action-creators";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {RootState} from "../../redux/Reducers/rootReducer";
 import {PlayerReducerState} from "../../redux/Reducers/playerReducer";
@@ -30,7 +29,6 @@ export const Song = (props: PropsType) => {
 
     function onSwitchPlay() {
         onPlay && onPlay();
-        // setPlayingSong(song);
         if (isPlayed) {
             pauseSong();
         } else {
@@ -39,7 +37,8 @@ export const Song = (props: PropsType) => {
     }
 
     const onImageError = () => {
-        setSongCover(songDefault);
+        song.cover = songDefault;
+        setSongCover(song.cover);
     };
 
     return (
