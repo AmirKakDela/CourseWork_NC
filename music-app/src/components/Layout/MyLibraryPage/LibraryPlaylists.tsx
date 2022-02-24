@@ -1,13 +1,11 @@
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../redux/Reducers/rootReducer";
-import {Song} from "../../Song/Song";
 import {Link} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {
     thunkUserLikedPlaylists,
     thunkUserPlaylists
 } from "../../../redux/Actions/thunkUserActions";
-import AlbumCard from "../../AlbumCard/AlbumCard";
 import {ScrollComponent} from "../../ScrollComponent/ScrollComponent";
 import PlaylistCard from "../../PlaylistCard/PlaylistCard";
 
@@ -36,10 +34,10 @@ const LibraryPlaylists: React.FC = () => {
         }
         console.log(user.playlists);
         console.log(user.likedPlaylists);
-    }, [user.likedPlaylists, user.playlists, dispatch]);
+    }, [user.likedPlaylists, user.playlists, dispatch, user.userId]);
 
     return (
-        <>
+        <div className="library">
             {/*{isLoading ? <h1 style={{backgroundColor: 'red', padding: 20}}>IS LOADING</h1> :*/}
             <div className="library__info">
                 <h1 className="library__title">Плейлисты</h1>
@@ -76,7 +74,7 @@ const LibraryPlaylists: React.FC = () => {
 
             </div>
             {/*}*/}
-        </>
+        </div>
     );
 };
 

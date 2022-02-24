@@ -30,7 +30,7 @@ const LibrarySong: React.FC = () => {
     }
 
     return (
-        <>
+        <div className="library">
             {isLoading ? <Skeleton active/> :
                 <div className="library__info">
                     <h1 className="library__title">Любимые треки</h1>
@@ -51,7 +51,7 @@ const LibrarySong: React.FC = () => {
                     </div>
                 </div>
             }
-        </>
+        </div>
     );
 };
 

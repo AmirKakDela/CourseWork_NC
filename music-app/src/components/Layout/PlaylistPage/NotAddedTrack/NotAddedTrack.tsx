@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {CaretRightFilled as PlayIcon, PauseOutlined as PauseIcon} from "@ant-design/icons";
-
 import {PlayerReducerState} from "../../../../redux/Reducers/playerReducer";
 import {useTypedSelector} from "../../../../hooks/useTypedSelector";
 import {RootState} from "../../../../redux/Reducers/rootReducer";
@@ -45,7 +44,7 @@ export const NotAddedTrack = (props: PropsType) => {
             <div className="not_added_song__main">
                 <div className="not_added_song__first">
                     <img src={songCover || songDefault}
-                         alt="Song Picture"
+                         alt="Song-img"
                          className="not_added_song__img"
                          onError={onImageError}
                     />

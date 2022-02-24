@@ -6,9 +6,9 @@ import "./PlaylistCard.scss";
 import {formWordTrack} from "../../utils/declension.utils";
 
 function PlaylistCard(props: any) {
-    const location = useLocation()
+    const location = useLocation();
 
-    if (location.pathname === "/admin/playlists") {
+    if (location.pathname.includes("/admin")) {
         return (
             <Link to={`/admin/playlist/${props.playlist._id}`}>
                 <div className="playlist__card">
@@ -24,7 +24,7 @@ function PlaylistCard(props: any) {
                     <span className="card__tracks">{props.playlist.songs.length} {formWordTrack(props.playlist.songs.length)}</span>
                 </div>
             </Link>
-        )
+        );
     }
 
     return (

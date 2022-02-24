@@ -70,7 +70,6 @@ const SearchPage = () => {
         if (searchString !== null && queryValue.trim()) {
             dispatch(getSearchResult(queryValue));
         }
-        // eslint-disable-next-line
     }, []);
 
     return (
@@ -82,12 +81,6 @@ const SearchPage = () => {
                    onChange={handleChange}
             />
             {!queryValue ? <div className="search__content">
-                    {/*<h2 className="search__title">Топ жанров</h2>*/}
-                    {/*<div className="search__genres-row">*/}
-                    {/*    {genres && genres.map(genre => (*/}
-                    {/*        <Genre key={genre._id} genre={genre}/>*/}
-                    {/*    ))}*/}
-                    {/*</div>*/}
                     <ScrollComponent className="search__genres-row" titleName="Топ жанров" data={
                         genres && genres.map(genre => (
                             <Genre key={genre._id} genre={genre}/>

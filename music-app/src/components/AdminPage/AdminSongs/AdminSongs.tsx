@@ -37,7 +37,7 @@ const AdminSongs: React.FC = () => {
 
 
     return (
-        <>
+        <div className="admin">
             {isLoading ? <Skeleton active/> :
                 <>
                     <Link to="/admin/song/create">
@@ -65,7 +65,7 @@ const AdminSongs: React.FC = () => {
                     })}
                 </>
             }
-        </>
+        </div>
     );
 };
 

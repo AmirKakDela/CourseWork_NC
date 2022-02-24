@@ -79,7 +79,7 @@ const AdminSongForm: React.FC = () => {
             })
         }
         setIsLoading(false);
-    }, [])
+    }, [params.id])
 
     useEffect(() => {
         return () => {
