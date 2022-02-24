@@ -32,6 +32,8 @@ import {SharedActionsType} from "./redux/Actions/sharedActions";
 import AdminAlbums from "./components/AdminPage/AdminAlbums/AdminAlbums";
 import { AdminAlbumForm } from './components/AdminPage/AdminAlbumForm/AdminAlbumForm';
 import LibraryAlbums from "./components/Layout/MyLibraryPage/LibraryAlbums";
+import AdminArtists from "./components/AdminPage/AdminArtists/AdminArtists";
+import AdminArtistForm from "./components/AdminPage/AdminArtistForm/AdminArtistForm";
 
 function App() {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
@@ -102,7 +104,9 @@ function App() {
                             <Route path="songs" element={<AdminSongs/>}/>
                             <Route path="song/:id" element={<AdminSongForm/>}/>
                             <Route path="song/create" element={<AdminSongForm/>}/>
-                            <Route path="artists" element={<h1>All Artists</h1>}/>
+                            <Route path="artists" element={<AdminArtists/>}/>
+                            <Route path="artist/:id" element={<AdminArtistForm/>}/>
+                            <Route path="artist/create" element={<AdminArtistForm/>}/>
                             <Route path="playlists" element={<AdminPlaylists/>}/>
                             <Route path='playlist/:id' element={<PlaylistPage/>}/>
                             <Route path="albums" element={<AdminAlbums/>}/>

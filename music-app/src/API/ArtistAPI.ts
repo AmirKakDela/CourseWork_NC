@@ -1,6 +1,11 @@
 import axios from "axios";
 import {AuthorizationHeaderConfig, url} from "../config/config";
 
+export type ArtistTypeRequestData = {
+    name: string,
+    image: any
+}
+
 class ArtistAPI {
     async getArtistById(id: string) {
         return await axios.get(`${url}/api/artist/artist/${id}`, AuthorizationHeaderConfig).then(res => {
@@ -25,6 +30,27 @@ class ArtistAPI {
             console.log(err)
         })
     }
+
+    async deleteArtist(id: string) {
+        return await axios.delete(`${url}/api/artist/delete/${id}`, AuthorizationHeaderConfig).then(res => {
+            console.log(res.data)
+        })
+    }
+
+    async createArtist(artist: FormData) {
+        return await axios.post(`${url}/api/artist/create`, artist, {
+            headers: {
+                Authorization: '' + localStorage.getItem('token'),
+                'content-type': 'multipart/form-data'
+            }
+        }).then(res => {
+            return res;
+        }).catch(res => {
+            console.log(res);
+            return res;
+        });
+    }
+
 }
 
 export default new ArtistAPI();

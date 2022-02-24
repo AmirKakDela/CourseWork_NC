@@ -35,3 +35,13 @@ export let validationRulesAlbum = {
         .test("fileFormat", "Неподдерживаемый формат файла. Загрузите файл типа image.",
                 value => value && SUPPORTED_FORMATS_IMAGE.includes(value.type))
 }
+
+export let validationRulesArtist = {
+    name: yup.string().trim()
+        .required('Введите имя исполнителя.'),
+    image: yup
+        .mixed()
+        .required("Загрузите фото исполнителя.")
+        .test("fileFormat", "Неподдерживаемый формат файла. Загрузите файл типа image.",
+                value => value && SUPPORTED_FORMATS_IMAGE.includes(value.type)),
+}
