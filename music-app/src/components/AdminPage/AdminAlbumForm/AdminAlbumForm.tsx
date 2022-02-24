@@ -57,7 +57,7 @@ export const AdminAlbumForm: React.FC = () => {
             });
             setIsLoading(false);
         }
-    },[params.id]);
+    }, [params.id]);
 
     function onSubmit(data: AlbumFormData) {
         setIsSubmit(true);
@@ -77,24 +77,14 @@ export const AdminAlbumForm: React.FC = () => {
             };
             fileReader.readAsDataURL(data.cover as Blob);
         } else {
-            if (params.id) {
-                AlbumAPI
-                    .editAlbum(params.id, data)
-                    .then(res => {
-                        res?.data?.message && dispatch(setError(res.data.message));
-                    })
-                    .finally(() => setIsSubmit(false));
-            } else {
-                AlbumAPI
-                    .createAlbum(data)
-                    .then(res => {
-                        res?.data?.message && dispatch(setError(res.data.message));
-                    })
-                    .finally(() => setIsSubmit(false));
-            }
+            AlbumAPI
+                .createAlbum(data)
+                .then(res => {
+                    res?.data?.message && dispatch(setError(res.data.message));
+                })
+                .finally(() => setIsSubmit(false));
         }
     }
-
 
     function onArtistChange(artist: string, setFieldValue: (field: string, value: any) => void) {
         setFieldValue(
