@@ -7,6 +7,7 @@ import {getTimesOfTracks} from "../../../utils/time-format.utils";
 import {AlbumType, SongType} from "../../../config/types";
 import {useActions} from "../../../hooks/useActions";
 import AlbumAPI from "../../../API/AlbumAPI";
+import AlbumLike from "./AlbumLike";
 
 export function AlbumPage() {
     const urlParams = useParams();
@@ -49,6 +50,9 @@ export function AlbumPage() {
                     </div>
                 </div>
                 <div className="info__main">
+                    <div className="album__like">
+                        <AlbumLike albumId={album._id}/>
+                    </div>
                     <h2 className="main__title">Песни</h2>
                     <div className="main__songs">
                         {songs.map((song, index) => {

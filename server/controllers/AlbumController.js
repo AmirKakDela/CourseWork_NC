@@ -1,5 +1,6 @@
 const { validationResult } = require("express-validator");
 const Album = require("../models/Album");
+const User = require("../models/User");
 
 class AlbumController {
     async getAlbum(req, res) {
@@ -116,6 +117,40 @@ class AlbumController {
         } catch (e) {
             res.status(500)
                 .json({ message: "Ошибка сервера при обновлении альбома" });
+        }
+    }
+
+    async userLikedAlbums(req, res) {
+        try {
+            const user = await User.findById(req.user);
+            if (!user) return res.status(403).json({message: 'Пользователь не найден'});
+            const albums = await Album.find({_id: user.likedAlbums});
+            return res.json(albums);
+        } catch (e) {
+            console.log('Ошибка сервера при userLikedAlbums', e);
+            return res.send({message: "Ошибка сервера при сохранении понравившегося альбома."});
+        }
+    }
+
+    async toggleLikeAlbum(req, res) {
+        try {
+            const album = await Album.findById(req.params.id);
+            if (!album) return res.status(412).json({message: 'Альбома с таким id не существует.'});
+
+            const user = await User.findById(req.user);
+            const albumIndex = user.likedAlbums.indexOf(album._id);
+            if (albumIndex === -1) {
+                user.likedAlbums.unshift(album._id);
+                await user.save();
+                return res.json({message: 'Добавлено в список любимых альбомов.'});
+            } else {
+                user.likedAlbums.splice(albumIndex, 1);
+                await user.save();
+                return res.json({message: 'Удалено из списка любимых альбомов.'});
+            }
+        } catch (e) {
+            console.log('Ошибка сервера при toggleLikeAlbum', e);
+            return res.send({message: "Ошибка сервера при добавлении альбома в список любимых альбомов."});
         }
     }
 }

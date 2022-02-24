@@ -31,6 +31,7 @@ import {darkTheme, lightTheme, ThemeContext} from "./components/Layout/theme-con
 import {SharedActionsType} from "./redux/Actions/sharedActions";
 import AdminAlbums from "./components/AdminPage/AdminAlbums/AdminAlbums";
 import { AdminAlbumForm } from './components/AdminPage/AdminAlbumForm/AdminAlbumForm';
+import LibraryAlbums from "./components/Layout/MyLibraryPage/LibraryAlbums";
 
 function App() {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
@@ -80,7 +81,7 @@ function App() {
                             <Route path='my-library' element={<MyLibraryPage/>}>
                                 <Route index element={<Navigate to='songs'/>}/>
                                 <Route path='songs' element={<LibrarySong/>}/>
-                                <Route path='albums' element={<h1>playlists</h1>}/>
+                                <Route path='albums' element={<LibraryAlbums/>}/>
                                 <Route path='playlists' element={<LibraryPlaylists/>}/>
                             </Route>
                             <Route path='create-playlist' element={<PlaylistPage/>}/>
@@ -104,6 +105,7 @@ function App() {
                             <Route path="playlists" element={<AdminPlaylists/>}/>
                             <Route path='playlist/:id' element={<PlaylistPage/>}/>
                             <Route path="albums" element={<AdminAlbums/>}/>
+                            <Route path='album/:id' element={<AlbumPage/>}/>
                             <Route path="album/update/:id" element={<AdminAlbumForm/>}/>
                             <Route path="album/create" element={<AdminAlbumForm/>}/>
                         </Route>

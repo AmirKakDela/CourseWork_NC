@@ -7,6 +7,7 @@ import {useActions} from "../../../hooks/useActions";
 import {SongType} from "../../../config/types";
 import SongsAPI from "../../../API/SongsAPI";
 import {Skeleton} from "antd";
+import {formWordTrack} from "../../../utils/declension.utils";
 
 const LibrarySong: React.FC = () => {
     const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const LibrarySong: React.FC = () => {
                 <div className="library__info">
                     <h1 className="library__title">Любимые треки</h1>
                     <h2 className="library__subtitle">
-                        <span>{user.userName}  &bull; </span> {user.likedSongs.length} треков
+                        <span>{user.userName}  &bull; </span> {user.likedSongs.length} {formWordTrack(user.likedSongs.length)}
                     </h2>
                     <div className="library__songs-wrap">
                         {songs.length > 0

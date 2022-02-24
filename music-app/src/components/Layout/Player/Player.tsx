@@ -1,6 +1,5 @@
 import {
     LoadingOutlined,
-    MenuUnfoldOutlined,
     PauseCircleOutlined,
     PlayCircleOutlined,
     SoundOutlined,
@@ -16,6 +15,7 @@ import SongProgress from "./SongProgress";
 import {formattedTime} from "../../../utils/time-format.utils";
 import Like from "../../Song/Like";
 import songDefault from "../../../assets/imgs/song_default.jpg";
+import {PopoverPlayerList} from "./PopoverPlayerList";
 
 let audio: HTMLAudioElement = new Audio();
 
@@ -24,6 +24,7 @@ export function Player() {
     const { playSong, setDurationSong, setVolumeSong, pauseSong, setPlayingSong } = useActions();
     const [playerTime, setPlayerTime] = useState(0);
     let [songCover, setSongCover] = useState(track?.cover);
+
     const isReady = audio.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA
         || audio.readyState === HTMLMediaElement.HAVE_FUTURE_DATA;
 
@@ -39,24 +40,22 @@ export function Player() {
         setSongParams();
     }, [track]);
 
-
-    const onImageError = () => {
+    function onImageError() {
         setSongCover(songDefault);
-    };
+    }
 
-    const setSongParams = () => {
+    function setSongParams() {
         if (track) {
             audio.src = track?.song;
             audio.autoplay = false;
             audio.volume = volume / 100;
-            // audio.loop = true; //добавить кнопку по кругу
             audio.onloadedmetadata = () => {
                 setDurationSong(audio.duration);
             };
             audio.oncanplay = () => {
                 if (!pause) {
                     audio.play();
-                }else {
+                } else {
                     audio.pause();
                 }
             };
@@ -72,9 +71,9 @@ export function Player() {
                 }
             };
         }
-    };
+    }
 
-    const onPrevClick = () => {
+    function onPrevClick() {
         if (track && playerList?.length) {
             const index = playerList.findIndex(it => it._id === track._id);
             if (index >= 0) {
@@ -83,34 +82,34 @@ export function Player() {
         } else {
             setSongParams();
         }
-    };
+    }
 
-    const onNextClick = () => {
+    function onNextClick() {
         if (track && playerList?.length) {
             const index = playerList.findIndex(it => it._id === track._id);
             if (index >= 0) {
                 setPlayingSong(playerList[(index + 1) % playerList.length]);
             }
         }
-    };
+    }
 
-    const onSwitchPlay = () => {
+    function onSwitchPlay() {
         if (pause) {
             playSong();
         } else {
             pauseSong();
         }
-    };
+    }
 
-    const changeVolume = (value: number) => {
+    function changeVolume(value: number) {
         audio.volume = value / 100;
         setVolumeSong(value);
-    };
+    }
 
-    const changeCurrentTime = (value: number) => {
+    function changeCurrentTime(value: number) {
         audio.currentTime = value;
         setPlayerTime(value);
-    };
+    }
 
     return (
         <div className="player">
@@ -145,9 +144,9 @@ export function Player() {
                     <div onClick={onSwitchPlay} className="player__controls__playpause">
                         {!pause
                             ? isReady
-                                ? <PauseCircleOutlined style={{ fontSize: "32px"}}/>
+                                ? <PauseCircleOutlined style={{ fontSize: "32px" }}/>
                                 : <LoadingOutlined style={{ fontSize: "32px" }} spin/>
-                            : <PlayCircleOutlined style={{ fontSize: "32px"}}/>
+                            : <PlayCircleOutlined style={{ fontSize: "32px" }}/>
                         }
                     </div>
                     <StepForwardOutlined
@@ -166,8 +165,8 @@ export function Player() {
                 </div>
             </div>
             <div className="player__control-button-bar">
-                <MenuUnfoldOutlined style={{ fontSize: "14px"}}/>
-                <SoundOutlined style={{ fontSize: "14px"}}/>
+                <PopoverPlayerList playerList={playerList}/>
+                <SoundOutlined style={{ fontSize: "16px" }}/>
                 <div className="player__control-button-bar__volume">
                     <SongProgress
                         begin={volume}

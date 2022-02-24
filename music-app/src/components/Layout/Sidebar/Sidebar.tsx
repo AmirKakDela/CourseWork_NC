@@ -37,7 +37,6 @@ const Sidebar: React.FC<PropsType> = (props) => {
         let newPlaylistNumber = playlistsByCurrentUser.length + 1
         while (playlistsByCurrentUser.find( p => p.name === `Мой плейлист №${newPlaylistNumber}`)) newPlaylistNumber++
 
-        console.log(playlistsByCurrentUser)
         const newPlaylist = {
             name: `Мой плейлист №${newPlaylistNumber}`,
             user: {
@@ -49,7 +48,6 @@ const Sidebar: React.FC<PropsType> = (props) => {
 
         PlaylistAPI.createPlaylist(newPlaylist)
             .then(data => {
-                console.log(data)
                 dispatch(thunkUserPlaylists(user.userId))
                 if (data.playlist) navigate(`/playlist/${data.playlist._id}`)
 
@@ -59,9 +57,7 @@ const Sidebar: React.FC<PropsType> = (props) => {
 
     useEffect(() => {
         //dispatch(thunkUserPlaylists(user.userId))
-        console.log(user.likedPlaylists)
         setPlaylists([...user.playlists, ...user.likedPlaylists])
-        console.log(user.playlists)
     }, [dispatch, user.playlists, user.likedPlaylists]);
 
     return (
@@ -105,7 +101,6 @@ const Sidebar: React.FC<PropsType> = (props) => {
                     &&
                     <Menu.ItemGroup className="menu__playlists">
                         {playlists.map((item, index) => {
-                            console.log(item)
                             return (
                                 <Menu.Item
                                     key={5 + index}

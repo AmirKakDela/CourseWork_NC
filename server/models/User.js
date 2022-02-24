@@ -7,6 +7,7 @@ const User = new Schema({
     likedSongs: {type: [String], default: []},
     playlists: {type: [String], default: []},
     likedPlaylists: {type: [String], default: []},
+    likedAlbums: {type: [String], default: []},
     admin: {type: Boolean, default: false}
 })
 

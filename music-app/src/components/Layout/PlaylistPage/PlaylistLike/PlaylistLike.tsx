@@ -19,9 +19,7 @@ const Like: React.FC<PropsType> = (props) => {
         dispatch(thunkToggleLikePlaylist(props.playlist));
     }
     const likePlaylistStatus = user.likedPlaylists.find(playlist => playlist._id === props.playlist._id)
-console.log(likePlaylistStatus)
-    console.log(user.likedPlaylists)
-    console.log(props.playlist)
+
     return (
         <div>
             {likePlaylistLoading.status && likePlaylistLoading.playlistId === props.playlist._id
