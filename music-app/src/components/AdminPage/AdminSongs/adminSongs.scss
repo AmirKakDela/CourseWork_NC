@@ -29,6 +29,22 @@
     }
   }
 
+  &-song {
+    &__wrap {
+      padding: 10px 30px;
+      border-bottom: .5px solid $lightgrey;
+      display: flex;
+      align-items: center;
+      column-gap: 15px;
+    }
+
+    &__action {
+      width: auto;
+      margin-top: 0;
+      padding: 5px 15px;
+    }
+  }
+
   &-genre {
     width: 100%;
     min-width: 320px;

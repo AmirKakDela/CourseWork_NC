@@ -103,13 +103,10 @@ function App() {
                             <AdminRoute isAdmin={isAdmin} isAuth={isAuth}>
                                 <AdminLayout/>
                             </AdminRoute>}>
-                            <Route index element={<MainPage/>}/>
+                            <Route index element={<AdminMain/>}/>
                             <Route path="songs" element={<AdminSongs/>}/>
                             <Route path="song/:id" element={<AdminSongForm/>}/>
                             <Route path="song/create" element={<AdminSongForm/>}/>
-                            <Route path="artists" element={<h1>All Artists</h1>}/>
-                            <Route path="playlists" element={<h1>All Playlists</h1>}/>
-                            <Route path="albums" element={<h1>All Albums</h1>}/>
                             <Route path="genres" element={<AdminGenres/>}/>
                             <Route path="genre/:id" element={<AdminGenreForm/>}/>
                             <Route path="genre/create" element={<AdminGenreForm/>}/>
