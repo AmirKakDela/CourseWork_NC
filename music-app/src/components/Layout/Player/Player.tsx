@@ -36,7 +36,7 @@ export function Player() {
     }, [pause, isReady]);
 
     useEffect(() => {
-        setSongCover(track.cover);
+        setSongCover(track?.cover);
         setSongParams();
     }, [track]);
 
