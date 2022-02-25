@@ -21,7 +21,7 @@ export const items: SidebarItemType[] = [
         text: 'Поиск',
     },
     {
-        path: "/my-library/songs",
+        path: "/my-library",
         itemId: "library",
         icon: ProfileOutlined,
         text: 'Моя медиатека',

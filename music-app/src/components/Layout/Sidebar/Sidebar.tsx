@@ -18,8 +18,10 @@ type PropsType = {
 const Sidebar: React.FC<PropsType> = (props) => {
     const navigate = useNavigate();
     let location = useLocation();
-    let current = props.items?.find(item => item?.path.includes(location.pathname))?.path || "/";
-    const handleClick = useCallback((e: MenuInfo) => current = e.key, []);
+    // let current = props.items?.find(item => item?.path.includes(location.pathname))?.path || "/";
+    // const handleClick = useCallback((e: MenuInfo) => current = e.key, []);
+    const [current, setCurrent] = useState('home');
+    const handleClick = (e: MenuInfo) => setCurrent(e.key);
     const dispatch = useDispatch();
     const currentTheme = useSelector((state: RootState) => state.shared.appTheme);
     const user = useSelector((state: RootState) => state.user.currentUser);
@@ -74,7 +76,7 @@ const Sidebar: React.FC<PropsType> = (props) => {
                     {props.items.map((item) => {
                         return (
                             <Menu.Item
-                                key={item.path}
+                                key={item.itemId}
                                 onClick={() => menuItemHandler(item.path)}
                                 icon={item.icon && React.createElement(item.icon)}
                                 id={item.itemId}
