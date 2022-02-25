@@ -34,6 +34,9 @@ import { AdminAlbumForm } from './components/AdminPage/AdminAlbumForm/AdminAlbum
 import LibraryAlbums from "./components/Layout/MyLibraryPage/LibraryAlbums";
 import AdminArtists from "./components/AdminPage/AdminArtists/AdminArtists";
 import AdminArtistForm from "./components/AdminPage/AdminArtistForm/AdminArtistForm";
+import AdminGenres from "./components/AdminPage/AdminGenres/AdminGenres";
+import AdminGenreForm from "./components/AdminPage/AdminGenreForm/AdminGenreForm";
+import AdminMain from "./components/AdminPage/AdminMain/AdminMain";
 
 function App() {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
@@ -104,6 +107,12 @@ function App() {
                             <Route path="songs" element={<AdminSongs/>}/>
                             <Route path="song/:id" element={<AdminSongForm/>}/>
                             <Route path="song/create" element={<AdminSongForm/>}/>
+                            <Route path="artists" element={<h1>All Artists</h1>}/>
+                            <Route path="playlists" element={<h1>All Playlists</h1>}/>
+                            <Route path="albums" element={<h1>All Albums</h1>}/>
+                            <Route path="genres" element={<AdminGenres/>}/>
+                            <Route path="genre/:id" element={<AdminGenreForm/>}/>
+                            <Route path="genre/create" element={<AdminGenreForm/>}/>
                             <Route path="artists" element={<AdminArtists/>}/>
                             <Route path="artist/:id" element={<AdminArtistForm/>}/>
                             <Route path="artist/create" element={<AdminArtistForm/>}/>

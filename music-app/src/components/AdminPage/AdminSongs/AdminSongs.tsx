@@ -32,6 +32,8 @@ const AdminSongs: React.FC = () => {
             setSongs(data)
             setIsLoading(false
             )
+        }).catch(err => {
+            console.log(err)
         })
     }, [])
 
@@ -43,7 +45,7 @@ const AdminSongs: React.FC = () => {
                     <Link to="/admin/song/create">
                         <button className="form__button admin__button">Создать новую песню</button>
                     </Link>
-                    {songs && songs.map((song, index) => {
+                    {songs.length && songs.map((song, index) => {
                         return <div className="admin-song__wrap" key={song._id}>
                             <Song song={song} order={index + 1} onPlay={onPlay.bind(this,song)}/>
                             <Popconfirm
@@ -63,7 +65,7 @@ const AdminSongs: React.FC = () => {
                             </Link>
                         </div>
                     })}
-                </>
+                </div>
             }
         </div>
     );

@@ -12,21 +12,20 @@ class GenreController {
             if (candidateGenre) return res.status(412).json({message: 'Такой жанр уже существует'})
 
             const genre = new Genre(req.body)
-            genre.save();
+            await genre.save();
 
             return res.json({message: 'Жанр успешно добавлен', genre})
-
         } catch (e) {
             console.log('Ошибка сервера при createGenre', e);
             return res.send({message: "Ошибка сервера при создании жанра."});
         }
     }
 
-    async getGenre(req,res ) {
+    async getGenre(req, res) {
         try {
             const id = req.params.id;
             const genre = await Genre.findById(id);
-            if(!genre) return res.status(412).json({message: "Ошибка сервера при получении жанра."});
+            if (!genre) return res.status(412).json({message: "Ошибка сервера при получении жанра."});
 
             const songs = await Song.find({genre: id})
             // const albums = await
