@@ -105,12 +105,11 @@ const SearchPage = () => {
                             return (<ArtistCard key={art._id} artist={art}/>)
                         })}
                     </div> : null}
-                    <h2 className="search__title">Плейлисты</h2>
-                    {searchResult.playlists.length ? <div className="search__genres-row">
-                        {searchResult.playlists.map(playlist => {
+                    <ScrollComponent className="search__genres-row" titleName="Плейлисты" data={
+                        searchResult.playlists.length && searchResult.playlists.map(playlist => {
                             return (<PlaylistCard key={playlist._id} playlist={playlist}/>)
-                        })}
-                    </div> : <p>Плейлистов нет</p>}
+                        })
+                    }/>
                     <div className="search__other">
                     </div>
                 </div>

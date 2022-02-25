@@ -9,21 +9,24 @@
   border-radius: 4px;
   transition: .2s all ease-in-out;
   user-select: none;
+  color: var(--text-color);
 
   &__main {
     width: auto;
     display: flex;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
   }
 
   &__add {
-    align-items: center;
+    /*align-items: center;
 
     .add__button {
       padding: 10px 25px;
       background: none;
-      color: $white;
-      border: 1px solid $white;
+      //color: var(--text-color);
+      border: 1px solid var(--text-color);
       border-radius: 500px;
       font-size: 12px;
       font-weight: 700;
@@ -31,7 +34,20 @@
       &:hover {
         transform: scale(1.08);
       }
-    }
+    }*/
+
+      padding: 10px 25px;
+      background: none;
+      //color: var(--text-color);
+      border: 1px solid var(--text-color);
+      border-radius: 500px;
+      font-size: 12px;
+      font-weight: 700;
+
+      &:hover {
+        transform: scale(1.08);
+      }
+
   }
 
   &__img {
@@ -44,7 +60,7 @@
   }
 
   &__name {
-    color: $white;
+    color: var(--text-color);
     font-weight: 600;
     line-height: 100%;
     white-space: nowrap;
@@ -54,7 +70,7 @@
 
   &__artist {
     font-size: 14px;
-    color: $grey;
+    color: var(--text-artist-color);
     font-weight: 600;
     line-height: 115%;
     white-space: nowrap;
@@ -64,13 +80,20 @@
 
   &__number {
     font-size: 16px;
-    color: $white;
+    //color: $white;
     font-weight: 400;
+  }
+
+  &__other {
+    display: flex;
+    column-gap: 20px;
+    align-items: center;
+
   }
 
   &__duration {
     font-size: 14px;
-    color: $grey;
+    color: var(--text-artist-color);
     font-weight: 400;
   }
 
@@ -83,7 +106,7 @@
     z-index: 1;
     display: none;
     font-size: 25px;
-    color: $white;
+    //color: $white;
     cursor: pointer;
     align-items: center;
     justify-content: center;
@@ -115,7 +138,7 @@
 
   &:hover {
     .song__artist {
-      color: $white;
+      //color: $white;
     }
 
     .song__number {

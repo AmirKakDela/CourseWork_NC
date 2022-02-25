@@ -2,11 +2,13 @@ const Router = require("express");
 const router = new Router();
 const controller = require("../controllers/playlistController");
 const authMiddleware = require("../middlewares/auth.middleware");
-const adminMiddleware = require("../middlewares/admin.middleware");
 const {check} = require("express-validator");
+const uploadMiddleware = require("../middlewares/upload.middleware");
 
 router.post(
-    "/create", authMiddleware,
+    "/create",
+    authMiddleware,
+    check('name', 'Обязательное поле не заполнено').notEmpty(),
     controller.createPlaylist
 );
 
@@ -40,6 +42,9 @@ router.put(
 router.put(
     "/edit/:id",
     authMiddleware,
+    uploadMiddleware.fields([
+        {name: 'cover', maxCount: 1}
+    ]),
     controller.editPlaylist
 );
 
@@ -58,11 +63,5 @@ router.put(
     '/user/like/:id',
     authMiddleware,
     controller.toggleLikePlaylist);
-
-/*router.delete(
-    "/user/delete/:id",
-    controller.deletePlaylistFromUser
-);*/
-
 
 module.exports = router;

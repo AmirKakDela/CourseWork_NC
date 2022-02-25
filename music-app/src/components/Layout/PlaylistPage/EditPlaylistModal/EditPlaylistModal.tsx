@@ -1,162 +1,96 @@
-import React, {useCallback, useEffect, useMemo, useState} from "react";
-import "./EditPlaylistModal.scss"
-import {Button, Form, Input, Modal, Upload} from "antd";
-import {UploadOutlined} from "@ant-design/icons";
+import React, {useMemo} from "react";
+import {Input, Modal} from "antd";
 import {Formik} from "formik";
-import {useDispatch} from "react-redux";
-import {PlaylistType} from "../../../../config/types";
 
+import "./EditPlaylistModal.scss"
+import {EditPlaylistType, PlaylistType} from "../../../../config/types";
 
-interface Values {
-    title: string;
-    description: string;
-    modifier: string;
-}
 
 interface EditPlaylistModalProps {
     visible: boolean;
-    onCreate: (values: PlaylistType) => void;
+    onEdit: (values: PlaylistType) => void;
     onCancel: () => void;
     playlist: PlaylistType
+    theme: string
 }
 
 const EditPlaylistModal: React.FC<EditPlaylistModalProps> = ({
                                                                  visible,
-                                                                 onCreate,
+                                                                 onEdit,
                                                                  onCancel,
-                                                                 playlist
+                                                                 playlist,
+                                                                 theme
                                                              }) => {
-    const initialValues: PlaylistType = useMemo(() => {
+    const initialValues: EditPlaylistType = useMemo(() => {
         return {
-            _id: playlist._id,
             name: playlist.name,
-            user: playlist.user,
             cover: playlist.cover,
-            songs: playlist.songs
+            description: playlist.description
         }
     }, [playlist]);
-    //const [initialValues, setInitialValues] = useState({name: playlist.name, cover: playlist.cover})
 
-    const [form] = Form.useForm();
-
-    const onSubmit = () => {
-        form
-            .validateFields()
-            .then(values => {
-                form.resetFields();
-                onCreate(values);
-            })
-            .catch(info => {
-                console.log('Validate Failed:', info);
-            });
-
+    const onSubmit = (data: any) => {
+        onEdit(data)
     }
 
-    useEffect(() => {
-        form.setFieldsValue(initialValues)
-    }, [form, initialValues])
     return (
         <Modal
-            className="edit_playlist__modal"
+            className={`edit_playlist__modal _${theme}`}
             visible={visible}
             title="Изменить сведения"
             cancelText="Cancel"
-            onCancel={() => {
-                form.resetFields()
-                onCancel()
+            onCancel={onCancel
             }
-            }
-            onOk={onSubmit}
-            footer={[
-                <Button className="edit_playlist__save" onClick={onSubmit}>{"Сохранить".toUpperCase()}</Button>
-            ]}
+            footer={[]}
         >
-            <Form
-                className="edit_playlist__form"
-                form={form}
-                layout="vertical"
-                name="form_in_modal"
-                initialValues={initialValues}
-            >
-                <Form.Item name="cover" className="form__cover">
-                    <Upload.Dragger action="/upload.do">
-                        <p className="ant-upload-text">
-                            &#119135;</p>
-                    </Upload.Dragger>
-                </Form.Item>
-                <Form.Item
-                    className="form__name"
-                    name="name"
-                    rules={[{required: true, message: 'Please input the title of collection!'}]}
-                >
-                    <Input/>
-                </Form.Item>
-            </Form>
-        </Modal>
-    );
-};
-
-/*const EditPlaylistModal = (props: any) => {
-    const playlist = props.playlist;
-    const handleOk = props.onOk;
-    const dispatch = useDispatch()
-
-    const initialValues: PlaylistType = useMemo(() => {
-        return {
-            name: playlist.name,
-            user: playlist.user,
-            cover: playlist.cover,
-            songs: playlist.songs
-        }
-    }, []);
-
-    const onSubmit = useCallback((data: PlaylistType) => {
-        if (initialValues !== data) dispatch(updatePlaylistByRequest(playlist._id, data))
-        handleOk()
-    }, [dispatch])
-
-
-    // const onSubmit = useCallback((data: PlaylistType) => {
-    //     console.log(data)
-    // }, [])
-    return (
-        <Modal
-            title="Basic Modal"
-            visible={props.visible}
-            onOk={props.onOk}
-            onCancel={props.onCancel}
-            okButtonProps={{color: "red"}}
-
-        >
-            <Formik initialValues={initialValues} onSubmit={onSubmit} validateOnBlur>
+            <Formik enableReinitialize initialValues={initialValues} onSubmit={onSubmit} className="edit_playlist__form"
+                    validateOnBlur>
                 {({
                       values,
                       touched,
                       errors,
                       handleSubmit,
                       handleBlur,
-                      handleChange
+                      handleChange,
+                      setFieldValue
                   }) =>
-                    (<form onSubmit={handleSubmit}>
-                        <Upload.Dragger name="cover" action="/upload.do" >
-                            <p className="ant-upload-drag-icon"></p>
-                            <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                            <p className="ant-upload-hint">Support for a single or bulk upload.</p>
-                        </Upload.Dragger>
+                    (<form className="edit_playlist__form" onSubmit={handleSubmit}>
+                        <div className="form__cover">
+                            {playlist.cover && <img src={playlist.cover}/>}
+                            <Input name='cover'
+                                   className={`form__input form__input_upload`}
+                                   id="cover"
+                                   type="file"
+                                   onBlur={handleBlur}
+
+                                   onChange={(e) => {
+                                       setFieldValue('cover', e.target.files && e.target.files[0])
+                                   }}
+                            />
+                        </div>
                         <Input
+                            className="form__name"
                             name="name"
-                            id="edit__name"
+                            placeholder="Добавить название"
+                            autoComplete="off"
+                            required
                             value={values.name}
                             onBlur={handleBlur}
                             onChange={handleChange}/>
-                        {/!*<Input.TextArea*!/}
-                        {/!*    onBlur={handleBlur}*!/}
-                        {/!*    onChange={handleChange}/>*!/}
-                        <button type="submit" onClick={() => props.onOk}>OK</button>
+                        <Input.TextArea
+                            className="form__description"
+                            name="description"
+                            placeholder="Добавить описание (необязательно; не более 300 символов)"
+                            maxLength={300}
+                            autoComplete="off"
+                            value={values.description}
+                            onBlur={handleBlur}
+                            onChange={handleChange}/>
+                        <button type="submit" className="form__save">{"Сохранить".toUpperCase()}</button>
                     </form>)}
             </Formik>
         </Modal>
     );
-};*/
+};
 
 export default EditPlaylistModal;

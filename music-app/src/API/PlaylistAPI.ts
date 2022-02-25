@@ -1,6 +1,5 @@
 import axios from "axios";
 import {AuthorizationHeaderConfig, url} from "../config/config";
-import {PlaylistType} from "../config/types";
 
 class PlaylistAPI {
     async createPlaylist(newPlaylist: any) {
@@ -33,16 +32,6 @@ class PlaylistAPI {
             })
     }
 
-    /*async getPlaylistsByUser() {
-        return await axios.get(`${url}/api/playlist/all`, AuthorizationHeaderConfig)
-            .then(res => {
-                return res.data
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }*/
-
     async getPlaylistById(id: string) {
         return await axios.get(`${url}/api/playlist/${id}`, AuthorizationHeaderConfig)
             .then(res => {
@@ -73,8 +62,13 @@ class PlaylistAPI {
             })
     }
 
-    async editPlaylist(id: string, data: PlaylistType) {
-        return await axios.put(`${url}/api/playlist/edit/${id}`, data, AuthorizationHeaderConfig)
+    async editPlaylist(id: string, data: any) {
+        return await axios.put(`${url}/api/playlist/edit/${id}`, data, {
+            headers: {
+                Authorization: '' + localStorage.getItem('token'),
+                'content-type': 'multipart/form-data'
+            }
+        })
             .then(res => {
                 return res.data
             })
@@ -86,16 +80,9 @@ class PlaylistAPI {
     async deletePlaylist(id: string) {
         return await axios.delete(`${url}/api/playlist/delete/${id}`, AuthorizationHeaderConfig)
             .then(res => {
-                console.log(res.data)
+                return res.data
             })
     }
-
-    /*async deletePlaylistFromUser(id: string, userId: string) {
-        return await axios.delete(`${url}/api/playlist/user/delete/${id}`,{userId: userId}, AuthorizationHeaderConfig)
-            .then(res => {
-                console.log(res.data)
-            })
-    }*/
 }
 
 export default new PlaylistAPI();

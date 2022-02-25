@@ -87,5 +87,12 @@ export type PlaylistType = {
         name: string
     },
     songs: Array<String>,
-    cover?: string
+    cover?: string,
+    description? : string
+}
+
+export type EditPlaylistType = {
+    cover?: string,
+    name: string,
+    description? : string
 }

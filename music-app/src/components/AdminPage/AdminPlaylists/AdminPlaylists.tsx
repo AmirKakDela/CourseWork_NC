@@ -2,23 +2,28 @@ import React, {useCallback, useEffect, useState} from "react";
 import {PlaylistType} from "../../../config/types";
 import PlaylistApi from "../../../API/PlaylistAPI";
 import {Button, Popconfirm, Skeleton} from "antd";
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
-import {useDispatch} from "react-redux";
+import {DeleteOutlined} from "@ant-design/icons";
+import {useDispatch, useSelector} from "react-redux";
+
 import PlaylistCard from "../../PlaylistCard/PlaylistCard";
 import "./AdminPlaylists.scss"
+import {RootState} from "../../../redux/Reducers/rootReducer";
+import {thunkUserPlaylists} from "../../../redux/Actions/thunkUserActions";
 
 const AdminPlaylists: React.FC = () => {
-    //const dispatch = useDispatch()
     const [playlists, setPlaylists] = useState<PlaylistType[]>([])
     const [isLoading, setIsLoading] = useState(true);
 
+    const user = useSelector((state: RootState) => state.user.currentUser)
+    const dispatch = useDispatch()
 
     const deletePlaylist = useCallback((id: string) => {
         PlaylistApi.deletePlaylist(id)
-            .then(() => {
+            .then((data) => {
+                console.log(data.message)
                 setPlaylists(playlists.filter(playlist => playlist._id !== id));
+                if(user.userId === data.deletedPlaylist.user.id) dispatch(thunkUserPlaylists(user.userId))
             })
-        //dispatch(thunkUserPlaylists())
     }, [playlists])
 
     useEffect(() => {
@@ -27,6 +32,7 @@ const AdminPlaylists: React.FC = () => {
             setIsLoading(false)
         })
     }, [])
+
     return (
         <div className="admin_playlists">
             {isLoading ? <Skeleton active/> :

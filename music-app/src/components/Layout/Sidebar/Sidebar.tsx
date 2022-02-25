@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {Menu, MenuTheme} from "antd";
 
-import { PlaylistType, SidebarItemType} from "../../../config/types";
+import {PlaylistType, SidebarItemType} from "../../../config/types";
 import {RootState} from "../../../redux/Reducers/rootReducer";
 import {thunkUserPlaylists} from "../../../redux/Actions/thunkUserActions";
 import {MenuInfo} from "rc-menu/lib/interface";
@@ -35,7 +35,7 @@ const Sidebar: React.FC<PropsType> = (props) => {
         const playlistsByCurrentUser = playlists.filter(el => el.user.id === user.userId)
 
         let newPlaylistNumber = playlistsByCurrentUser.length + 1
-        while (playlistsByCurrentUser.find( p => p.name === `Мой плейлист №${newPlaylistNumber}`)) newPlaylistNumber++
+        while (playlistsByCurrentUser.find(p => p.name === `Мой плейлист №${newPlaylistNumber}`)) newPlaylistNumber++
 
         console.log(playlistsByCurrentUser)
         const newPlaylist = {
@@ -49,19 +49,13 @@ const Sidebar: React.FC<PropsType> = (props) => {
 
         PlaylistAPI.createPlaylist(newPlaylist)
             .then(data => {
-                console.log(data)
                 dispatch(thunkUserPlaylists(user.userId))
                 if (data.playlist) navigate(`/playlist/${data.playlist._id}`)
-
             })
-
     }, [playlists])
 
     useEffect(() => {
-        //dispatch(thunkUserPlaylists(user.userId))
-        console.log(user.likedPlaylists)
         setPlaylists([...user.playlists, ...user.likedPlaylists])
-        console.log(user.playlists)
     }, [dispatch, user.playlists, user.likedPlaylists]);
 
     return (
@@ -89,15 +83,6 @@ const Sidebar: React.FC<PropsType> = (props) => {
                             </Menu.Item>
                         );
                     })}
-                    {/*<Menu.Item
-                        key="3"
-                        onClick={createPlaylist}
-                        icon={PlusSquareFilled && React.createElement(PlusSquareFilled)}
-                        id="create-playlist">Создать плейлист</Menu.Item>
-                    <Menu.Item key="4"
-                               onClick={() => navigate("/loved")}
-                               icon={HeartOutlined && React.createElement(HeartOutlined)}
-                               id="favourite-tracks">Любимые треки</Menu.Item>*/}
                 </Menu.ItemGroup>
                 {!location.pathname.includes("/admin")
                     &&
@@ -105,24 +90,19 @@ const Sidebar: React.FC<PropsType> = (props) => {
                     &&
                     <Menu.ItemGroup className="menu__playlists">
                         {playlists.map((item, index) => {
-                            console.log(item)
                             return (
                                 <Menu.Item
+                                    className="menu__playlist"
                                     key={5 + index}
                                     onClick={() => navigate(`/playlist/${item._id}`)}
                                     id={item._id}>
-                                    {item.name}
+                                        <span className="playlist__name">{item.name}</span>
+                                        {user.userId != item.user.id && <span className="playlist__author">{item.user.name}</span>}
                                 </Menu.Item>
                             );
                         })}
                     </Menu.ItemGroup>}
             </Menu>
-            {/*<Switch
-                checked={currentTheme === "dark"}
-                onChange={changeTheme}
-                checkedChildren="Dark"
-                unCheckedChildren="Light"
-            />*/}
         </div>
     );
 }
