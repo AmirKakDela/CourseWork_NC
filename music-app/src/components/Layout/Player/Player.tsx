@@ -36,6 +36,7 @@ export function Player() {
     }, [pause, isReady]);
 
     useEffect(() => {
+        setSongCover(track.cover);
         setSongParams();
     }, [track]);
 
@@ -118,7 +119,7 @@ export function Player() {
             {track
                 ? <div className="player__now-playing">
                     <div className="player__now-playing__cover">
-                        <img src={songCover || track?.cover}
+                        <img src={songCover}
                              alt="Song"
                              className="song__img"
                              aria-hidden="false"
