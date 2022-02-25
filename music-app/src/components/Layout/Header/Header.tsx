@@ -1,13 +1,12 @@
-import React, {useState} from "react";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../redux/Reducers/rootReducer";
 import {logoutCurrentUser} from "../../../redux/Actions/userActions";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {Dropdown, Menu, MenuTheme, Switch} from "antd";
-
-import "./Header.scss";
 import {CaretDownFilled, LeftOutlined, RightOutlined, UserOutlined} from "@ant-design/icons";
 import {ThemeContext} from "../theme-context/constants";
+import "./Header.scss";
 
 const Header = (props: any) => {
     const location = useLocation();

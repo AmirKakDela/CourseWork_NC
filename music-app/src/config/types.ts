@@ -9,7 +9,8 @@ export type CurrentUserType = {
     playlists: Array<PlaylistType>,
     likedPlaylists: Array<PlaylistType>,
     likePlaylistLoading: LikePlaylistLoadingType
-
+    likedAlbums: Array<string>,
+    likeAlbumLoading: LikeAlbumLoadingType
 }
 
 export type ErrorType = {
@@ -31,11 +32,11 @@ export type SongType = {
     genre: string
 }
 
-export type AlbumType = {
+export type AlbumType<SongT = string | SongType> = {
     _id: string,
     name: string,
     artist: string,
-    songs: Array<SongType>,
+    songs: Array<SongT>,
     cover: string
 }
 
@@ -76,6 +77,11 @@ export type LikeLoadingType = {
 
 export type LikePlaylistLoadingType = {
     playlistId: string | undefined,
+    status: boolean
+}
+
+export type LikeAlbumLoadingType = {
+    albumId: string | undefined,
     status: boolean
 }
 

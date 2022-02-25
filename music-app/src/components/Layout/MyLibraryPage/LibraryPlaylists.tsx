@@ -11,7 +11,6 @@ import {
 import {ScrollComponent} from "../../ScrollComponent/ScrollComponent";
 import PlaylistCard from "../../PlaylistCard/PlaylistCard";
 
-
 const LibraryPlaylists: React.FC = () => {
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user.currentUser);

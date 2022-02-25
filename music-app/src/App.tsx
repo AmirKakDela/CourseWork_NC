@@ -29,6 +29,11 @@ import LibraryPlaylists from "./components/Layout/MyLibraryPage/LibraryPlaylists
 import AdminPlaylists from "./components/AdminPage/AdminPlaylists/AdminPlaylists";
 import {darkTheme, lightTheme, ThemeContext} from "./components/Layout/theme-context/constants";
 import {SharedActionsType} from "./redux/Actions/sharedActions";
+import AdminAlbums from "./components/AdminPage/AdminAlbums/AdminAlbums";
+import { AdminAlbumForm } from './components/AdminPage/AdminAlbumForm/AdminAlbumForm';
+import LibraryAlbums from "./components/Layout/MyLibraryPage/LibraryAlbums";
+import AdminArtists from "./components/AdminPage/AdminArtists/AdminArtists";
+import AdminArtistForm from "./components/AdminPage/AdminArtistForm/AdminArtistForm";
 
 function App() {
     const isAuth = useSelector((state: RootState) => state.user.isAuth);
@@ -78,7 +83,7 @@ function App() {
                             <Route path='my-library' element={<MyLibraryPage/>}>
                                 <Route index element={<Navigate to='songs'/>}/>
                                 <Route path='songs' element={<LibrarySong/>}/>
-                                <Route path='albums' element={<h1>playlists</h1>}/>
+                                <Route path='albums' element={<LibraryAlbums/>}/>
                                 <Route path='playlists' element={<LibraryPlaylists/>}/>
                             </Route>
                             <Route path='create-playlist' element={<PlaylistPage/>}/>
@@ -95,13 +100,19 @@ function App() {
                             <AdminRoute isAdmin={isAdmin} isAuth={isAuth}>
                                 <AdminLayout/>
                             </AdminRoute>}>
+                            <Route index element={<MainPage/>}/>
                             <Route path="songs" element={<AdminSongs/>}/>
                             <Route path="song/:id" element={<AdminSongForm/>}/>
                             <Route path="song/create" element={<AdminSongForm/>}/>
-                            <Route path="artists" element={<h1>All Artists</h1>}/>
+                            <Route path="artists" element={<AdminArtists/>}/>
+                            <Route path="artist/:id" element={<AdminArtistForm/>}/>
+                            <Route path="artist/create" element={<AdminArtistForm/>}/>
                             <Route path="playlists" element={<AdminPlaylists/>}/>
-                            <Route path="albums" element={<h1>All Albums</h1>}/>
                             <Route path='playlist/:id' element={<PlaylistPage/>}/>
+                            <Route path="albums" element={<AdminAlbums/>}/>
+                            <Route path='album/:id' element={<AlbumPage/>}/>
+                            <Route path="album/update/:id" element={<AdminAlbumForm/>}/>
+                            <Route path="album/create" element={<AdminAlbumForm/>}/>
                         </Route>
                     </Routes>
                 </BrowserRouter>

@@ -144,7 +144,6 @@ class playlistController {
                 ? res.json(updatedPlaylist)
                 : res.status(412)
                     .json({message: "Плейлиста с таким id не существует"});
-
         } catch (e) {
             console.log(e);
             return res.send({message: "Ошибка сервера при обновлении плейлиста."});

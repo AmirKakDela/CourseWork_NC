@@ -19,25 +19,26 @@ type PropsType = {
 const Sidebar: React.FC<PropsType> = (props) => {
     const navigate = useNavigate();
     let location = useLocation();
-    let current = props.items?.find(item => item?.path.includes(location.pathname))?.path || '/';
-    const handleClick = useCallback((e: MenuInfo) => current = e.key, []);
+    // let current = props.items?.find(item => item?.path.includes(location.pathname))?.path || "/";
+    // const handleClick = useCallback((e: MenuInfo) => current = e.key, []);
+    const [current, setCurrent] = useState('home');
+    const handleClick = (e: MenuInfo) => setCurrent(e.key);
     const dispatch = useDispatch();
     const currentTheme = useSelector((state: RootState) => state.shared.appTheme);
-
-    const user = useSelector((state: RootState) => state.user.currentUser)
-    const [playlists, setPlaylists] = useState<PlaylistType[]>([])
+    const user = useSelector((state: RootState) => state.user.currentUser);
+    const [playlists, setPlaylists] = useState<PlaylistType[]>([]);
 
     const menuItemHandler = (itemPath: string) => {
-        itemPath === "/create-playlist" ? createPlaylist() : navigate(itemPath)
-    }
+        itemPath === "/create-playlist" ? createPlaylist() : navigate(itemPath);
+    };
 
     const createPlaylist = useCallback(() => {
-        const playlistsByCurrentUser = playlists.filter(el => el.user.id === user.userId)
+        const playlistsByCurrentUser = playlists.filter(el => el.user.id === user.userId);
+        let newPlaylistNumber = playlistsByCurrentUser.length + 1;
+        while (playlistsByCurrentUser.find(p => p.name === `Мой плейлист №${newPlaylistNumber}`)) {
+            newPlaylistNumber++;
+        }
 
-        let newPlaylistNumber = playlistsByCurrentUser.length + 1
-        while (playlistsByCurrentUser.find(p => p.name === `Мой плейлист №${newPlaylistNumber}`)) newPlaylistNumber++
-
-        console.log(playlistsByCurrentUser)
         const newPlaylist = {
             name: `Мой плейлист №${newPlaylistNumber}`,
             user: {
@@ -45,14 +46,16 @@ const Sidebar: React.FC<PropsType> = (props) => {
                 name: user.userName
             },
             songs: []
-        }
+        };
 
         PlaylistAPI.createPlaylist(newPlaylist)
             .then(data => {
-                dispatch(thunkUserPlaylists(user.userId))
-                if (data.playlist) navigate(`/playlist/${data.playlist._id}`)
-            })
-    }, [playlists])
+                dispatch(thunkUserPlaylists(user.userId));
+                if (data.playlist) {
+                    navigate(`/playlist/${data.playlist._id}`);
+                }
+            });
+    }, [playlists, dispatch, navigate, user.userId, user.userName]);
 
     useEffect(() => {
         setPlaylists([...user.playlists, ...user.likedPlaylists])
@@ -61,7 +64,7 @@ const Sidebar: React.FC<PropsType> = (props) => {
     return (
         <div className="sidebar">
             <div className="home-logo">
-                <Link to='/'>
+                <Link to="/">
                     <img src={SpotifyLogo} alt="SpotifyLogo"/>
                 </Link>
             </div>
@@ -71,10 +74,10 @@ const Sidebar: React.FC<PropsType> = (props) => {
                   theme={currentTheme}
             >
                 <Menu.ItemGroup className="menu__items">
-                    {props.items.map((item, index) => {
+                    {props.items.map((item) => {
                         return (
                             <Menu.Item
-                                key={index}
+                                key={item.itemId}
                                 onClick={() => menuItemHandler(item.path)}
                                 icon={item.icon && React.createElement(item.icon)}
                                 id={item.itemId}

@@ -193,7 +193,7 @@
   }
 
   &__artist {
-    color: var(--text-artist-color, $background-base);
+    color: var(--text-artist-color, $darkwhite);
   }
 
   &:hover {
@@ -262,7 +262,7 @@
 //artistPage
 .main-content .info {
   &__header {
-    background: linear-gradient(284deg, var(--artist-info-header-bg-color) 0%, rgba(29, 185, 84, 0.58) 100%);
+    background: linear-gradient(284deg, var(--artist-info-header-bg-color, #000000C5) 0%, rgba(29, 185, 84, 0.58) 100%);
   }
 
   &__main {

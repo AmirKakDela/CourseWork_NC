@@ -17,6 +17,7 @@ import {GenreType, SongType} from "../../../config/types";
 import {ScrollComponent} from "../../ScrollComponent/ScrollComponent";
 import {useActions} from "../../../hooks/useActions";
 import PlaylistCard from "../../PlaylistCard/PlaylistCard";
+import AlbumAPI from "../../../API/AlbumAPI";
 
 const SearchPage = () => {
     const dispatch = useDispatch();
@@ -31,13 +32,23 @@ const SearchPage = () => {
             dispatch(getSearchResult(queryValue))
             setSearchQuery({query: queryValue})
         }, 250), [dispatch, setSearchQuery]
-    )
+    );
+
+    const { setPlayingSong, setPlayingSongList } = useActions();
+
+    const onClickPlayIcon = (albumId: string) => {
+        AlbumAPI.getAlbumById(albumId)
+            .then(data => {
+                setPlayingSongList(data.songs);
+                setPlayingSong(data.songs[0]);
+            });
+    };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setQueryValue(e.target.value);
         debouncedGetSearch(e.target.value);
     }
-    const { setPlayingSong, setPlayingSongList } = useActions();
+
     function onPlay(song: SongType) {
         setPlayingSongList(searchResult.songs);
         setPlayingSong(song);
@@ -59,7 +70,6 @@ const SearchPage = () => {
         if (searchString !== null && queryValue.trim()) {
             dispatch(getSearchResult(queryValue));
         }
-        // eslint-disable-next-line
     }, []);
 
     return (
@@ -71,12 +81,6 @@ const SearchPage = () => {
                    onChange={handleChange}
             />
             {!queryValue ? <div className="search__content">
-                    {/*<h2 className="search__title">Топ жанров</h2>*/}
-                    {/*<div className="search__genres-row">*/}
-                    {/*    {genres && genres.map(genre => (*/}
-                    {/*        <Genre key={genre._id} genre={genre}/>*/}
-                    {/*    ))}*/}
-                    {/*</div>*/}
                     <ScrollComponent className="search__genres-row" titleName="Топ жанров" data={
                         genres && genres.map(genre => (
                             <Genre key={genre._id} genre={genre}/>
@@ -84,7 +88,9 @@ const SearchPage = () => {
                     <h2 className="search__title">Популярные плейлисты и альбомы</h2>
                     <div className="search__other">
                         {popularAlbums.map(album => {
-                            return <AlbumCard key={album._id} album={album}/>
+                            return <AlbumCard key={album._id}
+                                              album={album}
+                                              onClickPlayIcon={() => onClickPlayIcon(album._id)}/>
                         })}
                     </div>
                 </div>

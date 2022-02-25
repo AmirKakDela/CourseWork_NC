@@ -6,10 +6,12 @@ import './adminSongs.scss';
 import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
 import {Link} from "react-router-dom";
 import {Popconfirm, Skeleton} from "antd";
+import {useActions} from "../../../hooks/useActions";
 
 const AdminSongs: React.FC = () => {
     const [songs, setSongs] = useState<SongType[]>([])
     const [isLoading, setIsLoading] = useState(true);
+    const { setPlayingSong, setPlayingSongList } = useActions();
 
     const deleteSong = (id: string) => {
         SongsAPI.deleteSong(id).then(() => {
@@ -18,6 +20,11 @@ const AdminSongs: React.FC = () => {
             })
             setSongs(newSongs);
         })
+    }
+
+    const onPlay = (song: SongType) => {
+        setPlayingSongList(songs);
+        setPlayingSong(song);
     }
 
     useEffect(() => {
@@ -30,7 +37,7 @@ const AdminSongs: React.FC = () => {
 
 
     return (
-        <>
+        <div className="admin">
             {isLoading ? <Skeleton active/> :
                 <>
                     <Link to="/admin/song/create">
@@ -38,7 +45,7 @@ const AdminSongs: React.FC = () => {
                     </Link>
                     {songs && songs.map((song, index) => {
                         return <div className="admin-song__wrap" key={song._id}>
-                            <Song song={song} order={index + 1}/>
+                            <Song song={song} order={index + 1} onPlay={onPlay.bind(this,song)}/>
                             <Popconfirm
                                 title="Вы действительно хотите удалить данную песню?"
                                 onConfirm={() => deleteSong(song._id)}
@@ -58,7 +65,7 @@ const AdminSongs: React.FC = () => {
                     })}
                 </>
             }
-        </>
+        </div>
     );
 };
 

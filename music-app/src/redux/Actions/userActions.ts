@@ -1,17 +1,28 @@
-import {CurrentUserType, LikeLoadingType, PlaylistType, SongType, LikePlaylistLoadingType} from "../../config/types";
+import {
+    CurrentUserType,
+    LikeLoadingType,
+    PlaylistType,
+    SongType,
+    LikePlaylistLoadingType,
+    AlbumType,
+    LikeAlbumLoadingType
+} from "../../config/types";
 
 export enum UserActionTypeTypes {
-    SET_CURRENT_USER = 'SET_CURRENT_USER',
-    LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER',
-    SET_AUTH_ERROR = 'SET_AUTH_ERROR',
-    SET_USER_LIKED_SONGS = 'SET_USER_LIKED_SONGS',
-    TOGGLE_LIKE_SONG = 'TOGGLE_LIKE_SONG',
-    USER_LOADING = 'USER_LOADING',
-    LIKE_LOADING = 'LIKE_LOADING',
-    SET_USER_PLAYLISTS = 'SET_USER_PLAYLISTS',
-    SET_USER_LIKED_PLAYLISTS = 'SET_USER_LIKED_PLAYLISTS',
-    TOGGLE_LIKE_PLAYLIST = 'TOGGLE_LIKE_PLAYLIST',
-    LIKE_PLAYLIST_LOADING = 'LIKE_PLAYLIST_LOADING'
+    SET_CURRENT_USER = "SET_CURRENT_USER",
+    LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER",
+    SET_AUTH_ERROR = "SET_AUTH_ERROR",
+    SET_USER_LIKED_SONGS = "SET_USER_LIKED_SONGS",
+    TOGGLE_LIKE_SONG = "TOGGLE_LIKE_SONG",
+    USER_LOADING = "USER_LOADING",
+    LIKE_LOADING = "LIKE_LOADING",
+    SET_USER_PLAYLISTS = "SET_USER_PLAYLISTS",
+    SET_USER_LIKED_PLAYLISTS = "SET_USER_LIKED_PLAYLISTS",
+    TOGGLE_LIKE_PLAYLIST = "TOGGLE_LIKE_PLAYLIST",
+    LIKE_PLAYLIST_LOADING = "LIKE_PLAYLIST_LOADING",
+    TOGGLE_LIKE_ALBUM = "TOGGLE_LIKE_ALBUM",
+    LIKE_ALBUM_LOADING = "LIKE_ALBUM_LOADING",
+    SET_USER_LIKED_ALBUMS = 'SET_USER_LIKED_ALBUMS',
 }
 
 export type UserActionTypes = SetCurrentUserType
@@ -25,18 +36,20 @@ export type UserActionTypes = SetCurrentUserType
     | LikePlaylistLoadingTypeAction
     | SetUserLikedPlaylistsType
     | ToggleLikePlaylistType
-
+    | ToggleLikeAlbumType
+    | LikeAlbumLoadingTypeAction
+    | SetUserLikedAlbumsType;
 
 type LogoutCurrentUserType = {
     type: UserActionTypeTypes.LOGOUT_CURRENT_USER
 }
 
 export const logoutCurrentUser = (): LogoutCurrentUserType => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     return {
         type: UserActionTypeTypes.LOGOUT_CURRENT_USER
-    }
-}
+    };
+};
 
 export type SetCurrentUserType = {
     type: UserActionTypeTypes.SET_CURRENT_USER,
@@ -46,8 +59,8 @@ export const setCurrentUser = (currentUser: CurrentUserType): SetCurrentUserType
     return {
         type: UserActionTypeTypes.SET_CURRENT_USER,
         payload: currentUser
-    }
-}
+    };
+};
 
 export type SetAuthErrorType = {
     type: UserActionTypeTypes.SET_AUTH_ERROR,
@@ -58,8 +71,8 @@ export const setAuthError = (error: string | null): SetAuthErrorType => {
     return {
         type: UserActionTypeTypes.SET_AUTH_ERROR,
         payload: error
-    }
-}
+    };
+};
 
 export type UserLoadingType = {
     type: UserActionTypeTypes.USER_LOADING,
@@ -70,8 +83,8 @@ export const userLoading = (status: boolean): UserLoadingType => {
     return {
         type: UserActionTypeTypes.USER_LOADING,
         payload: status
-    }
-}
+    };
+};
 
 export type SetUserLikedSongsType = {
     type: UserActionTypeTypes.SET_USER_LIKED_SONGS,
@@ -82,8 +95,8 @@ export const setUserLikedSongs = (likedSongs: Array<SongType>): SetUserLikedSong
     return {
         type: UserActionTypeTypes.SET_USER_LIKED_SONGS,
         payload: likedSongs
-    }
-}
+    };
+};
 
 export type ToggleLikeSongType = {
     type: UserActionTypeTypes.TOGGLE_LIKE_SONG,
@@ -94,8 +107,8 @@ export const toggleLikeSong = (song: SongType): ToggleLikeSongType => {
     return {
         type: UserActionTypeTypes.TOGGLE_LIKE_SONG,
         payload: song
-    }
-}
+    };
+};
 
 export type LikeLoadingTypeAction = {
     type: UserActionTypeTypes.LIKE_LOADING,
@@ -106,8 +119,8 @@ export const likeLoading = (likeSong: LikeLoadingType): LikeLoadingTypeAction =>
     return {
         type: UserActionTypeTypes.LIKE_LOADING,
         payload: likeSong
-    }
-}
+    };
+};
 
 export type SetUserPlaylistsType = {
     type: UserActionTypeTypes.SET_USER_PLAYLISTS,
@@ -118,8 +131,8 @@ export const setUserPlaylists = (userPlaylists: Array<PlaylistType>): SetUserPla
     return {
         type: UserActionTypeTypes.SET_USER_PLAYLISTS,
         payload: userPlaylists
-    }
-}
+    };
+};
 
 export type SetUserLikedPlaylistsType = {
     type: UserActionTypeTypes.SET_USER_LIKED_PLAYLISTS,
@@ -130,8 +143,8 @@ export const setUserLikedPlaylists = (likedPlaylists: Array<PlaylistType>): SetU
     return {
         type: UserActionTypeTypes.SET_USER_LIKED_PLAYLISTS,
         payload: likedPlaylists
-    }
-}
+    };
+};
 
 export type ToggleLikePlaylistType = {
     type: UserActionTypeTypes.TOGGLE_LIKE_PLAYLIST,
@@ -142,8 +155,8 @@ export const toggleLikePlaylist = (playlist: PlaylistType): ToggleLikePlaylistTy
     return {
         type: UserActionTypeTypes.TOGGLE_LIKE_PLAYLIST,
         payload: playlist
-    }
-}
+    };
+};
 
 export type LikePlaylistLoadingTypeAction = {
     type: UserActionTypeTypes.LIKE_PLAYLIST_LOADING,
@@ -154,5 +167,41 @@ export const likePlaylistLoading = (likePlaylist: LikePlaylistLoadingType): Like
     return {
         type: UserActionTypeTypes.LIKE_PLAYLIST_LOADING,
         payload: likePlaylist
-    }
+    };
+};
+
+export type SetUserLikedAlbumsType = {
+    type: UserActionTypeTypes.SET_USER_LIKED_ALBUMS,
+    payload: Array<AlbumType>
 }
+
+export const setUserLikedAlbums = (likedAlbums: Array<AlbumType>): SetUserLikedAlbumsType => {
+    return {
+        type: UserActionTypeTypes.SET_USER_LIKED_ALBUMS,
+        payload: likedAlbums
+    };
+};
+
+export type ToggleLikeAlbumType = {
+    type: UserActionTypeTypes.TOGGLE_LIKE_ALBUM,
+    payload: string
+}
+
+export const toggleLikeAlbum = (albumId: string): ToggleLikeAlbumType => {
+    return {
+        type: UserActionTypeTypes.TOGGLE_LIKE_ALBUM,
+        payload: albumId
+    };
+};
+
+export type LikeAlbumLoadingTypeAction = {
+    type: UserActionTypeTypes.LIKE_ALBUM_LOADING,
+    payload: LikeAlbumLoadingType
+}
+
+export const likeAlbumLoading = (likeAlbum: LikeAlbumLoadingType): LikeAlbumLoadingTypeAction => {
+    return {
+        type: UserActionTypeTypes.LIKE_ALBUM_LOADING,
+        payload: likeAlbum
+    };
+};

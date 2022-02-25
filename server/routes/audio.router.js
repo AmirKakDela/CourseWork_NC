@@ -24,6 +24,7 @@ const uploadAudio = multer({
     storage: multerS3({
         s3: s3,
         bucket: `${BUCKET}/audio`,
+        acl: 'public-read',
         key: (req, file, cb) => {
             console.log(file);
             cb(null, file.originalname);
@@ -31,10 +32,11 @@ const uploadAudio = multer({
     })
 });
 
-router.post("/audio-upload", uploadAudio.single("file"),
-    async function (req, res) {
+router.post("/audio-upload", uploadAudio.single("audio"),
+    async (req, res) => {
     try{
-        res.send("Successfully uploaded " + req.file.location + " location!");
+        console.log("Successfully uploaded!");
+        res.send(`https://d1u5py1azrnpf.cloudfront.net/audio/${req.file.originalname}`);
     } catch (e) {
         res.status(500)
             .json({ message: e.message });

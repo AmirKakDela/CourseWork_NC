@@ -5,7 +5,6 @@ import songDefault from "../../assets/imgs/song_default.jpg";
 import Like from "./Like";
 import {CaretRightFilled as PlayIcon, PauseOutlined as PauseIcon} from "@ant-design/icons";
 import {useActions} from "../../hooks/useActions";
-import {setPlayingSong} from "../../redux/action-creators/action-creators";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {RootState} from "../../redux/Reducers/rootReducer";
 import {PlayerReducerState} from "../../redux/Reducers/playerReducer";
@@ -18,19 +17,18 @@ type PropsType = {
 }
 
 export const Song = (props: PropsType) => {
-    const {song, order, onPlay} = props;
-    const {pause, track} = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
+    const { song, order, onPlay } = props;
+    const { pause, track } = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
     const [songCover, setSongCover] = useState(song.cover);
-    const {playSong, pauseSong} = useActions();
+    const { playSong, pauseSong } = useActions();
     let isSelectedSong = false;
     if (song._id) {
         isSelectedSong = track?._id === song._id;
     }
     const isPlayed = !pause && isSelectedSong;
 
-    function play() {
+    function onSwitchPlay() {
         onPlay && onPlay();
-        // setPlayingSong(song);
         if (isPlayed) {
             pauseSong();
         } else {
@@ -39,7 +37,8 @@ export const Song = (props: PropsType) => {
     }
 
     const onImageError = () => {
-        setSongCover(songDefault);
+        song.cover = songDefault;
+        setSongCover(song.cover);
     };
 
     return (
@@ -48,10 +47,10 @@ export const Song = (props: PropsType) => {
                 <div className="song__first">
                     {!isPlayed && <h3 className="song__number">{order}</h3>}
                     <div className="song__play"
-                         onClick={play}>
+                         onClick={onSwitchPlay}>
                         {isPlayed
                             ? <PauseIcon/>
-                            : <PlayIcon onClick={onPlay}/>
+                            : <PlayIcon onClick={onSwitchPlay}/>
                         }
                     </div>
                 </div>

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Formik} from "formik";
 import {Input} from "antd";
-import './adminSongForm.scss';
 import {ArtistType, GenreType, SongType} from "../../../config/types";
 import GenreAPI from "../../../API/GenreAPI";
 import * as yup from "yup";
@@ -11,7 +10,7 @@ import ArtistAPI from "../../../API/ArtistAPI";
 import SongsAPI from "../../../API/SongsAPI";
 import {useDispatch} from "react-redux";
 import {setError} from "../../../redux/Actions/errorAction";
-
+import './adminSongForm.scss';
 
 export type SongTypeWithoutId = {
     name: string,
@@ -72,14 +71,13 @@ const AdminSongForm: React.FC = () => {
     useEffect(() => {
         if (params.id) {
             SongsAPI.getSongById(params.id).then((data: SongType) => {
-                console.log(data)
                 initialValues.name = data.name
                 initialValues.artistId = data.artistId;
                 initialValues.genre = data.genre;
             })
         }
         setIsLoading(false);
-    }, [])
+    }, [params.id])
 
     useEffect(() => {
         return () => {

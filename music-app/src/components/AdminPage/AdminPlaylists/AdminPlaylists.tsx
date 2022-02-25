@@ -1,12 +1,12 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {PlaylistType} from "../../../config/types";
-import PlaylistApi from "../../../API/PlaylistAPI";
 import {Button, Popconfirm, Skeleton} from "antd";
 import {DeleteOutlined} from "@ant-design/icons";
 import {useDispatch, useSelector} from "react-redux";
 
-import PlaylistCard from "../../PlaylistCard/PlaylistCard";
 import "./AdminPlaylists.scss"
+import PlaylistApi from "../../../API/PlaylistAPI";
+import {PlaylistType} from "../../../config/types";
+import PlaylistCard from "../../PlaylistCard/PlaylistCard";
 import {RootState} from "../../../redux/Reducers/rootReducer";
 import {thunkUserPlaylists} from "../../../redux/Actions/thunkUserActions";
 
@@ -34,9 +34,9 @@ const AdminPlaylists: React.FC = () => {
     }, [])
 
     return (
-        <div className="admin_playlists">
+        <div className="admin admin_playlists">
             {isLoading ? <Skeleton active/> :
-                playlists && playlists.map((playlist, index) => {
+                playlists && playlists.map((playlist) => {
                     return <div className="admin_playlist__wrap">
                         <PlaylistCard playlist={playlist}/>
                         <div className="admin_playlist__delete">
