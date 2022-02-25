@@ -41,6 +41,16 @@
     --song-active-color: #FFFFFF4C;
     --song-like-color: #FFFFFFFF;
     --library-link-active-color: #FFFFFF19;
+    --edit-playlist-bg-color: #282828FF;
+    --edit-playlist-input-color: #323232FF;
+
+    //--header-bg-color: $header_color;
+    //--main-bg-color: $black26;
+    //--text-color: $white;
+    //--sidebar-bg-color: $black0;
+    //--player-bg-color: $player-dark-bg-color;
+    //--player-border-color: $black40;
+    //--webkit-scrollbar-bg-color: $black26;
   }
 
   &._light {
@@ -73,6 +83,17 @@
     --song-active-color: #1DB95433;
     --song-like-color: #646464;
     --library-link-active-color: rgba(0, 0, 0, 0.1);
+    --edit-playlist-bg-color: #F1F1F1FF;
+    --edit-playlist-input-color: #FFFFFFFF;
+
+    //--header-bg-color: $main-content-light-bg-color;
+    //--main-bg-color: $main-content-light-bg-color;
+    //--text-color: $text-light-color;
+    //--sidebar-bg-color: $white;
+    //--player-bg-color: $player-light-bg-color;
+    //--player-border-color: $player-border-light;
+    //--webkit-scrollbar-bg-color: #b6b6b6;
+    //--text-artist-color: $darkwhite;
   }
 }
 

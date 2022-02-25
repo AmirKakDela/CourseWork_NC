@@ -35,7 +35,7 @@ const LibrarySong: React.FC = () => {
                 <div className="library__info">
                     <h1 className="library__title">Любимые треки</h1>
                     <h2 className="library__subtitle">
-                        <span>{user.userName}  &bull; </span> {user.likedSongs.length} {formWordTrack(user.likedSongs.length)}
+                        <span>{user.userName}  &bull; </span> {songs.length} {formWordTrack(songs.length)}
                     </h2>
                     <div className="library__songs-wrap">
                         {songs.length > 0

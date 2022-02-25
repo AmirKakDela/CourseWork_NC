@@ -6,7 +6,9 @@ import {RootState} from "../../../../redux/Reducers/rootReducer";
 import {useActions} from "../../../../hooks/useActions";
 import {SongType} from "../../../../config/types";
 import songDefault from "../../../../assets/imgs/song_default.jpg";
-import "./NotAddedTrack.scss";
+import "./NotAddedSong.scss";
+import Like from "../../../Song/Like";
+import {formattedTime} from "../../../../utils/time-format.utils";
 
 type PropsType = {
     song: SongType,
@@ -14,7 +16,7 @@ type PropsType = {
     onPlay?: () => void,
 }
 
-export const NotAddedTrack = (props: PropsType) => {
+export const NotAddedSong = (props: PropsType) => {
     const {song, onAdd, onPlay} = props;
     const {pause, track} = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
     const [songCover, setSongCover] = useState(song.cover);
@@ -60,10 +62,17 @@ export const NotAddedTrack = (props: PropsType) => {
                     <h3 className="not_added_song__name">{song.name}</h3>
                     <h3 className="not_added_song__artist">{song.artist}</h3>
                 </div>
+
             </div>
-            <div className="not_added_song__add">
+            <div className="not_added_song__other">
+                <h3 className="not_added_song__duration">
+                    {formattedTime(song.duration)}
+                </h3>
+                <button className="not_added_song__add" onClick={onAdd}>{"Добавить".toUpperCase()}</button>
+            </div>
+            {/*<div className="not_added_song__add">
                 <button className="add__button" onClick={onAdd}>{"Добавить".toUpperCase()}</button>
-            </div>
+            </div>*/}
         </div>
     );
 };

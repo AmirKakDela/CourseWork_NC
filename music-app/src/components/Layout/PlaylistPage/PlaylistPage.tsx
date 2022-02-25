@@ -1,10 +1,12 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {Button, Menu, Popconfirm, Popover, Tooltip} from "antd";
 import {CaretRightFilled as PlayIcon, DeleteOutlined, PauseOutlined as PauseIcon} from "@ant-design/icons";
 import MoonLoader from "react-spinners/MoonLoader";
-import {PlaylistType, SongType} from "../../../config/types";
+
+import "./playlistPage.scss";
+import {EditPlaylistType, PlaylistType, SongType} from "../../../config/types";
 import {useActions} from "../../../hooks/useActions";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import {PlayerReducerState} from "../../../redux/Reducers/playerReducer";
@@ -14,13 +16,15 @@ import PlaylistAPI from "../../../API/PlaylistAPI";
 import SongsAPI from "../../../API/SongsAPI";
 import {Song} from "../../Song/Song";
 import EditPlaylistModal from "./EditPlaylistModal/EditPlaylistModal";
-import {NotAddedTrack} from "./NotAddedTrack/NotAddedTrack";
+import {NotAddedSong} from "./NotAddedSong/NotAddedSong";
 import PlaylistLike from "./PlaylistLike/PlaylistLike";
 import {formWordTrack} from "../../../utils/declension.utils";
 import {getTimesOfPlaylistTracks} from "../../../utils/time-format.utils";
-import "./playlistPage.scss";
+import {ThemeContext} from "../theme-context/constants";
+import defaultCover from "../../../assets/imgs/song_default.jpg";
 
 const PlaylistPage = () => {
+    const theme = useContext(ThemeContext)
     const urlParams = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -43,12 +47,13 @@ const PlaylistPage = () => {
 
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
-    const { setPlayingSong, setPlayingSongList} = useActions();
+    const {setPlayingSong, setPlayingSongList} = useActions();
 
     const {pause} = useTypedSelector<PlayerReducerState>((state: RootState) => state.player);
     const isPlayed = !pause;
 
     const [isPlaylistByUser, setIsPlaylistByUser] = useState<boolean>(false)
+    const [playlistCover, setPlaylistCover] = useState(defaultCover);
 
     const showModal = () => {
         setIsModalVisible(true);
@@ -58,13 +63,20 @@ const PlaylistPage = () => {
         setIsModalVisible(false);
     };
 
-    const onPlaylistEdit = useCallback((values: PlaylistType) => {
+    const onPlaylistEdit = useCallback((data: EditPlaylistType) => {
         if (urlParams.id) {
-            PlaylistAPI.editPlaylist(urlParams.id, values)
+            const formData = new FormData();
+            for (let key in data) {
+                // @ts-ignore
+                formData.append(key, data[key])
+            }
+
+            PlaylistAPI.editPlaylist(urlParams.id, formData)
                 .then((data) => {
                         setPlaylist(data)
                     }
                 )
+
             dispatch(thunkUserPlaylists(user.userId))
         }
         setIsModalVisible(false);
@@ -73,13 +85,17 @@ const PlaylistPage = () => {
     const deletePlaylist = useCallback(() => {
         if (urlParams.id) {
             PlaylistAPI.deletePlaylist(urlParams.id)
+                .then(data => {
+                        console.log(data.message)
+                    }
+                )
             dispatch(thunkUserPlaylists(user.userId))
             navigate("/")
         }
     }, [user.playlists])
 
     function onPlay(song: SongType) {
-        setPlayingSongList(songs);
+        setPlayingSongList(songs!);
         setPlayingSong(song);
     }
 
@@ -122,11 +138,16 @@ const PlaylistPage = () => {
         }
     }, [songs, allSongs, playlist])
 
+    const onImageError = () => {
+        setPlaylistCover(defaultCover);
+    };
+
     useEffect(() => {
         if (urlParams.id && !isModalVisible) {
             PlaylistAPI.getPlaylistById(urlParams.id).then(data => {
                 setPlaylist(data.playlist);
                 setSongs(data.songs);
+                setPlaylistCover(data.playlist.cover)
                 setIsLoading(false);
             })
         }
@@ -140,8 +161,6 @@ const PlaylistPage = () => {
     const playlistOptions = () => {
         const optionsHandler = (option: string) => {
             switch (option) {
-                case "delete_from_user":
-                    break;
                 case "edit": {
                     showModal();
                     break;
@@ -150,21 +169,24 @@ const PlaylistPage = () => {
                     deletePlaylist();
                     break;
                 }
-                case "share":
+                case "share": {
+                    navigator.clipboard.writeText(window.location.href);
                     break;
+                }
             }
         }
 
         return (
             <Menu>
-                <Menu.Item onClick={() => optionsHandler("delete_from_user")}>Удалить из профиля</Menu.Item>
                 <Menu.Item onClick={() => optionsHandler("edit")}>
                     Изменить сведения
                 </Menu.Item>
                 <Menu.Item onClick={() => optionsHandler("delete")}>
                     Удалить
                 </Menu.Item>
-                <Menu.Item onClick={() => optionsHandler("share")}>Поделиться</Menu.Item>
+                <Menu.Item onClick={() => optionsHandler("share")}>
+                    Поделиться
+                </Menu.Item>
             </Menu>
         )
     }
@@ -212,7 +234,6 @@ const PlaylistPage = () => {
                     >
                         <Button className="actions__options">&#8943;</Button>
                     </Popover>}
-
             </div>
         )
     }
@@ -226,34 +247,39 @@ const PlaylistPage = () => {
                     <div className="playlist__info">
                         <div className="info__header">
                             <div className="info__cover" onClick={showModal}>
-                                <img src="" alt="Обложка плейлиста"/>
+                                <img src={playlistCover} alt="Обложка плейлиста" onError={onImageError}/>
                             </div>
                             <div className="info__desc">
                                 <h2 className="desc__category">Плейлист</h2>
                                 <h1 className="desc__name" onClick={showModal}>
                                     {playlist.name}
                                 </h1>
-                                <span className="desc__text">
-                            {playlist.user.name} &bull; {playlist.songs.length} {formWordTrack(playlist.songs.length)}, {getTimesOfPlaylistTracks(songs)}
-                        </span>
+                                {playlist.description &&
+                                    <span className={"desc__description"}>{playlist.description}</span>}
+                                <h2 className="desc__text">
+                                    {playlist.user.name} &bull; {playlist.songs.length} {formWordTrack(playlist.songs.length)}, {getTimesOfPlaylistTracks(songs)}
+                                </h2>
                             </div>
                         </div>
                         {isPlaylistByUser && <EditPlaylistModal
                             visible={isModalVisible}
-                            onCreate={onPlaylistEdit}
+                            onEdit={onPlaylistEdit}
                             onCancel={closeModal}
                             playlist={playlist}
+                            theme={theme}
                         />}
                         <PlaylistActions/>
                         <div className="info__main">
                             <h2 className="main__title">Песни</h2>
-                            {songs.length > 0
-                                ?
-                                <div className="main__songs">
-                                    {songs.map((s, index) => (
+
+                            <div className="main__songs">
+                                {songs.length > 0
+                                    ?
+                                    songs.map((s, index) => (
                                         <div className="songs__song">
                                             <Song song={s} order={index + 1} key={s._id} onPlay={() => onPlay(s)}/>
-                                            {(isPlaylistByUser || user.isAdmin) &&
+                                            {(isPlaylistByUser || user.isAdmin)
+                                                &&
                                                 <Tooltip placement="topLeft" title={"Удалить из плейлиста"}>
                                                     <Popconfirm
                                                         title="Вы действительно хотите удалить данную песню?"
@@ -261,18 +287,18 @@ const PlaylistPage = () => {
                                                         okText="Да"
                                                         cancelText="Нет"
                                                     >
-                                                <span className="admin-song__action">
-                                                    <DeleteOutlined className="song__delete"/>
-                                                </span>
+                                                        <span className="admin-song__action">
+                                                            <DeleteOutlined className="song__delete"/>
+                                                        </span>
                                                     </Popconfirm>
-                                                    {/*<Button className="song__delete" onClick={() => deleteSong(s, index)}>&times;</Button>*/}
                                                 </Tooltip>
                                             }
                                         </div>
-                                    ))}
-                                </div>
-                                :
-                                <h3>Треков пока нет</h3>}
+                                    ))
+                                    :
+                                    <span className="songs__notsongs">Треков пока нет.</span>
+                                }
+                            </div>
                         </div>
                     </div>
                     {!location.pathname.includes("/admin")
@@ -292,8 +318,9 @@ const PlaylistPage = () => {
                                     </div>
                                     <div className="addblock__list">
                                         {allSongs.map((song, index) => (
-                                            <NotAddedTrack song={song} key={song._id}
-                                                           onAdd={() => addHandler(song, index)} onPlay={() => onPlay(song)}/>))
+                                            <NotAddedSong song={song} key={song._id}
+                                                          onAdd={() => addHandler(song, index)}
+                                                          onPlay={() => onPlay(song)}/>))
                                         }
                                     </div>
                                 </div>)}

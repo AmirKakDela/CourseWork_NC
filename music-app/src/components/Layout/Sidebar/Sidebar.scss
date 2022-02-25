@@ -97,6 +97,26 @@
         border-radius: 2px;
       }
     }
+
+    &__playlist {
+      .ant-menu-title-content {
+        display: flex;
+        flex-direction: column;
+
+        .playlist {
+          &__name {
+            font-size: 14px;
+            line-height: 14px;
+          }
+
+          &__author {
+            font-size: 12px;
+            line-height: 12px;
+            color: var(--text-artist-color);
+          }
+        }
+      }
+    }
   }
 
 

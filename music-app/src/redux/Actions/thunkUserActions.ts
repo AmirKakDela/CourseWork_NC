@@ -124,7 +124,7 @@ export const thunkUserLikedPlaylists = (userId: string) => {
     return async (dispatch: Dispatch<UserActionTypes>) => {
         try {
             const response = await axios.get(`${url}/api/playlist/user/${userId}/liked-playlists`, AuthorizationHeaderConfig)
-            dispatch(setUserLikedPlaylists(response.data))
+            dispatch(setUserLikedPlaylists(response.data.playlists))
         } catch (e) {
             const u = e as ErrorType
             dispatch(setAuthError(u.response.data.message))

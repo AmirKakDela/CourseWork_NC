@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {Menu, MenuTheme} from "antd";
+
 import {PlaylistType, SidebarItemType} from "../../../config/types";
 import {RootState} from "../../../redux/Reducers/rootReducer";
 import {thunkUserPlaylists} from "../../../redux/Actions/thunkUserActions";
@@ -18,8 +19,10 @@ type PropsType = {
 const Sidebar: React.FC<PropsType> = (props) => {
     const navigate = useNavigate();
     let location = useLocation();
-    let current = props.items?.find(item => item?.path.includes(location.pathname))?.path || "/";
-    const handleClick = useCallback((e: MenuInfo) => current = e.key, []);
+    // let current = props.items?.find(item => item?.path.includes(location.pathname))?.path || "/";
+    // const handleClick = useCallback((e: MenuInfo) => current = e.key, []);
+    const [current, setCurrent] = useState('home');
+    const handleClick = (e: MenuInfo) => setCurrent(e.key);
     const dispatch = useDispatch();
     const currentTheme = useSelector((state: RootState) => state.shared.appTheme);
     const user = useSelector((state: RootState) => state.user.currentUser);
@@ -55,7 +58,7 @@ const Sidebar: React.FC<PropsType> = (props) => {
     }, [playlists, dispatch, navigate, user.userId, user.userName]);
 
     useEffect(() => {
-        setPlaylists([...user.playlists, ...user.likedPlaylists]);
+        setPlaylists([...user.playlists, ...user.likedPlaylists])
     }, [dispatch, user.playlists, user.likedPlaylists]);
 
     return (
@@ -74,7 +77,7 @@ const Sidebar: React.FC<PropsType> = (props) => {
                     {props.items.map((item) => {
                         return (
                             <Menu.Item
-                                key={item.path}
+                                key={item.itemId}
                                 onClick={() => menuItemHandler(item.path)}
                                 icon={item.icon && React.createElement(item.icon)}
                                 id={item.itemId}
@@ -92,10 +95,12 @@ const Sidebar: React.FC<PropsType> = (props) => {
                         {playlists.map((item, index) => {
                             return (
                                 <Menu.Item
+                                    className="menu__playlist"
                                     key={5 + index}
                                     onClick={() => navigate(`/playlist/${item._id}`)}
                                     id={item._id}>
-                                    {item.name}
+                                        <span className="playlist__name">{item.name}</span>
+                                        {user.userId != item.user.id && <span className="playlist__author">{item.user.name}</span>}
                                 </Menu.Item>
                             );
                         })}
@@ -103,6 +108,6 @@ const Sidebar: React.FC<PropsType> = (props) => {
             </Menu>
         </div>
     );
-};
+}
 
 export default Sidebar;
