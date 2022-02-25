@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {CaretRightOutlined} from "@ant-design/icons";
 import {Button} from "antd";
 import {Link, useLocation} from "react-router-dom";
@@ -15,11 +15,15 @@ type PropsType = {
 function PlaylistCard(props: PropsType) {
     const {playlist} = props
     const location = useLocation()
-    const [playlistCover, setPlaylistCover] = useState(playlist.cover);
+    const [playlistCover, setPlaylistCover] = useState(defaultCover);
 
     const onImageError = () => {
         setPlaylistCover(defaultCover);
     };
+
+    useEffect(()=>{
+        if(playlist.cover) setPlaylistCover(playlist.cover)
+    }, [playlist])
 
     if (location.pathname === "/admin/playlists") {
 

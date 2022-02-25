@@ -127,7 +127,7 @@ const PlaylistPage = () => {
     }, [songs, allSongs, playlist])
 
 
-    const deleteSong = useCallback((item: SongType, index: number) => {
+    const deleteSong = useCallback((item: SongType) => {
         if (urlParams.id) {
             PlaylistAPI.deleteSongFromPlaylist(urlParams.id, item._id)
                 .then(data => {
@@ -147,7 +147,7 @@ const PlaylistPage = () => {
             PlaylistAPI.getPlaylistById(urlParams.id).then(data => {
                 setPlaylist(data.playlist);
                 setSongs(data.songs);
-                setPlaylistCover(data.playlist.cover)
+                if (data.playlist.cover) setPlaylistCover(data.playlist.cover)
                 setIsLoading(false);
             })
         }
@@ -283,7 +283,7 @@ const PlaylistPage = () => {
                                                 <Tooltip placement="topLeft" title={"Удалить из плейлиста"}>
                                                     <Popconfirm
                                                         title="Вы действительно хотите удалить данную песню?"
-                                                        onConfirm={() => deleteSong(s, index)}
+                                                        onConfirm={() => deleteSong(s)}
                                                         okText="Да"
                                                         cancelText="Нет"
                                                     >
