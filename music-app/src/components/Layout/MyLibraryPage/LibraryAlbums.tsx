@@ -44,7 +44,7 @@ const LibraryAlbums: React.FC = () => {
                     </h2>
                     <div className="library__songs-wrap">
                         {albums.length > 0
-                            ? <ScrollComponent titleName="Мои альбомы" data={
+                            ? <ScrollComponent titleName="Любимые альбомы" data={
                                 albums.map(album => {
                                     return <AlbumCard key={album._id}
                                                       album={album}
